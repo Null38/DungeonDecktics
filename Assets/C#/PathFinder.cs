@@ -1,140 +1,157 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 
-[System.Serializable]
-public class Node
+namespace Astar
 {
-    public Node(bool _isWall, int _x, int _y) { isWall = _isWall; x = _x; y = _y; }
 
-    public bool isWall;
-    public Node ParentNode;
-
-    // G : 시작으로부터 이동했던 거리, H : |가로|+|세로| 장애물 무시하여 목표까지의 거리, F : G + H
-    public int x, y, G, H;
-    public int F { get { return G + H; } }
-}
-
-
-public class PathFinder : MonoBehaviour
-{
-    public Vector2Int bottomLeft, topRight, startPos, targetPos;
-    public List<Node> FinalNodeList;
-    public bool allowDiagonal, dontCrossCorner;
-
-    int sizeX, sizeY;
-    Node[,] NodeArray;
-    Node StartNode, TargetNode, CurNode;
-    List<Node> OpenList, ClosedList;
-
-
-    public void PathFinding()
+    public static class PathFinder
     {
-        // NodeArray의 크기 정해주고, isWall, x, y 대입
-        sizeX = topRight.x - bottomLeft.x + 1;
-        sizeY = topRight.y - bottomLeft.y + 1;
-        NodeArray = new Node[sizeX, sizeY];
+        public delegate int CostHandler(Vector2Int position);
+        public delegate bool PassableHandler(Vector2Int position);
 
-        for (int i = 0; i < sizeX; i++)
+        [Serializable]
+        private class Node
         {
-            for (int j = 0; j < sizeY; j++)
+            const int StraightCost = 10;
+            const int DiagonalCost = 14;
+
+            public Vector2Int Position;
+            public Node Parent;
+            public int G;
+            public int H;
+            public int F => G + H;
+
+            public Node(Vector2Int pos, Node parent, Vector2Int target, int costMult = 1)
             {
-                bool isWall = false;
-                foreach (Collider2D col in Physics2D.OverlapCircleAll(new Vector2(i + bottomLeft.x, j + bottomLeft.y), 0.4f))
-                    if (col.gameObject.layer == LayerMask.NameToLayer("Wall")) isWall = true;
-
-                NodeArray[i, j] = new Node(isWall, i + bottomLeft.x, j + bottomLeft.y);
-            }
-        }
-
-
-        // 시작과 끝 노드, 열린리스트와 닫힌리스트, 마지막리스트 초기화
-        StartNode = NodeArray[startPos.x - bottomLeft.x, startPos.y - bottomLeft.y];
-        TargetNode = NodeArray[targetPos.x - bottomLeft.x, targetPos.y - bottomLeft.y];
-
-        OpenList = new List<Node>() { StartNode };
-        ClosedList = new List<Node>();
-        FinalNodeList = new List<Node>();
-
-
-        while (OpenList.Count > 0)
-        {
-            // 열린리스트 중 가장 F가 작고 F가 같다면 H가 작은 걸 현재노드로 하고 열린리스트에서 닫힌리스트로 옮기기
-            CurNode = OpenList[0];
-            for (int i = 1; i < OpenList.Count; i++)
-                if (OpenList[i].F <= CurNode.F && OpenList[i].H < CurNode.H) CurNode = OpenList[i];
-
-            OpenList.Remove(CurNode);
-            ClosedList.Add(CurNode);
-
-
-            // 마지막
-            if (CurNode == TargetNode)
-            {
-                Node TargetCurNode = TargetNode;
-                while (TargetCurNode != StartNode)
+                Position = pos;
+                Parent = parent;
+                H = Mathf.Abs(target.x - pos.x) + Mathf.Abs(target.y - pos.y);
+                if (parent != null)
                 {
-                    FinalNodeList.Add(TargetCurNode);
-                    TargetCurNode = TargetCurNode.ParentNode;
+                    int dx = Mathf.Abs(parent.Position.x - pos.x);
+                    int dy = Mathf.Abs(parent.Position.y - pos.y);
+                    G = parent.G + (dx == 1 && dy == 1 ? DiagonalCost : StraightCost) * costMult;
                 }
-                FinalNodeList.Add(StartNode);
-                FinalNodeList.Reverse();
-
-                for (int i = 0; i < FinalNodeList.Count; i++) print(i + "번째는 " + FinalNodeList[i].x + ", " + FinalNodeList[i].y);
-                return;
+                else
+                    G = 0;
             }
 
-
-            // ↗↖↙↘
-            if (allowDiagonal)
+            public override bool Equals(object obj)
             {
-                OpenListAdd(CurNode.x + 1, CurNode.y + 1);
-                OpenListAdd(CurNode.x - 1, CurNode.y + 1);
-                OpenListAdd(CurNode.x - 1, CurNode.y - 1);
-                OpenListAdd(CurNode.x + 1, CurNode.y - 1);
+                return obj is Node node && Position == node.Position;
             }
 
-            // ↑ → ↓ ←
-            OpenListAdd(CurNode.x, CurNode.y + 1);
-            OpenListAdd(CurNode.x + 1, CurNode.y);
-            OpenListAdd(CurNode.x, CurNode.y - 1);
-            OpenListAdd(CurNode.x - 1, CurNode.y);
+            public override int GetHashCode()
+            {
+                return Position.GetHashCode();
+            }
         }
-    }
 
-    void OpenListAdd(int checkX, int checkY)
-    {
-        // 상하좌우 범위를 벗어나지 않고, 벽이 아니면서, 닫힌리스트에 없다면
-        if (checkX >= bottomLeft.x && checkX < topRight.x + 1 && checkY >= bottomLeft.y && checkY < topRight.y + 1 && !NodeArray[checkX - bottomLeft.x, checkY - bottomLeft.y].isWall && !ClosedList.Contains(NodeArray[checkX - bottomLeft.x, checkY - bottomLeft.y]))
+        private static readonly Vector2Int[] FourDirs = new Vector2Int[]
         {
-            // 대각선 허용시, 벽 사이로 통과 안됨
-            if (allowDiagonal) if (NodeArray[CurNode.x - bottomLeft.x, checkY - bottomLeft.y].isWall && NodeArray[checkX - bottomLeft.x, CurNode.y - bottomLeft.y].isWall) return;
+            new Vector2Int(0 , 1 ), 
+            new Vector2Int(1 , 0 ),  
+            new Vector2Int(0 , -1), 
+            new Vector2Int(-1, 0 ) 
+        };
 
-            // 코너를 가로질러 가지 않을시, 이동 중에 수직수평 장애물이 있으면 안됨
-            if (dontCrossCorner) if (NodeArray[CurNode.x - bottomLeft.x, checkY - bottomLeft.y].isWall || NodeArray[checkX - bottomLeft.x, CurNode.y - bottomLeft.y].isWall) return;
+        private static readonly Vector2Int[] DiagDirs = new Vector2Int[]
+        {
+            new Vector2Int(1, 1),
+            new Vector2Int(1, -1),
+            new Vector2Int(-1, -1),
+            new Vector2Int(-1, 1)
+        };
 
-
-            // 이웃노드에 넣고, 직선은 10, 대각선은 14비용
-            Node NeighborNode = NodeArray[checkX - bottomLeft.x, checkY - bottomLeft.y];
-            int MoveCost = CurNode.G + (CurNode.x - checkX == 0 || CurNode.y - checkY == 0 ? 10 : 14);
-
-
-            // 이동비용이 이웃노드G보다 작거나 또는 열린리스트에 이웃노드가 없다면 G, H, ParentNode를 설정 후 열린리스트에 추가
-            if (MoveCost < NeighborNode.G || !OpenList.Contains(NeighborNode))
-            {
-                NeighborNode.G = MoveCost;
-                NeighborNode.H = (Mathf.Abs(NeighborNode.x - TargetNode.x) + Mathf.Abs(NeighborNode.y - TargetNode.y)) * 10;
-                NeighborNode.ParentNode = CurNode;
-
-                OpenList.Add(NeighborNode);
-            }
+        public static List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, bool useDiagonal = true)
+        {
+            return FindPath(start, target, GetCost, IsPassable, useDiagonal);
         }
-    }
 
-    void OnDrawGizmos()
-    {
-        if (FinalNodeList.Count != 0) for (int i = 0; i < FinalNodeList.Count - 1; i++)
-                Gizmos.DrawLine(new Vector2(FinalNodeList[i].x, FinalNodeList[i].y), new Vector2(FinalNodeList[i + 1].x, FinalNodeList[i + 1].y));
+        public static List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, CostHandler GetCost, PassableHandler IsPassable, bool useDiagonal = true)
+        {
+            PriorityQueue<Node, int> openSet = new PriorityQueue<Node, int> ();
+            HashSet<Node> closedSet = new HashSet<Node>();
+
+            openSet.Enqueue(new Node(start, null, target), 0);
+
+            while (openSet.Count > 0)
+            {
+                Node currNode = openSet.Dequeue();
+
+                if (closedSet.Contains(currNode))
+                    continue;
+                
+                if (currNode.Position == target)
+                    return GetPath(currNode);
+
+
+                closedSet.Add(currNode);
+
+
+                foreach (Vector2Int dir in FourDirs)
+                {
+                    Vector2Int newPos = currNode.Position + dir;
+
+                    if (!IsPassable(newPos))
+                        continue;
+
+                    Node newNode = new Node(newPos, currNode, target, GetCost(newPos));
+
+                    if (closedSet.Contains(newNode))
+                        continue;
+
+                    openSet.Enqueue(newNode, newNode.F);
+                }
+
+                if (useDiagonal)
+                {
+                    foreach (Vector2Int dir in DiagDirs)
+                    {
+                        Vector2Int newPos = currNode.Position + dir;
+
+                        if (!IsPassable(newPos))
+                            continue;
+
+                        Node newNode = new Node(newPos, currNode, target, GetCost(newPos));
+
+                        if (closedSet.Contains(newNode))
+                            continue;
+
+                        openSet.Enqueue(newNode, newNode.F);
+                    }
+                }
+                
+            }
+
+            return null;
+        }
+
+        public static int GetCost(Vector2Int position) {return 1;}
+        public static bool IsPassable(Vector2Int position)
+        {
+            Collider2D hit = Physics2D.OverlapPoint(position, LayerMask.GetMask("Wall"));
+            
+            if (hit == null)
+                return true;
+
+            return false;
+        }
+
+        private static List<Vector2Int> GetPath(Node curr)
+        {
+            List<Vector2Int> path = new List<Vector2Int>();
+            while (curr != null)
+            {
+                path.Add(curr.Position);
+                curr = curr.Parent;
+            }
+
+            path.Reverse(); 
+            return path;
+        }
     }
 }
