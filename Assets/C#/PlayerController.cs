@@ -12,5 +12,9 @@ public class PlayerController : Controller
     void Update()
     {
         
+        if (Input.anyKeyDown)
+        {
+
+        }
     }
 }
