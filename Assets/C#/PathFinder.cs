@@ -24,7 +24,7 @@ namespace Astar
             public int H;
             public int F => G + H;
 
-            public Node(Vector2Int pos, Node parent, Vector2Int target, int costMult = 1)
+            public Node(Vector2Int pos, Node parent, Vector2Int target)
             {
                 Position = pos;
                 Parent = parent;
@@ -33,7 +33,7 @@ namespace Astar
                 {
                     int dx = Mathf.Abs(parent.Position.x - pos.x);
                     int dy = Mathf.Abs(parent.Position.y - pos.y);
-                    G = parent.G + (dx == 1 && dy == 1 ? DiagonalCost : StraightCost) * costMult;
+                    G = parent.G + (dx == 1 && dy == 1 ? DiagonalCost : StraightCost);
                 }
                 else
                     G = 0;
@@ -50,29 +50,13 @@ namespace Astar
             }
         }
 
-        private static readonly Vector2Int[] FourDirs = new Vector2Int[]
+
+        public static List<Vector2Int> FindPath(Vector2Int start, Vector2Int target)
         {
-            new Vector2Int(0 , 1 ), 
-            new Vector2Int(1 , 0 ),  
-            new Vector2Int(0 , -1), 
-            new Vector2Int(-1, 0 ) 
-        };
-
-        private static readonly Vector2Int[] DiagDirs = new Vector2Int[]
-{
-    new Vector2Int(1, 1),
-    new Vector2Int(1, -1),
-    new Vector2Int(-1, -1),
-    new Vector2Int(-1, 1)
-};
-
-
-        public static List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, bool useDiagonal = true)
-        {
-            return FindPath(start, target, GetCost, IsPassable , useDiagonal);
+            return FindPath(start, target, GetCost, IsPassable);
         }
 
-        public static List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, CostHandler GetCost, PassableHandler IsPassable, bool useDiagonal = true)
+        public static List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, CostHandler GetCost, PassableHandler IsPassable)
         {
             PriorityQueue<Node, int> openSet = new PriorityQueue<Node, int> ();
             HashSet<Node> closedSet = new HashSet<Node>();
@@ -85,74 +69,21 @@ namespace Astar
 
                 if (closedSet.Contains(currNode))
                     continue;
-                
-                if (currNode.Position == target)
-                    return GetPath(currNode);
-
 
                 closedSet.Add(currNode);
 
 
-                foreach (Vector2Int dir in FourDirs)
-                {
-                    Vector2Int newPos = currNode.Position + dir;
-
-                    if (!IsPassable(newPos))
-                        continue;
-
-                    Node newNode = new Node(newPos, currNode, target, GetCost(newPos));
-
-                    if (closedSet.Contains(newNode))
-                        continue;
-
-                    openSet.Enqueue(newNode, newNode.F);
-                }
-
-                if (!useDiagonal)
-                    continue;
-
-                foreach (Vector2Int dir in DiagDirs)
-                {
-                    Vector2Int newPos = currNode.Position + dir;
-
-                    if (!IsPassable(newPos))
-                        continue;
-
-                    Node newNode = new Node(newPos, currNode, target, GetCost(newPos));
-
-                    if (closedSet.Contains(newNode))
-                        continue;
-
-                    openSet.Enqueue(newNode, newNode.F);
-                }
 
             }
 
-            return null;
+            
+            throw new NotImplementedException("A* 미구현");
         }
 
         public static int GetCost(Vector2Int position) {return 1;}
         public static bool IsPassable(Vector2Int position)
         {
-            Collider2D hit = Physics2D.OverlapPoint(position, LayerMask.GetMask("Wall"));
-            
-            if (hit == null)
-                return true;
-
-            return false;
-        }
-
-        private static List<Vector2Int> GetPath(Node curr)
-        {
-            List<Vector2Int> path = new List<Vector2Int>();
-            while (curr != null)
-            {
-                path.Add(curr.Position);
-                curr = curr.Parent;
-            }
-
-            path.Reverse(); 
-            return path;
+            throw new NotImplementedException("이동 검사 미구현");
         }
     }
 }
