@@ -50,7 +50,7 @@ namespace Astar
             }
         }
 
-        private static readonly Vector2Int[] FourDir = new Vector2Int[]
+        private static readonly Vector2Int[] FourDirs = new Vector2Int[]
         {
             new Vector2Int(0 , 1 ), 
             new Vector2Int(1 , 0 ),  
@@ -58,12 +58,20 @@ namespace Astar
             new Vector2Int(-1, 0 ) 
         };
 
-        public static List<Vector2Int> FindPath(Vector2Int start, Vector2Int target)
+        private static readonly Vector2Int[] DiagDirs = new Vector2Int[]
         {
-            return FindPath(start, target, GetCost, IsPassable);
+            new Vector2Int(1, 1),
+            new Vector2Int(1, -1),
+            new Vector2Int(-1, -1),
+            new Vector2Int(-1, 1)
+        };
+
+        public static List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, bool useDiagonal = true)
+        {
+            return FindPath(start, target, GetCost, IsPassable, useDiagonal);
         }
 
-        public static List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, CostHandler GetCost, PassableHandler IsPassable)
+        public static List<Vector2Int> FindPath(Vector2Int start, Vector2Int target, CostHandler GetCost, PassableHandler IsPassable, bool useDiagonal = true)
         {
             PriorityQueue<Node, int> openSet = new PriorityQueue<Node, int> ();
             HashSet<Node> closedSet = new HashSet<Node>();
@@ -84,7 +92,7 @@ namespace Astar
                 closedSet.Add(currNode);
 
 
-                foreach (Vector2Int dir in FourDir)
+                foreach (Vector2Int dir in FourDirs)
                 {
                     Vector2Int newPos = currNode.Position + dir;
 
@@ -97,6 +105,24 @@ namespace Astar
                         continue;
 
                     openSet.Enqueue(newNode, newNode.F);
+                }
+
+                if (useDiagonal)
+                {
+                    foreach (Vector2Int dir in DiagDirs)
+                    {
+                        Vector2Int newPos = currNode.Position + dir;
+
+                        if (!IsPassable(newPos))
+                            continue;
+
+                        Node newNode = new Node(newPos, currNode, target, GetCost(newPos));
+
+                        if (closedSet.Contains(newNode))
+                            continue;
+
+                        openSet.Enqueue(newNode, newNode.F);
+                    }
                 }
                 
             }
