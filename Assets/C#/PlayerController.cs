@@ -1,3 +1,5 @@
+using Astar;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : Controller
@@ -7,14 +9,10 @@ public class PlayerController : Controller
     {
         
     }
-
+    
     // Update is called once per frame
     void Update()
     {
         
-        if (Input.anyKeyDown)
-        {
-
-        }
     }
 }
