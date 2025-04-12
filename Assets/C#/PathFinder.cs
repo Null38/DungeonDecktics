@@ -50,7 +50,7 @@ namespace Astar
             }
         }
 
-        private static readonly Vector2Int[] FourDirs = new Vector2Int[]
+        private static readonly Vector2Int[] s_FourDirs = new Vector2Int[]
         {
             new Vector2Int(0 , 1 ), 
             new Vector2Int(1 , 0 ),  
@@ -58,7 +58,7 @@ namespace Astar
             new Vector2Int(-1, 0 ) 
         };
 
-        private static readonly Vector2Int[] DiagDirs = new Vector2Int[]
+        private static readonly Vector2Int[] s_DiagDirs = new Vector2Int[]
         {
             new Vector2Int(1, 1),
             new Vector2Int(1, -1),
@@ -92,7 +92,7 @@ namespace Astar
                 closedSet.Add(currNode);
 
 
-                foreach (Vector2Int dir in FourDirs)
+                foreach (Vector2Int dir in s_FourDirs)
                 {
                     Vector2Int newPos = currNode.Position + dir;
 
@@ -109,7 +109,7 @@ namespace Astar
 
                 if (useDiagonal)
                 {
-                    foreach (Vector2Int dir in DiagDirs)
+                    foreach (Vector2Int dir in s_DiagDirs)
                     {
                         Vector2Int newPos = currNode.Position + dir;
 
