@@ -24,7 +24,7 @@ namespace Astar
             public int H;
             public int F => G + H;
 
-            public Node(Vector2Int pos, Node parent, Vector2Int target)
+            public Node(Vector2Int pos, Node parent, Vector2Int target, int costMult = 1)
             {
                 Position = pos;
                 Parent = parent;
@@ -33,7 +33,7 @@ namespace Astar
                 {
                     int dx = Mathf.Abs(parent.Position.x - pos.x);
                     int dy = Mathf.Abs(parent.Position.y - pos.y);
-                    G = parent.G + (dx == 1 && dy == 1 ? DiagonalCost : StraightCost);
+                    G = parent.G + (dx == 1 && dy == 1 ? DiagonalCost : StraightCost) * costMult;
                 }
                 else
                     G = 0;
@@ -50,6 +50,13 @@ namespace Astar
             }
         }
 
+        private static readonly Vector2Int[] FourDir = new Vector2Int[]
+        {
+            new Vector2Int(0 , 1 ), 
+            new Vector2Int(1 , 0 ),  
+            new Vector2Int(0 , -1), 
+            new Vector2Int(-1, 0 ) 
+        };
 
         public static List<Vector2Int> FindPath(Vector2Int start, Vector2Int target)
         {
@@ -69,21 +76,56 @@ namespace Astar
 
                 if (closedSet.Contains(currNode))
                     continue;
+                
+                if (currNode.Position == target)
+                    return GetPath(currNode);
+
 
                 closedSet.Add(currNode);
 
 
+                foreach (Vector2Int dir in FourDir)
+                {
+                    Vector2Int newPos = currNode.Position + dir;
 
+                    if (!IsPassable(newPos))
+                        continue;
+
+                    Node newNode = new Node(newPos, currNode, target, GetCost(newPos));
+
+                    if (closedSet.Contains(newNode))
+                        continue;
+
+                    openSet.Enqueue(newNode, newNode.F);
+                }
+                
             }
 
-            
-            throw new NotImplementedException("A* 미구현");
+            return null;
         }
 
         public static int GetCost(Vector2Int position) {return 1;}
         public static bool IsPassable(Vector2Int position)
         {
-            throw new NotImplementedException("이동 검사 미구현");
+            Collider2D hit = Physics2D.OverlapPoint(position, LayerMask.GetMask("Wall"));
+            
+            if (hit == null)
+                return true;
+
+            return false;
+        }
+
+        private static List<Vector2Int> GetPath(Node curr)
+        {
+            List<Vector2Int> path = new List<Vector2Int>();
+            while (curr != null)
+            {
+                path.Add(curr.Position);
+                curr = curr.Parent;
+            }
+
+            path.Reverse(); 
+            return path;
         }
     }
 }
