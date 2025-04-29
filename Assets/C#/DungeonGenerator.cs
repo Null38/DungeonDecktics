@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using static Unity.Burst.Intrinsics.X86.Avx;
 using Random = UnityEngine.Random;
 
@@ -30,8 +31,10 @@ public class DungeonGenerator : MonoBehaviour
 
     private void Initialize()
     {
-        MinRoomSize = 6;
-        MaxRoomSize = (int)(Math.Min(mapSize.x, mapSize.y) / 4f);
+        map = new TileType[mapSize.x, mapSize.y];
+
+        MinRoomSize = 5;
+        MaxRoomSize = (int)(Math.Min(mapSize.x, mapSize.y) / 4f) - 1;
         RoomCount = (int)(Math.Sqrt(mapSize.x * mapSize.y) / 2f);
     }
 
@@ -45,7 +48,7 @@ public class DungeonGenerator : MonoBehaviour
         int padConst = Padding * 2;
         int randomSize = (mapSize.x - padConst) * (mapSize.y - padConst);
 
-        while (rooms.Count < RoomCount)
+        while (randomSize > 0 && rooms.Count < RoomCount)
         {
             int index = Random.Range(0, randomSize);
 
@@ -60,10 +63,11 @@ public class DungeonGenerator : MonoBehaviour
             if (area == null)
             {
                 excludedPoints.Add(index, excludedPoints.Count);
+                randomSize--;
+                continue;
             }
             
-            rooms.Add(MakeRoom(area));
-            
+            rooms.Add(MakeRoom((RectInt)area));
         }
     }
 
@@ -73,32 +77,30 @@ public class DungeonGenerator : MonoBehaviour
         Stack<Vector2Int> corners = new Stack<Vector2Int>();
 
         stack.Push(point);
-
+        
         while (stack.Count > 0)
         {
             Vector2Int curr = stack.Pop();
-
+            
             if (curr.y == point.y &&
                 IsValidTile(curr + Vector2Int.right, TileType.floor, (x, y) => x != y))
             {
                 stack.Push(curr + Vector2Int.right);
             }
 
-            Vector2Int newValue = curr + Vector2Int.up;
-
-            if (IsValidTile(newValue, TileType.floor, (x, y) => x != y) &&
+            if (IsValidTile(curr + Vector2Int.up, TileType.floor, (x, y) => x != y) &&
                (corners.Count == 0 || curr.y < corners.Peek().y))
             {
-                stack.Push(newValue);
+                stack.Push(curr + Vector2Int.up);
             }
             else
             {
-                if (corners.TryPeek(out Vector2Int value) && value.y == newValue.y)
+                if (corners.TryPeek(out Vector2Int value) && value.y <= curr.y)
                 {
                     corners.Pop();
                 }
 
-                corners.Push(newValue);
+                corners.Push(curr);
             }
         }
 
@@ -106,12 +108,12 @@ public class DungeonGenerator : MonoBehaviour
 
         foreach (Vector2Int corner in corners)
         {
-            Vector2Int size = new Vector2Int(point.x - corner.x + 1, point.y - corner.y + 1);
+            Vector2Int size = new Vector2Int(corner.x - point.x, corner.y - point.y);
             if (size.x < MinRoomSize || size.y < MinRoomSize)
             {
                 continue;
             }
-
+            
             areas.Add(new RectInt(point, size));
         }
 
@@ -119,9 +121,29 @@ public class DungeonGenerator : MonoBehaviour
     }
 
 
-    private RectInt MakeRoom(RectInt? area)
+    private RectInt MakeRoom(RectInt area)
     {
-        throw new NotImplementedException();
+        Vector2Int size = new Vector2Int(Random.Range(MinRoomSize, Math.Min(area.size.x, MaxRoomSize)), Random.Range(MinRoomSize, Math.Min(area.size.y, MaxRoomSize)));
+        
+        RectInt room = new RectInt(area.position, size);
+
+        for (int x = room.xMin; x <= room.xMax; x++)
+        {
+            for (int y = room.yMin; y <= room.yMax; y++)
+            {
+                if (x != room.xMin && x != room.xMax &&
+                    y != room.yMin && y != room.yMax)
+                {
+                    map[x, y] = TileType.floor;
+                }
+                else
+                {
+                    map[x, y] = Random.Range(0, 10) < 9 ? TileType.wall : TileType.softWall;
+                }
+            }
+        }
+
+        return room;
     }
 
     /// <summary>
