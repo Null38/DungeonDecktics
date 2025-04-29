@@ -87,7 +87,7 @@ public class DungeonGenerator : MonoBehaviour
             Vector2Int newValue = curr + Vector2Int.up;
 
             if (IsValidTile(newValue, TileType.floor, (x, y) => x != y) &&
-                curr.y < corners.Peek().y)
+               (corners.Count == 0 || curr.y < corners.Peek().y))
             {
                 stack.Push(newValue);
             }
@@ -102,8 +102,20 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
+        List<RectInt> areas = new List<RectInt>();
 
-        throw new NotImplementedException();
+        foreach (Vector2Int corner in corners)
+        {
+            Vector2Int size = new Vector2Int(point.x - corner.x + 1, point.y - corner.y + 1);
+            if (size.x < MinRoomSize || size.y < MinRoomSize)
+            {
+                continue;
+            }
+
+            areas.Add(new RectInt(point, size));
+        }
+
+        return areas.Count == 0 ? null : areas[Random.Range(0, areas.Count)];
     }
 
 
