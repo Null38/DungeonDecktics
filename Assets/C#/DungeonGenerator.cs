@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
@@ -39,19 +40,33 @@ public class DungeonGenerator : MonoBehaviour
         Initialize();
 
         List<RectInt> rooms = new List<RectInt>();
+        Dictionary<int, int> excludedPoints = new Dictionary<int ,int>();
+
+        int padConst = Padding * 2;
+        int randomSize = (mapSize.x - padConst) * (mapSize.y - padConst);
 
         while (rooms.Count < RoomCount)
         {
+            int index = Random.Range(0, randomSize);
 
-            Vector2Int point = new Vector2Int(Random.Range(Padding, mapSize.x - Padding), Random.Range(Padding, mapSize.y - Padding));
+            while (excludedPoints.ContainsKey(index))
+            {
+                index = randomSize + excludedPoints[index];
+            }
+
+            Vector2Int point = Int2Vector2Int(index, mapSize.x - padConst) + new Vector2Int(Padding, Padding);
 
             RectInt? area = IdentifyArea(point);
-            if (area != null)
+            if (area == null)
             {
-                rooms.Add(MakeRoom(area));
+                excludedPoints.Add(index, excludedPoints.Count);
             }
+            
+            rooms.Add(MakeRoom(area));
+            
         }
     }
+
     private RectInt? IdentifyArea(Vector2Int point)
     {
         Stack<Vector2Int> stack = new Stack<Vector2Int>();
@@ -124,5 +139,15 @@ public class DungeonGenerator : MonoBehaviour
             return false;
 
         return comp(map[pos.x, pos.y], requiredType);
+    }
+
+
+    public Vector2Int Int2Vector2Int(int index, int gridWidth)
+    {
+        // X는 나머지 값, Y는 몫으로 계산
+        int x = index % gridWidth;
+        int y = index / gridWidth;
+
+        return new Vector2Int(x, y);
     }
 }
