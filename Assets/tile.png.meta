@@ -103,7 +103,7 @@ TextureImporter:
       name: tile_0
       rect:
         serializedVersion: 2
-        x: 32
+        x: 64
         y: 0
         width: 32
         height: 32
@@ -126,11 +126,11 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 32
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -148,6 +148,72 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 64
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ed109e07b1b6d24bb0efc4475221b32
+      internalID: -124429625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73f5ec058e1c879439a3d82c4a5eaf53
+      internalID: -577825568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_4
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f2af4fef3103464f8d67fadff296e9f
+      internalID: -205097565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tile_5
+      rect:
+        serializedVersion: 2
+        x: 32
         y: 0
         width: 32
         height: 32
@@ -159,8 +225,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ed109e07b1b6d24bb0efc4475221b32
-      internalID: -124429625
+      spriteID: 599acc07507a138438608476daddfe73
+      internalID: -467897098
       vertices: []
       indices: 
       edges: []
@@ -182,6 +248,9 @@ TextureImporter:
       tile_0: 7399533318584292489
       tile_1: 948597914
       tile_2: -124429625
+      tile_3: -577825568
+      tile_4: -205097565
+      tile_5: -467897098
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
+ï»¿using System;
 using System.Collections.Generic;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static Unity.Burst.Intrinsics.X86.Avx;
 using Random = UnityEngine.Random;
 
 public class DungeonGenerator : MonoBehaviour
@@ -18,7 +15,7 @@ public class DungeonGenerator : MonoBehaviour
 
     TileType[,] map;
 
-    enum TileType 
+    enum TileType
     {
         floor = 1,
         door = 2,
@@ -28,6 +25,18 @@ public class DungeonGenerator : MonoBehaviour
 
         empty = 0
     };
+
+    struct RoomInfo
+    {
+        public RectInt RoomRect { private get; set; }
+        Vector2Int center;
+
+        public RoomInfo(RectInt roomRect)
+        {
+            RoomRect = roomRect;
+            center = new Vector2Int((int)roomRect.center.x, (int)roomRect.center.y);
+        }
+    }
 
     private void Initialize()
     {
@@ -42,8 +51,8 @@ public class DungeonGenerator : MonoBehaviour
     {
         Initialize();
 
-        List<RectInt> rooms = new List<RectInt>();
-        Dictionary<int, int> excludedPoints = new Dictionary<int ,int>();
+        List<RoomInfo> rooms = new List<RoomInfo>();
+        Dictionary<int, int> excludedPoints = new Dictionary<int, int>();
 
         int padConst = Padding * 2;
         int randomSize = (mapSize.x - padConst) * (mapSize.y - padConst);
@@ -66,9 +75,11 @@ public class DungeonGenerator : MonoBehaviour
                 randomSize--;
                 continue;
             }
-            
-            rooms.Add(MakeRoom((RectInt)area));
+
+            rooms.Add(MakeRectRoom((RectInt)area));
         }
+
+        MapRender();
     }
 
     private RectInt? IdentifyArea(Vector2Int point)
@@ -77,18 +88,18 @@ public class DungeonGenerator : MonoBehaviour
         Stack<Vector2Int> corners = new Stack<Vector2Int>();
 
         stack.Push(point);
-        
+
         while (stack.Count > 0)
         {
             Vector2Int curr = stack.Pop();
-            
+
             if (curr.y == point.y &&
-                IsValidTile(curr + Vector2Int.right, TileType.floor, (x, y) => x != y))
+                IsValidTile(curr + Vector2Int.right, (x) => x != TileType.floor))
             {
                 stack.Push(curr + Vector2Int.right);
             }
 
-            if (IsValidTile(curr + Vector2Int.up, TileType.floor, (x, y) => x != y) &&
+            if (IsValidTile(curr + Vector2Int.up, (x) => x != TileType.floor) &&
                (corners.Count == 0 || curr.y < corners.Peek().y))
             {
                 stack.Push(curr + Vector2Int.up);
@@ -113,7 +124,7 @@ public class DungeonGenerator : MonoBehaviour
             {
                 continue;
             }
-            
+
             areas.Add(new RectInt(point, size));
         }
 
@@ -121,10 +132,10 @@ public class DungeonGenerator : MonoBehaviour
     }
 
 
-    private RectInt MakeRoom(RectInt area)
+    private RoomInfo MakeRectRoom(RectInt area)
     {
         Vector2Int size = new Vector2Int(Random.Range(MinRoomSize, Math.Min(area.size.x, MaxRoomSize)), Random.Range(MinRoomSize, Math.Min(area.size.y, MaxRoomSize)));
-        
+
         RectInt room = new RectInt(area.position, size);
 
         for (int x = room.xMin; x <= room.xMax; x++)
@@ -143,7 +154,14 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
-        return room;
+        return new RoomInfo(room);
+    }
+
+    private RoomInfo MakeTemplateRoom(RectInt area)
+    {
+
+
+        throw new NotImplementedException();
     }
 
     /// <summary>
@@ -156,7 +174,7 @@ public class DungeonGenerator : MonoBehaviour
     /// <returns>True if the position is valid and the tile matches the type; otherwise, false.</returns>
     bool IsValidTile(Vector2Int pos, TileType requiredType)
     {
-        return IsValidTile(pos, requiredType, (x, y) => x == y);
+        return IsValidTile(pos, (x) => x == requiredType);
     }
 
     /// <summary>
@@ -167,21 +185,53 @@ public class DungeonGenerator : MonoBehaviour
     /// <param name="requiredType">The expected tile type to compare against.</param>
     /// <param name="comp">A comparison function that takes the tile's type and the required type, and returns true if valid.</param>
     /// <returns>True if the position is valid and the comparison condition is met; otherwise, false.</returns>
-    bool IsValidTile(Vector2Int pos, TileType requiredType, Func<TileType, TileType, bool> comp)
+    bool IsValidTile(Vector2Int pos, Func<TileType, bool> comp)
     {
         if (pos.x < Padding || pos.y < Padding || pos.x >= mapSize.x - Padding || pos.y >= mapSize.y - Padding)
             return false;
 
-        return comp(map[pos.x, pos.y], requiredType);
+        return comp(map[pos.x, pos.y]);
     }
 
 
     public Vector2Int Int2Vector2Int(int index, int gridWidth)
     {
-        // X´Â ³ª¸ÓÁö °ª, Y´Â ¸òÀ¸·Î °è»ê
+        // XëŠ” ë‚˜ë¨¸ì§€ ê°’, YëŠ” ëª«ìœ¼ë¡œ ê³„ì‚°
         int x = index % gridWidth;
         int y = index / gridWidth;
 
         return new Vector2Int(x, y);
+    }
+
+    public Tilemap floorTilemap;
+    public Tilemap wallTilemap;
+
+    public TileBase floorTile;
+    public TileBase wallTile;
+
+    public void MapRender()
+    {
+        floorTilemap.ClearAllTiles();
+        wallTilemap.ClearAllTiles();
+
+        for (int x = 0; x < mapSize.x; x++)
+        {
+            for (int y = 0; y < mapSize.y; y++)
+            {
+                Vector3Int tilePos = new Vector3Int(x, y, 0);
+                TileType type = map[x, y];
+
+                floorTilemap.SetTile(tilePos, floorTile);
+                switch (type)
+                {
+                    case TileType.empty:
+                    case TileType.stone:
+                    case TileType.softWall:
+                    case TileType.wall:
+                        wallTilemap.SetTile(tilePos, wallTile);
+                        break;
+                }
+            }
+        }
     }
 }
