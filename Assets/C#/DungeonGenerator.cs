@@ -1,13 +1,8 @@
 ﻿using Astar;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using static Unity.Burst.Intrinsics.X86.Avx;
 using Random = UnityEngine.Random;
 
 public class DungeonGenerator : MonoBehaviour
@@ -19,7 +14,7 @@ public class DungeonGenerator : MonoBehaviour
     private int RoomCount;
     private int Padding = 4;
 
-    private int mergeChance = 4;// Range(0, mergeChance) > 0
+    private int mergeChance = 4;// Range(0, mergeChance) == 0
 
     TileType[,] map;
 
@@ -41,7 +36,7 @@ public class DungeonGenerator : MonoBehaviour
 
     struct RoomInfo
     {
-        public RectInt RoomRect { private get; set; }
+        public RectInt RoomRect { get; private set; }
         public readonly Vector2Int center;
 
         public RoomInfo(RectInt roomRect)
@@ -69,6 +64,9 @@ public class DungeonGenerator : MonoBehaviour
         RoomCount = (int)(Math.Sqrt(mapSize.x * mapSize.y) / 2f);
     }
 
+    /// <summary>
+    /// Generate and Render New Map
+    /// </summary>
     public void Generate()
     {
         Initialize();
@@ -99,8 +97,6 @@ public class DungeonGenerator : MonoBehaviour
 
             MakeRectRoom((RectInt)area);
         }
-
-        Debug.Log(randomSize);
 
         MakeTunnels();
         MergeRooms();
@@ -322,7 +318,6 @@ public class DungeonGenerator : MonoBehaviour
 
     public Vector2Int Int2Vector2Int(int index, int gridWidth)
     {
-        // X는 나머지 값, Y는 몫으로 계산
         int x = index % gridWidth;
         int y = index / gridWidth;
 
