@@ -50,7 +50,7 @@ namespace Astar
             }
         }
 
-        private static readonly Vector2Int[] s_FourDirs = new Vector2Int[]
+        public static readonly Vector2Int[] s_FourDirs = new Vector2Int[]
         {
             new Vector2Int(0 , 1 ), 
             new Vector2Int(1 , 0 ),  
@@ -58,7 +58,7 @@ namespace Astar
             new Vector2Int(-1, 0 ) 
         };
 
-        private static readonly Vector2Int[] s_DiagDirs = new Vector2Int[]
+        public static readonly Vector2Int[] s_DiagDirs = new Vector2Int[]
         {
             new Vector2Int(1, 1),
             new Vector2Int(1, -1),

@@ -1,7 +1,12 @@
-﻿using System;
+﻿using Astar;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static Unity.Burst.Intrinsics.X86.Avx;
 using Random = UnityEngine.Random;
 
 public class DungeonGenerator : MonoBehaviour
@@ -15,13 +20,18 @@ public class DungeonGenerator : MonoBehaviour
 
     TileType[,] map;
 
+    List<RoomInfo> rooms = new List<RoomInfo>();
+    List<Vector2Int> doors = new List<Vector2Int>();
+
     enum TileType
     {
         floor = 1,
         door = 2,
+        corridor = 3,
+
         stone = 4,
         softWall = 5,
-        wall = 10,
+        wall = 20,
 
         empty = 0
     };
@@ -29,7 +39,7 @@ public class DungeonGenerator : MonoBehaviour
     struct RoomInfo
     {
         public RectInt RoomRect { private get; set; }
-        Vector2Int center;
+        public readonly Vector2Int center;
 
         public RoomInfo(RectInt roomRect)
         {
@@ -41,6 +51,15 @@ public class DungeonGenerator : MonoBehaviour
     private void Initialize()
     {
         map = new TileType[mapSize.x, mapSize.y];
+        rooms.Clear();
+
+        for (int x = 0; x < mapSize.x; x++)
+        {
+            for (int y = 0; y < mapSize.y; y++)
+            {
+                map[x, y] = TileType.stone;
+            }
+        }
 
         MinRoomSize = 5;
         MaxRoomSize = (int)(Math.Min(mapSize.x, mapSize.y) / 4f) - 1;
@@ -51,7 +70,6 @@ public class DungeonGenerator : MonoBehaviour
     {
         Initialize();
 
-        List<RoomInfo> rooms = new List<RoomInfo>();
         Dictionary<int, int> excludedPoints = new Dictionary<int, int>();
 
         int padConst = Padding * 2;
@@ -60,7 +78,7 @@ public class DungeonGenerator : MonoBehaviour
         while (randomSize > 0 && rooms.Count < RoomCount)
         {
             int index = Random.Range(0, randomSize);
-
+            
             while (excludedPoints.ContainsKey(index))
             {
                 index = randomSize + excludedPoints[index];
@@ -68,7 +86,7 @@ public class DungeonGenerator : MonoBehaviour
 
             Vector2Int point = Int2Vector2Int(index, mapSize.x - padConst) + new Vector2Int(Padding, Padding);
 
-            RectInt? area = IdentifyArea(point);
+            RectInt ? area = IdentifyArea(point);
             if (area == null)
             {
                 excludedPoints.Add(index, excludedPoints.Count);
@@ -76,14 +94,20 @@ public class DungeonGenerator : MonoBehaviour
                 continue;
             }
 
-            rooms.Add(MakeRectRoom((RectInt)area));
+            MakeRectRoom((RectInt)area);
         }
+
+        MakeTunnels();
+        MergeRooms();
 
         MapRender();
     }
 
     private RectInt? IdentifyArea(Vector2Int point)
     {
+        if (!IsValidTile(point, (x) => x != TileType.floor))
+            return null;
+        
         Stack<Vector2Int> stack = new Stack<Vector2Int>();
         Stack<Vector2Int> corners = new Stack<Vector2Int>();
 
@@ -132,7 +156,7 @@ public class DungeonGenerator : MonoBehaviour
     }
 
 
-    private RoomInfo MakeRectRoom(RectInt area)
+    private void MakeRectRoom(RectInt area)
     {
         Vector2Int size = new Vector2Int(Random.Range(MinRoomSize, Math.Min(area.size.x, MaxRoomSize)), Random.Range(MinRoomSize, Math.Min(area.size.y, MaxRoomSize)));
 
@@ -153,28 +177,82 @@ public class DungeonGenerator : MonoBehaviour
                 }
             }
         }
+        map[room.xMin, room.yMin] = TileType.wall;
+        map[room.xMax, room.yMin] = TileType.wall;
+        map[room.xMin, room.yMax] = TileType.wall;
+        map[room.xMax, room.yMax] = TileType.wall;
 
-        return new RoomInfo(room);
+
+        rooms.Add(new RoomInfo(room));
     }
 
-    private RoomInfo MakeTemplateRoom(RectInt area)
+    private void MakeTemplateRoom(RectInt area)
     {
-
-
         throw new NotImplementedException();
     }
 
-    /// <summary>
-    /// Checks whether the given position is within the valid map bounds and
-    /// whether the tile at that position matches the specified type.
-    /// Default comparison is equality (==).
-    /// </summary>
-    /// <param name="pos">The tile position to check.</param>
-    /// <param name="requiredType">The expected tile type to compare against.</param>
-    /// <returns>True if the position is valid and the tile matches the type; otherwise, false.</returns>
-    bool IsValidTile(Vector2Int pos, TileType requiredType)
+    private void MakeTunnels()
     {
-        return IsValidTile(pos, (x) => x == requiredType);
+        for (int i = 0; i < rooms.Count - 1; i++)
+        {
+            Vector2Int start = rooms[i].center;
+            Vector2Int end = rooms[i + 1].center;
+
+            List<Vector2Int> path = PathFinder.FindPath(start, end, GetCost, (pos) => (IsValidTile(pos, (_) => true)), false);
+
+            foreach (Vector2Int pos in path)
+            {
+                switch (map[pos.x, pos.y])
+                {
+                    case TileType.stone:
+                        map[pos.x, pos.y] = TileType.floor;
+                        break;
+                    case TileType.softWall:
+                    case TileType.wall:
+                        map[pos.x, pos.y] = TileType.door;
+                        doors.Add(pos);
+                        break;
+                }
+            }
+        }
+    }
+
+    private int GetCost(Vector2Int position)
+    {
+        switch (map[position.x, position.y])
+        {
+            case TileType.floor:
+            case TileType.door:
+                return (int)TileType.floor;
+            case TileType.stone:
+            case TileType.softWall:
+                return (int)TileType.stone;
+            case TileType.wall:
+                return (int)TileType.wall;
+        }
+        return 0;
+    }
+    private void MergeRooms()
+    {
+        foreach (Vector2Int door in doors)
+        {
+            int adjacentFloors = 0;
+
+            foreach (Vector2Int dir in PathFinder.s_FourDirs)
+            {
+                Vector2Int adjacent = door + dir;
+                if (map[adjacent.x, adjacent.y] == TileType.floor)
+                {
+                    adjacentFloors++;
+                }
+            }
+
+            if (adjacentFloors < 2 && Random.Range(0, 4) > 0)
+                continue;
+
+            Queue<Vector2Int> queue = new Queue<Vector2Int>();
+            queue.Enqueue(door);
+        }
     }
 
     /// <summary>
@@ -224,7 +302,6 @@ public class DungeonGenerator : MonoBehaviour
                 floorTilemap.SetTile(tilePos, floorTile);
                 switch (type)
                 {
-                    case TileType.empty:
                     case TileType.stone:
                     case TileType.softWall:
                     case TileType.wall:
