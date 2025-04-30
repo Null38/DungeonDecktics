@@ -19,6 +19,8 @@ public class DungeonGenerator : MonoBehaviour
     private int RoomCount;
     private int Padding = 4;
 
+    private int mergeChance = 4;// Range(0, mergeChance) > 0
+
     TileType[,] map;
 
     List<RoomInfo> rooms = new List<RoomInfo>();
@@ -63,7 +65,6 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
-        MinRoomSize = 5;
         MaxRoomSize = (int)(Math.Min(mapSize.x, mapSize.y) / 4f);
         RoomCount = (int)(Math.Sqrt(mapSize.x * mapSize.y) / 2f);
     }
@@ -251,7 +252,7 @@ public class DungeonGenerator : MonoBehaviour
                 }
             }
             
-            if (adjacentFloors < 2 || Random.Range(0, 4) > 0)
+            if (adjacentFloors < 2 || Random.Range(0, mergeChance) > 0)
                 continue;
 
             Queue<Vector2Int> queue = new Queue<Vector2Int>();
