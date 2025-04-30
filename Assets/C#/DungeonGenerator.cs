@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using static Unity.Burst.Intrinsics.X86.Avx;
@@ -13,7 +14,7 @@ public class DungeonGenerator : MonoBehaviour
 {
     public Vector2Int mapSize;
 
-    private int MinRoomSize = 6;
+    private int MinRoomSize = 5;
     private int MaxRoomSize;
     private int RoomCount;
     private int Padding = 4;
@@ -52,6 +53,7 @@ public class DungeonGenerator : MonoBehaviour
     {
         map = new TileType[mapSize.x, mapSize.y];
         rooms.Clear();
+        doors.Clear();
 
         for (int x = 0; x < mapSize.x; x++)
         {
@@ -62,7 +64,7 @@ public class DungeonGenerator : MonoBehaviour
         }
 
         MinRoomSize = 5;
-        MaxRoomSize = (int)(Math.Min(mapSize.x, mapSize.y) / 4f) - 1;
+        MaxRoomSize = (int)(Math.Min(mapSize.x, mapSize.y) / 4f);
         RoomCount = (int)(Math.Sqrt(mapSize.x * mapSize.y) / 2f);
     }
 
@@ -96,6 +98,8 @@ public class DungeonGenerator : MonoBehaviour
 
             MakeRectRoom((RectInt)area);
         }
+
+        Debug.Log(randomSize);
 
         MakeTunnels();
         MergeRooms();
@@ -205,7 +209,7 @@ public class DungeonGenerator : MonoBehaviour
                 switch (map[pos.x, pos.y])
                 {
                     case TileType.stone:
-                        map[pos.x, pos.y] = TileType.floor;
+                        map[pos.x, pos.y] = TileType.corridor;
                         break;
                     case TileType.softWall:
                     case TileType.wall:
@@ -246,13 +250,56 @@ public class DungeonGenerator : MonoBehaviour
                     adjacentFloors++;
                 }
             }
-
-            if (adjacentFloors < 2 && Random.Range(0, 4) > 0)
+            
+            if (adjacentFloors < 2 || Random.Range(0, 4) > 0)
                 continue;
 
             Queue<Vector2Int> queue = new Queue<Vector2Int>();
             queue.Enqueue(door);
+
+            map[door.x, door.y] = TileType.floor;
+
+            while (queue.Count > 0)
+            {
+                Vector2Int curr = queue.Dequeue();
+
+                List<Vector2Int> expandables = new List<Vector2Int>();
+                int floorCount = 0;
+
+                foreach (Vector2Int dir in PathFinder.s_FourDirs)
+                {
+                    Vector2Int next = curr + dir;
+
+                    if (IsValidTile(next, IsExpandable))
+                        expandables.Add(next);
+
+                    if (IsValidTile(next, (x) => x == TileType.floor))
+                        floorCount++;
+                }
+
+                if (floorCount < 3 && curr != door)
+                    continue;
+
+                map[curr.x, curr.y] = TileType.floor;
+
+                foreach (Vector2Int expandable in expandables)
+                {
+                    queue.Enqueue(expandable);
+                }
+            }
         }
+    }
+
+    private bool IsExpandable(TileType tileType)
+    {
+        switch (tileType)
+        {
+            case TileType.door:
+            case TileType.softWall:
+            case TileType.wall:
+                return true;
+        }
+        return false;
     }
 
     /// <summary>
