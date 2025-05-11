@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerInfo", menuName = "Scriptable Objects/Info")]
 public class PlayerInfo : BaseInfo
 {
-    public string ClassName;
+    public CharacterClass CharacterClass;
 
     [SerializeField]
     public int Experience;
