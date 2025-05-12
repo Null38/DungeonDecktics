@@ -8,12 +8,14 @@ using Random = UnityEngine.Random;
 public class DungeonGenerator : MonoBehaviour
 {
     public Vector2Int mapSize;
+    public List<MapData> templateMaps; 
 
     private int MinRoomSize = 5;
     private int MaxRoomSize;
     private int RoomCount;
     private int Padding = 1;
 
+    private int templateChance = 3;// Range(0, templateChance) == 0
     private int mergeChance = 4;// Range(0, mergeChance) == 0
 
     TileType[,] map;
@@ -44,10 +46,10 @@ public class DungeonGenerator : MonoBehaviour
             RoomRect = roomRect;
             center = new Vector2Int((int)roomRect.center.x, (int)roomRect.center.y);
         }
-        public RoomInfo(RectInt roomRect, Dictionary<string, object> valuses)
+        public RoomInfo(RectInt roomRect, Vector2Int center)
         {
             RoomRect = roomRect;
-            center = new Vector2Int((int)roomRect.center.x, (int)roomRect.center.y);
+            this.center = center + roomRect.position;
         }
     }
 
@@ -100,17 +102,20 @@ public class DungeonGenerator : MonoBehaviour
                 continue;
             }
 
-            MakeRectRoom((RectInt)area);
+            if (Random.Range(0, templateChance) == 0)
+            {
+                MakeTemplateRoom((RectInt)area);
+            }
+            else
+            {
+                MakeRectRoom((RectInt)area);
+            }
         }
 
         MakeTunnels();
         MergeRooms();
 
         MapRender();
-
-
-
-        MakeTemplateRoom(RectInt.zero);
     }
 
     private RectInt? IdentifyArea(Vector2Int point)
@@ -198,7 +203,43 @@ public class DungeonGenerator : MonoBehaviour
 
     private void MakeTemplateRoom(RectInt area)
     {
-        throw new NotImplementedException();
+        List<MapData> validTemplates = new List<MapData>();
+
+        foreach (var template in templateMaps)
+        {
+            Vector2Int _size = template.Size;
+            if (_size.x <= area.width && _size.y <= area.height)
+            {
+                validTemplates.Add(template);
+            }
+        }
+
+        if (validTemplates.Count <= 0)
+        {
+            MakeRectRoom(area);
+            return;
+        }
+
+        MapData selectedTemplate = validTemplates[Random.Range(0, validTemplates.Count)];
+
+        Vector2Int selectedSize = selectedTemplate.Size;
+
+        Vector2Int size = selectedTemplate.Size;
+
+        RectInt room = new RectInt(area.position, size - new Vector2Int(1, 1));
+
+        for (int x = 0; x < size.x; x++)
+        {
+            for (int y = 0; y < size.y; y++)
+            {
+                if (selectedTemplate.Map[x, y] != 0)
+                {
+                    map[room.xMin + x, room.yMin + y] = (TileType)selectedTemplate.Map[x, y];
+                }
+            }
+        }
+
+        rooms.Add(new RoomInfo(room, selectedTemplate.Center));
     }
 
     private void MakeTunnels()

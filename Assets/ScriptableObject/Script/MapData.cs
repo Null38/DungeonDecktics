@@ -6,6 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MapData", menuName = "ScriptableObjects/MapData")]
 public class MapData : ScriptableObject
 {
+    [SerializeField]
     private class JsonData
     {
         public int width;
@@ -20,9 +21,12 @@ public class MapData : ScriptableObject
     [TextArea(10, 15)]
     private string jsonFile;
     private JsonData data;
+    private Vector2Int size;
+    private Vector2Int center;
 
     public int[,] Map { get; private set; }
-    public Vector2Int[,] Size { get; private set; }
+    public Vector2Int Size { get => size; }
+    public Vector2Int Center { get => center; }
 
     private void OnEnable()
     {
@@ -36,22 +40,20 @@ public class MapData : ScriptableObject
             return;
         }
 
-        ConvertJson();
+        ConvertToVar();
     }
 
-    private void ConvertJson()
+    private void ConvertToVar()
     {
-        int rows = data.height;
-        int cols = data.width;
+        center = new Vector2Int(data.centerX, data.centerY);
+        size.x = data.width;
+        size.y = data.width;
 
-        Map = new int[cols, rows];
+        Map = new int[size.x, size.y];
         
-        for (int y = 0; y < rows; y++)
+        for (int i = 0; i < data.map.Length; i++)
         {
-            for (int x = 0; x < cols; x++)
-            {
-                Map[x, y] = data.map[x * cols + y];
-            }
+            Map[i % size.x, i / size.x] = data.map[i];
         }
     }
 }
