@@ -14,9 +14,6 @@ public abstract class CardObject : ScriptableObject
     public TargetType targetType;
     public int range;
 
-    [TextArea(3, 5)]
-    public string jsonData;
-
     public abstract void UseCard();
     public abstract string FormatDescription();
 }
