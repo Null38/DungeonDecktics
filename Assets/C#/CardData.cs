@@ -1,97 +1,49 @@
-﻿using TMPro;
+﻿using Newtonsoft.Json;
 using UnityEngine;
 
 public enum CardCategory { Attack, Armor, Utility }       // 카드 종류
 public enum TargetType { Self, Enemy, Area }              // 타겟 타입
-public enum ValueType { Flat, Percentage, StatusEffect }  // 효과 타입
+public enum ValueType { Flat, Percentage, StatusEffect, lifeStealPercentage }  // 효과 타입
 
 [CreateAssetMenu(menuName = "Card")]
 public class CardData : ScriptableObject
 {
-    // [카드 기본 정보]
-    public string cardName;
+    [JsonProperty("CardName")]
+    public string CardName;
+
+    [JsonProperty("description")]
     public string description;
+
+    [JsonProperty("artwork")]
     public Sprite artwork;
+
+    [JsonProperty("cost")]
     public int cost;
 
-    // [카드 분류 및 타겟 정보]
+    [JsonProperty("category")]
     public CardCategory category;
+
+    [JsonProperty("targetType")]
     public TargetType targetType;
-    public int range; // 공격/유틸 범위 (예: 1이면 인접, 3이면 3칸 등)
 
-    // [카드 효과 정보]
+    [JsonProperty("range")]
+    public int range;
+
+    [JsonProperty("valueType")]
     public ValueType valueType;
-    public float amount;             // Flat 데미지, 퍼센트 비율 등
-    public string statusEffectID;    // 상태이상 이름 (예: "Burn", "Stun")
-    public float lifeStealPercentage; // 피흡 공격
+
+    [JsonProperty("amount")]
+    public float amount;
+
+    [JsonProperty("statusEffectID")]
+    public string statusEffectID;
+
+    [JsonProperty("lifeStealPercentage")]
+    public float lifeStealPercentage;
+    TextAsset textAsset = Resources.Load<TextAsset>("Json/SchoolLocationJson");
+
+    public string imagePath;
 }
-
-public class CardExecutor : MonoBehaviour
-{
-    public void ExecuteCard(CardData card, State target)
-    {
-        switch (card.category)
-        {
-            case CardCategory.Attack:
-                ApplyAttack(card, target);
-                break;
-            case CardCategory.Armor:
-                ApplyDefense(card, target);
-                break;
-            case CardCategory.Utility:
-                ApplyUtility(card, target);
-                break;
-        }
-    }
-
-    void ApplyAttack(CardData card, State target)
-    {
-        int damage = 0;
-
-        if (card.valueType == ValueType.Flat)
-        {
-            damage = (int)card.amount;
-        }
-        else if (card.valueType == ValueType.Percentage)
-        {
-            damage = (int)(target.CurrentHealth * (card.amount / 100f));
-        }
-
-        target.TakeDamage(damage);
-        Debug.Log($"[Attack] {card.cardName} → 대상에게 {damage} 피해 (범위: {card.range})");
-
-        if (card.lifeStealPercentage > 0)
-        {
-            int healAmount = (int)(damage * (card.lifeStealPercentage / 100f));
-            target.Heal(healAmount);
-            Debug.Log($"[LifeSteal] {card.cardName} → {healAmount} 체력 흡수");
-        }
-    }
-
-    void ApplyDefense(CardData card, State target)
-    {
-        int armorAmount = (int)card.amount;
-        int duration = 3; // 기본 방어 지속 턴
-        target.ApplyTemporaryArmor(armorAmount, duration);
-        Debug.Log($"[Armor] {card.cardName} → {armorAmount} 방어도 적용 (3턴)");
-    }
-
-    void ApplyUtility(CardData card, State target)
-    {
-        if (card.valueType == ValueType.StatusEffect)
-        {
-            Debug.Log($"[Utility] 상태이상 '{card.statusEffectID}' 적용");
-            // 나중에 상태이상 시스템 연동
-        }
-        else if (card.valueType == ValueType.Flat)
-        {
-            target.Heal((int)card.amount);
-            Debug.Log($"[Utility] {card.cardName} → 체력 {(int)card.amount} 회복");
-        }
-    }
-}
-
-
 //우선 임시적으로 State 클래스 생성해둠. 나중에 합칠 경우 수정 필요.
 
 //using UnityEngine;
