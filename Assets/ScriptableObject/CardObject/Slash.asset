@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41300e5be343207408dfd98df03b1fe8, type: 3}
   m_Name: Slash
   m_EditorClassIdentifier: 
-  cardName: "\uBCA0\uAE30"
-  description: "\uC801\uC5D0\uAC8C \uAC80\uC744 \uD718\uB458\uB7EC \uD53C\uD574\uB97C
-    \uC785\uD799\uB2C8\uB2E4."
-  artwork: {fileID: 0}
+  CardName: "\uBCA0\uAE30"
+  description: "\uC801\uC5D0\uAC8C \uAC80\uC744 \uD718\uB458\uB7EC { (cardData as
+    AttackData).Damage}\uC758 \uD53C\uD574\uB97C \uC785\uD799\uB2C8\uB2E4."
+  artwork: {fileID: -4457850898058260020, guid: dac4e8d83af96784c9effad0910dc0f7, type: 3}
   cost: 2
   category: 0
   targetType: 1
-  valueType: 0
-  amount: 5
-  statusEffectID: 0
+  range: 0
+  jsonData: '{"Damage" : 8}'
