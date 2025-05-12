@@ -1,44 +1,48 @@
-﻿using Newtonsoft.Json;
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum CardCategory { Attack, Armor, Utility }       // 카드 종류
 public enum TargetType { Self, Enemy, Area }              // 타겟 타입
 public enum ValueType { Flat, Percentage, StatusEffect, lifeStealPercentage }  // 효과 타입
 
-[CreateAssetMenu(menuName = "Card")]
+[CreateAssetMenu(fileName = "CardData", menuName = "ScriptableObjects/CardData")]
 public class CardData : ScriptableObject
-{
-    [JsonProperty("CardName")]
+{    
+    private class data
+    {
+        string CardName;
+        string description ;
+        string artwork;
+        int cost;
+        string category;
+        string targetType;
+        int range;
+        string valueType;
+        int amount;
+        string statusEffectID;
+        int lifeStealPercentage;
+}
+
+    
     public string CardName;
 
-    [JsonProperty("description")]
     public string description;
 
-    [JsonProperty("artwork")]
     public Sprite artwork;
 
-    [JsonProperty("cost")]
     public int cost;
 
-    [JsonProperty("category")]
     public CardCategory category;
 
-    [JsonProperty("targetType")]
     public TargetType targetType;
 
-    [JsonProperty("range")]
     public int range;
 
-    [JsonProperty("valueType")]
     public ValueType valueType;
 
-    [JsonProperty("amount")]
     public float amount;
 
-    [JsonProperty("statusEffectID")]
     public string statusEffectID;
 
-    [JsonProperty("lifeStealPercentage")]
     public float lifeStealPercentage;
     TextAsset textAsset = Resources.Load<TextAsset>("Json/SchoolLocationJson");
 
