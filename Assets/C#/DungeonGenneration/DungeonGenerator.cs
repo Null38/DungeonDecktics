@@ -1,11 +1,9 @@
 ﻿using Astar;
 using System;
-using MiniJSON;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
-using static UnityEditor.Progress;
 
 public class DungeonGenerator : MonoBehaviour
 {
@@ -42,6 +40,11 @@ public class DungeonGenerator : MonoBehaviour
         public readonly Vector2Int center;
 
         public RoomInfo(RectInt roomRect)
+        {
+            RoomRect = roomRect;
+            center = new Vector2Int((int)roomRect.center.x, (int)roomRect.center.y);
+        }
+        public RoomInfo(RectInt roomRect, Dictionary<string, object> valuses)
         {
             RoomRect = roomRect;
             center = new Vector2Int((int)roomRect.center.x, (int)roomRect.center.y);
@@ -195,30 +198,6 @@ public class DungeonGenerator : MonoBehaviour
 
     private void MakeTemplateRoom(RectInt area)
     {
-        Dictionary<string, object> Templat = Json.Deserialize("{\r\n  \"ogmoVersion\": \"3.4.0\",\r\n  \"width\": 5,\r\n  \"height\": 5,\r\n  \"offsetX\": 0,\r\n  \"offsetY\": 0,\r\n  \"values\": {\"centerX\": 2, \"centerY\": 2},\r\n  \"layers\": [\r\n    {\r\n      \"name\": \"Center_Pointer\",\r\n      \"_eid\": \"07889561\",\r\n      \"entities\": [\r\n        {\"name\": \"center\", \"id\": 0, \"_eid\": \"45290151\", \"x\": 64, \"y\": 64, \"originX\": -8, \"originY\": -8}\r\n      ]\r\n    },\r\n    {\r\n      \"name\": \"Tile\",\r\n      \"_eid\": \"44206181\",\r\n      \"grid2D\": [\r\n        [\"20\", \"5\", \"20\", \"5\", \"20\"],\r\n        [\"5\", \"1\", \"20\", \"1\", \"5\"],\r\n        [\"20\", \"1\", \"1\", \"1\", \"20\"],\r\n        [\"5\", \"1\", \"20\", \"1\", \"5\"],\r\n        [\"20\", \"5\", \"20\", \"5\", \"20\"]\r\n      ]\r\n    }\r\n  ]\r\n}") as Dictionary<string, object>;
-        List<object> layers = Templat["layers"] as List<object>;
-
-        Dictionary<string, object> valuses = Templat["values"] as Dictionary<string, object>;
-
-        foreach (Dictionary<string, object> layer in layers)
-        {
-            switch (layer["name"])
-            {
-                case "Tile":
-                    break;
-                default:
-                    continue;
-            }
-
-
-            foreach (var item in layer)
-            {
-
-                Debug.Log(item);
-            }
-        }
-
-
         throw new NotImplementedException();
     }
 
