@@ -877,7 +877,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapSize: {x: 30, y: 30}
   templateMaps:
-  - {fileID: 11400000, guid: 7a30313b033bb384a999e7765a2e58a0, type: 2}
+  - {fileID: 11400000, guid: a5d058b0302271b4d934cb5416f783c2, type: 2}
+  - {fileID: 11400000, guid: 0b5b8a3f828997648bbe114ad0850a5e, type: 2}
   floorTilemap: {fileID: 1469236017}
   wallTilemap: {fileID: 352936743}
   floorTile: {fileID: 11400000, guid: cd49a36ebea5c8641a7c314a7dffbb25, type: 2}

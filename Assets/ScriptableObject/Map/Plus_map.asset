@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4270a780b9bd22c4e9d1cfe48d68431c, type: 3}
   m_Name: Plus_map
   m_EditorClassIdentifier: 
-  jsonFile: 
+  jsonFile: "{\n  \"width\": 7,\n  \"height\": 7,\n  \"centerX\": 3,\n  \"centerY\":
+    3,\n  \"map\": [\n    0, 20, 5, 5, 5, 20, 0,\n    20, 20, 1, 1, 1, 20, 20,\n   
+    5, 1, 1, 1, 1, 1, 5,\n    5, 1, 1, 1, 1, 1, 5,\n    5, 1, 1, 1, 1, 1, 5,\n   
+    20, 20, 1, 1, 1, 20, 20,\n    0, 20, 5, 5, 5, 20, 0\n  ]\n}"
