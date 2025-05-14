@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: EquipmentData
   m_EditorClassIdentifier: 
   deck: {fileID: 11400000, guid: 095e2b9efb0a7824ab1bd4973ad50a6d, type: 2}
-  type: 1
+  type: 0
