@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AttackCardObject", menuName = "ScriptableObjects/Card/AttackCard")]
+[CreateAssetMenu(fileName = "AttackCardObject", menuName = "Scriptable Objects/Card/AttackCard")]
 public class AttackCardObject : CardObject
 {
 

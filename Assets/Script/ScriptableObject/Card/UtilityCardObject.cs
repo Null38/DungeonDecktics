@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "UtilityCardObject", menuName = "ScriptableObjects/Card/UtilityCard")]
+[CreateAssetMenu(fileName = "UtilityCardObject", menuName = "Scriptable Objects/Card/UtilityCard")]
 public class UtilityCardObject : CardObject
 {
     public int heal;

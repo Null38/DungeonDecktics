@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyInfo", menuName = "Scriptable Objects/Info")]
+[CreateAssetMenu(fileName = "new EnemyInfo", menuName = "Scriptable Objects/Info/Enemy Info")]
 public class EnemyInfo : BaseInfo
 {
     public CharacterSpecies CharacterSpecies;
