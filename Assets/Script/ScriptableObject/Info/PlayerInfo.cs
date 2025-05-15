@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerInfo", menuName = "Scriptable Objects/Info")]
+[CreateAssetMenu(fileName = "new PlayerInfo", menuName = "Scriptable Objects/Info/PlayerInfo")]
 public class PlayerInfo : BaseInfo
 {
     public CharacterClass CharacterClass;
