@@ -367,7 +367,7 @@ TextureImporter:
       name: baseWall_12
       rect:
         serializedVersion: 2
-        x: 32
+        x: 0
         y: 0
         width: 32
         height: 32
@@ -389,7 +389,7 @@ TextureImporter:
       name: baseWall_13
       rect:
         serializedVersion: 2
-        x: 64
+        x: 32
         y: 0
         width: 32
         height: 32
@@ -411,7 +411,7 @@ TextureImporter:
       name: baseWall_14
       rect:
         serializedVersion: 2
-        x: 96
+        x: 64
         y: 0
         width: 32
         height: 32
@@ -425,6 +425,28 @@ TextureImporter:
       bones: []
       spriteID: 5d4d464eb3301b544946cb3d49b0ea8f
       internalID: 2058918378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: baseWall_15
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01f2ed1b439a0044b9f7cac680f49fd0
+      internalID: 1999975499
       vertices: []
       indices: 
       edges: []
@@ -450,6 +472,7 @@ TextureImporter:
       baseWall_12: 110760198
       baseWall_13: 398525600
       baseWall_14: 2058918378
+      baseWall_15: 1999975499
       baseWall_2: 1297838967
       baseWall_3: 484874028
       baseWall_4: -1431330264
