@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.WSA;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 namespace DualGridTile
 {
@@ -7,10 +9,20 @@ namespace DualGridTile
     [RequireComponent(typeof(Tilemap))]
     public class DualGrid : MonoBehaviour
     {
+        Vector3Int[] offsets = new Vector3Int[]
+        {
+            new Vector3Int(0, 1, 0),
+            new Vector3Int(1, 1, 0),
+            new Vector3Int(0, 0, 0),
+            new Vector3Int(1, 0, 0)
+        };
+
+
         private Tilemap reference;
         private bool _isEventHooked = false;
 
         public DualGridRuleTile Rule;
+        private DualGridRuleTile rule;
         public Tilemap RenderTileMap;
 
 
@@ -18,6 +30,8 @@ namespace DualGridTile
         private void Awake()
         {
             reference = GetComponent<Tilemap>();
+            reference.origin = Vector3Int.zero;
+            RenderTileMap.origin = Vector3Int.zero;
         }
 
         private void OnEnable()
@@ -26,6 +40,8 @@ namespace DualGridTile
             {
                 Tilemap.tilemapTileChanged += OnTilemapChanged;
                 _isEventHooked = true;
+                rule = Instantiate(Rule);
+                rule.reference = reference;
             }
         }
 
@@ -50,16 +66,54 @@ namespace DualGridTile
         {
             foreach (var tile in changedTiles)
             {
-                Debug.Log($"Tile changed at position {tile.position}");
+                Vector3Int basePos = tile.position;
+
                 if (tile.tile != null)
                 {
-                    RenderTileMap.SetTile(tile.position, Rule);
+                    foreach (var off in offsets)
+                    {
+                        Vector3Int targetPos = basePos + off;
+                        RenderTileMap.SetTile(targetPos, rule);
+                    }
                 }
                 else
                 {
-                    RenderTileMap.SetTile(tile.position, null);
+                    TileRemoved(tile);
                 }
             }
+        }
+
+        void TileRemoved(Tilemap.SyncTile tile)
+        {
+            foreach (var off in offsets)
+            {
+                Vector3Int targetPos = tile.position + off;
+
+                if (!IsRenderHaveNeighbor(targetPos))
+                {
+
+                    RenderTileMap.SetTile(targetPos, null);
+                }
+            }
+
+            
+        }
+
+        bool IsRenderHaveNeighbor(Vector3Int pos)
+        {
+
+            foreach (var off in offsets)
+            {
+                Vector3Int refPos = pos - off;
+
+                if (reference.GetTile(refPos) != null)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+            
         }
     }
 }
