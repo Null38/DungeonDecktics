@@ -5,11 +5,11 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; } 
     public int currentTurn = 0; 
-    public bool isGameOver = false; // °ÔÀÓ ¿À¹ö »óÅÂ Ã¼Å©
-    public GameObject player; // ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®
-    public GameObject enemy; // Àû ¿ÀºêÁ§Æ®
+    public bool isGameOver = false; // ê²Œì„ ì˜¤ë²„ ìƒíƒœ ì²´í¬
+    public GameObject player; // í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸
+    public GameObject enemy; // ì  ì˜¤ë¸Œì íŠ¸
 
-    // ÅÏ ÁøÇàÀ» À§ÇÑ ±âº» °ª
+    // í„´ ì§„í–‰ì„ ìœ„í•œ ê¸°ë³¸ ê°’
     private bool isPlayerTurn = true;
 
     private void Awake()
@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject); 
         }
 
-        DontDestroyOnLoad(gameObject); // GameManager ÆÄ±« ¹æÁö
+        DontDestroyOnLoad(gameObject); // GameManager íŒŒê´´ ë°©ì§€
     }
 
     private void Start()
@@ -31,84 +31,84 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
-    // °ÔÀÓ ÃÊ±âÈ­
+    // ê²Œì„ ì´ˆê¸°í™”
     public void StartGame()
     {
-        currentTurn = 1; // °ÔÀÓ ½ÃÀÛ ½Ã ÅÏ 1·Î ¼³Á¤
+        currentTurn = 1; // ê²Œì„ ì‹œì‘ ì‹œ í„´ 1ë¡œ ì„¤ì •
         isGameOver = false;
         isPlayerTurn = true;
 
-        // ÇÊ¿äÇÑ ÃÊ±âÈ­ ÀÛ¾÷ Ãß°¡ (¿¹: ÇÃ·¹ÀÌ¾î, Àû ÃÊ±âÈ­)
-        Debug.Log("°ÔÀÓ ½ÃÀÛ!");
+        // í•„ìš”í•œ ì´ˆê¸°í™” ì‘ì—… ì¶”ê°€ (ì˜ˆ: í”Œë ˆì´ì–´, ì  ì´ˆê¸°í™”)
+        Debug.Log("ê²Œì„ ì‹œì‘!");
         BeginTurn();
     }
 
-    // ÅÏÀ» ÁøÇàÇÏ´Â ÇÔ¼ö
+    // í„´ì„ ì§„í–‰í•˜ëŠ” í•¨ìˆ˜
     private void BeginTurn()
     {
         if (isGameOver)
         {
-            Debug.Log("°ÔÀÓÀÌ Á¾·áµÇ¾ú½À´Ï´Ù.");
+            Debug.Log("ê²Œì„ì´ ì¢…ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
             return;
         }
 
         if (isPlayerTurn)
         {
-            Debug.Log("ÇÃ·¹ÀÌ¾îÀÇ ÅÏÀÔ´Ï´Ù.");
-            // ÇÃ·¹ÀÌ¾î ÅÏ °ü·Ã ·ÎÁ÷ Ãß°¡ (¿¹: ÇÃ·¹ÀÌ¾î Çàµ¿ ¼±ÅÃ)
-            // ÀÌ ¿¹½Ã¿¡¼­´Â ´Ü¼øÈ÷ µô·¹ÀÌ¸¦ ÁÖ°í ÀûÀÇ ÅÏÀ¸·Î ³Ñ¾î°¡µµ·Ï ±¸Çö
+            Debug.Log("í”Œë ˆì´ì–´ì˜ í„´ì…ë‹ˆë‹¤.");
+            // í”Œë ˆì´ì–´ í„´ ê´€ë ¨ ë¡œì§ ì¶”ê°€ (ì˜ˆ: í”Œë ˆì´ì–´ í–‰ë™ ì„ íƒ)
+            // ì´ ì˜ˆì‹œì—ì„œëŠ” ë‹¨ìˆœíˆ ë”œë ˆì´ë¥¼ ì£¼ê³  ì ì˜ í„´ìœ¼ë¡œ ë„˜ì–´ê°€ë„ë¡ êµ¬í˜„
             StartCoroutine(PlayerTurn());
         }
         else
         {
-            Debug.Log("ÀûÀÇ ÅÏÀÔ´Ï´Ù.");
-            // Àû ÅÏ °ü·Ã ·ÎÁ÷ Ãß°¡ (¿¹: AI Çàµ¿)
+            Debug.Log("ì ì˜ í„´ì…ë‹ˆë‹¤.");
+            // ì  í„´ ê´€ë ¨ ë¡œì§ ì¶”ê°€ (ì˜ˆ: AI í–‰ë™)
             StartCoroutine(EnemyTurn());
         }
     }
 
-    // ÇÃ·¹ÀÌ¾î ÅÏ Ã³¸® (¿¹½Ã·Î µô·¹ÀÌ¸¦ ÁÖ°í ÅÏÀ» ÀüÈ¯)
+    // í”Œë ˆì´ì–´ í„´ ì²˜ë¦¬ (ì˜ˆì‹œë¡œ ë”œë ˆì´ë¥¼ ì£¼ê³  í„´ì„ ì „í™˜)
     private IEnumerator PlayerTurn()
     {
-        // ÇÃ·¹ÀÌ¾î°¡ Çàµ¿ÇÏ´Â ½Ã°£ (¿¹: Çàµ¿ ¼±ÅÃ È­¸é)
+        // í”Œë ˆì´ì–´ê°€ í–‰ë™í•˜ëŠ” ì‹œê°„ (ì˜ˆ: í–‰ë™ ì„ íƒ í™”ë©´)
         yield return new WaitForSeconds(2f);
 
-        // ÇÃ·¹ÀÌ¾î°¡ ÀÌµ¿ÇÏ°Å³ª Çàµ¿ÇÏ´Â °£´ÜÇÑ ¿¹½Ã
+        // í”Œë ˆì´ì–´ê°€ ì´ë™í•˜ê±°ë‚˜ í–‰ë™í•˜ëŠ” ê°„ë‹¨í•œ ì˜ˆì‹œ
         if (player != null)
         {
-            player.transform.position = new Vector3(1, 0, 0); // ÇÃ·¹ÀÌ¾î ÀÌµ¿
-            Debug.Log("ÇÃ·¹ÀÌ¾î ÀÌµ¿: " + player.transform.position);
+            player.transform.position = new Vector3(1, 0, 0); // í”Œë ˆì´ì–´ ì´ë™
+            Debug.Log("í”Œë ˆì´ì–´ ì´ë™: " + player.transform.position);
         }
 
-        // ÅÏ ÀüÈ¯
+        // í„´ ì „í™˜
         isPlayerTurn = false;
         currentTurn++;
-        BeginTurn(); // ÀûÀÇ ÅÏÀ¸·Î ³Ñ¾î°¨
+        BeginTurn(); // ì ì˜ í„´ìœ¼ë¡œ ë„˜ì–´ê°
     }
 
-    // Àû ÅÏ Ã³¸® (¿¹½Ã·Î °£´ÜÇÑ µô·¹ÀÌ ÈÄ ÅÏÀ» ÀüÈ¯)
+    // ì  í„´ ì²˜ë¦¬ (ì˜ˆì‹œë¡œ ê°„ë‹¨í•œ ë”œë ˆì´ í›„ í„´ì„ ì „í™˜)
     private IEnumerator EnemyTurn()
     {
-        // ÀûÀÇ Çàµ¿ ½Ã°£ (AIÀÇ ÅÏ Ã³¸®)
+        // ì ì˜ í–‰ë™ ì‹œê°„ (AIì˜ í„´ ì²˜ë¦¬)
         yield return new WaitForSeconds(2f);
 
-        // ÀûÀÇ Çàµ¿ ¿¹½Ã: Àû ÀÌµ¿
+        // ì ì˜ í–‰ë™ ì˜ˆì‹œ: ì  ì´ë™
         if (enemy != null)
         {
-            enemy.transform.position = new Vector3(-1, 0, 0); // Àû ÀÌµ¿
-            Debug.Log("Àû ÀÌµ¿: " + enemy.transform.position);
+            enemy.transform.position = new Vector3(-1, 0, 0); // ì  ì´ë™
+            Debug.Log("ì  ì´ë™: " + enemy.transform.position);
         }
 
-        // ÅÏ ÀüÈ¯
+        // í„´ ì „í™˜
         isPlayerTurn = true;
         currentTurn++;
-        BeginTurn(); // ÇÃ·¹ÀÌ¾îÀÇ ÅÏÀ¸·Î ³Ñ¾î°¨
+        BeginTurn(); // í”Œë ˆì´ì–´ì˜ í„´ìœ¼ë¡œ ë„˜ì–´ê°
     }
 
-    // °ÔÀÓ ¿À¹ö Ã³¸®
+    // ê²Œì„ ì˜¤ë²„ ì²˜ë¦¬
     public void EndGame()
     {
         isGameOver = true;
-        Debug.Log("°ÔÀÓ ¿À¹ö!");
+        Debug.Log("ê²Œì„ ì˜¤ë²„!");
     }
 }
