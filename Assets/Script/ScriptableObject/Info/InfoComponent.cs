@@ -10,15 +10,15 @@ public class InfoComponent : MonoBehaviour
     {
         int remainingDamage = damage;
 
-        // È¸ÇÇÀ²(evasion) Àû¿ë
+        // íšŒí”¼ìœ¨(evasion) ì ìš©
         float roll = Random.value;
         if (roll < info.evasion)
         {
-            Debug.Log($"[È¸ÇÇ] °ø°İÀ» È¸ÇÇÇß½À´Ï´Ù! (È¸ÇÇ È®·ü: {info.evasion * 100:F1}%)");
+            Debug.Log($"[íšŒí”¼] ê³µê²©ì„ íšŒí”¼í–ˆìŠµë‹ˆë‹¤! (íšŒí”¼ í™•ë¥ : {info.evasion * 100:F1}%)");
             return;
         }
 
-        // 1. ½¯µå ¸ÕÀú ±ğ±â
+        // 1. ì‰´ë“œ ë¨¼ì € ê¹ê¸°
         if (info.currentShield > 0)
         {
             int shieldDamage = Mathf.Min(info.currentShield, remainingDamage);
@@ -26,11 +26,11 @@ public class InfoComponent : MonoBehaviour
             remainingDamage -= shieldDamage;
         }
 
-        // 2. ³²Àº µ¥¹ÌÁö¸¦ HP¿¡ Àû¿ë
+        // 2. ë‚¨ì€ ë°ë¯¸ì§€ë¥¼ HPì— ì ìš©
         if (remainingDamage > 0)
         {
             info.currentHp = Mathf.Max(info.currentHp - remainingDamage, 0);
-            // Debug.Log($"{remainingDamage}ÀÇ ÇÇÇØ¸¦ ÀÔ¾ú½À´Ï´Ù. (³²Àº Ã¼·Â: {info.currentHp})");
+            // Debug.Log($"{remainingDamage}ì˜ í”¼í•´ë¥¼ ì…ì—ˆìŠµë‹ˆë‹¤. (ë‚¨ì€ ì²´ë ¥: {info.currentHp})");
 
             if (info.currentHp <= 0)
             {
@@ -46,13 +46,13 @@ public class InfoComponent : MonoBehaviour
         info.currentHp = Mathf.Min(info.currentHp + heal, info.MaxHp);
     }
 
-    // Á×À½ Ã³¸® ¸Ş¼­µå
+    // ì£½ìŒ ì²˜ë¦¬ ë©”ì„œë“œ
     protected virtual void Die()
     {
-        Debug.Log("ÀÌ(°¡) Á×¾ú½À´Ï´Ù.");
+        Debug.Log("ì´(ê°€) ì£½ì—ˆìŠµë‹ˆë‹¤.");
     }
 
-    // Cost Á¶Á¤ ¸Ş¼­µå
+    // Cost ì¡°ì • ë©”ì„œë“œ
     public bool UseCost(int cost)
     {
         if (info.currentCost < cost)
