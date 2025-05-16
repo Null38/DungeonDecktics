@@ -133,7 +133,7 @@ namespace Astar
         public static int GetCost(Vector2Int position) {return 1;}
         public static bool IsPassable(Vector2Int position)
         {
-            Collider2D hit = Physics2D.OverlapPoint(position, LayerMask.GetMask("Wall"));
+            Collider2D hit = Physics2D.OverlapPoint(position, DataManager.WallLayer);
             
             if (hit == null)
                 return true;

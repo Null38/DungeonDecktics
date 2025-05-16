@@ -33,7 +33,6 @@ public class GameManager : MonoBehaviour
 
         // 필요한 초기화 작업 추가 (예: 플레이어, 적 초기화)
         Debug.Log("게임 시작!");
-
     }
 
     //외부에서 턴 종료 시 호출

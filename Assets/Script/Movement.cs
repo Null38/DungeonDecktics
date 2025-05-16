@@ -3,8 +3,35 @@ using UnityEngine;
 [RequireComponent(typeof(Controller))]
 public class Movement : MonoBehaviour
 {
-    public void MoveTo(Vector2 targetPos)
+    private Controller controller;
+
+    private void Start()
     {
-        transform.position = targetPos;
+        controller = GetComponent<Controller>();
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if (GameManager.Instance.isPlayerTurn)
+        {
+            Move();
+        }
+    }
+
+
+    public void Move()
+    {
+        if (controller.TargetPos == null)
+        {
+            return;
+        }
+
+        transform.position = Vector3.MoveTowards(transform.position, (Vector3)controller.TargetPos, DataManager.Speed * Time.deltaTime);
+
+        if (transform.position == (Vector3)controller.TargetPos)
+        {
+            controller.Next();
+        }
     }
 }

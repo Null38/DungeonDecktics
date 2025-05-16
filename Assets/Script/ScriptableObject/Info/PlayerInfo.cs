@@ -12,8 +12,5 @@ public class PlayerInfo : BaseInfo
     public int additionalHp;
 
     [SerializeField]
-    public int additionalCost;
-
-    [SerializeField]
     public int additionalShield;
 }

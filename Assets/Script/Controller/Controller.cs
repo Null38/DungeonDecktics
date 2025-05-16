@@ -1,17 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 
 abstract public class Controller : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    [SerializeField]
+    protected List<Vector2Int> path = new();
 
+    public virtual Vector3? TargetPos 
+    {
+        get
+        {
+            if (path == null || path.Count == 0)
+                return null;
+
+            return (Vector2)path[0];
+        }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    public abstract void Next();
 }
