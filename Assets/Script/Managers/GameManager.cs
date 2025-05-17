@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public bool isPlayerTurn { get; private set;}
 
     public event Action GameOverEvent;
+    public event Action EnemyTurnEvent;
 
     private void Awake()
     {
@@ -41,10 +42,16 @@ public class GameManager : MonoBehaviour
         isPlayerTurn = !isPlayerTurn;
         currentTurn++;
 
-        if (true)//게임오버시
+        if (false)//게임오버시
+        {
+            EndGame();
             return;
+        }
 
-        EndGame();
+        if (!isPlayerTurn)
+        {
+            EnemyTurnEvent?.Invoke();
+        }
     }
 
     // 게임 오버 처리

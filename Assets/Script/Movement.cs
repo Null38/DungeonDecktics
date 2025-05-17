@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (GameManager.Instance.isPlayerTurn)
+        if (controller.IsActive)
         {
             Move();
         }
