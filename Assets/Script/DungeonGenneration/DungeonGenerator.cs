@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 public class DungeonGenerator : MonoBehaviour
 {
     public MapObject EnterObject;
-    public MapObject ExitObject;
+    public MapObject NextMapObject;
 
     public Vector2Int mapSize;
     public List<MapData> templateMaps; 
@@ -25,7 +25,7 @@ public class DungeonGenerator : MonoBehaviour
 
     List<RoomInfo> rooms = new List<RoomInfo>();
     List<Vector2Int> doors = new List<Vector2Int>();
-    List<(MapObject, Vector2Int)> objects;
+    List<(MapObject, Vector2Int)> objects = new();
 
     enum TileType
     {
@@ -64,6 +64,7 @@ public class DungeonGenerator : MonoBehaviour
         map = new TileType[mapSize.x, mapSize.y];
         rooms.Clear();
         doors.Clear();
+        objects.Clear();
 
         for (int x = 0; x < mapSize.x; x++)
         {
@@ -409,7 +410,7 @@ public class DungeonGenerator : MonoBehaviour
 
 
         objects.Add((EnterObject, entranceRoom.center));
-        objects.Add((ExitObject, exitRoom.center));
+        objects.Add((NextMapObject, exitRoom.center));
     }
 
 
@@ -442,5 +443,18 @@ public class DungeonGenerator : MonoBehaviour
                 }
             }
         }
+
+        PlaceObjets();
+    }
+
+    private void PlaceObjets()
+    {
+        foreach (var item in objects)
+        {
+
+            Debug.Log(item.Item2);
+        }
+
+        throw new NotImplementedException("오브젝트 생성 구현해야한다고 하네요");
     }
 }
