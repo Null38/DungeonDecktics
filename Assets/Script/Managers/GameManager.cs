@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public bool isPlayerTurn { get; private set;}
 
     public event Action GameOverEvent;
-    public event Action EnemyTurnEvent;
+    public static event Action EnemyTurnEvent;
 
     private void Awake()
     {
