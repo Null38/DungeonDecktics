@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
-using UnityEditor.U2D.Aseprite;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "MapData", menuName = "Scriptable Objects/MapData")]
+[CreateAssetMenu(fileName = "new MapData", menuName = "Scriptable Objects/Map/MapData")]
 public class MapData : ScriptableObject
 {
     [SerializeField]

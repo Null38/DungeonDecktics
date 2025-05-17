@@ -1,4 +1,4 @@
-﻿using Astar;
+using Astar;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +7,9 @@ using Random = UnityEngine.Random;
 
 public class DungeonGenerator : MonoBehaviour
 {
+    public MapObject EnterObject;
+    public MapObject ExitObject;
+
     public Vector2Int mapSize;
     public List<MapData> templateMaps; 
 
@@ -22,6 +25,7 @@ public class DungeonGenerator : MonoBehaviour
 
     List<RoomInfo> rooms = new List<RoomInfo>();
     List<Vector2Int> doors = new List<Vector2Int>();
+    List<(MapObject, Vector2Int)> objects;
 
     enum TileType
     {
@@ -40,14 +44,16 @@ public class DungeonGenerator : MonoBehaviour
     {
         public RectInt RoomRect { get; private set; }
         public readonly Vector2Int center;
-
-        public RoomInfo(RectInt roomRect)
+        public bool isSpecific;
+        public RoomInfo(RectInt roomRect, bool isSpecific = false)
         {
+            this.isSpecific = isSpecific;
             RoomRect = roomRect;
             center = new Vector2Int((int)roomRect.center.x, (int)roomRect.center.y);
         }
-        public RoomInfo(RectInt roomRect, Vector2Int center)
+        public RoomInfo(RectInt roomRect, Vector2Int center, bool isSpecific)
         {
+            this.isSpecific = isSpecific;
             RoomRect = roomRect;
             this.center = center + roomRect.position;
         }
@@ -78,6 +84,18 @@ public class DungeonGenerator : MonoBehaviour
     {
         Initialize();
 
+        MakeRooms();
+
+        MakeTunnels();
+        MergeRooms();
+
+        MakeObjects();
+
+        MapRender();
+    }
+
+    private void MakeRooms()
+    {
         Dictionary<int, int> excludedPoints = new Dictionary<int, int>();
 
         int padConst = Padding * 2;
@@ -86,7 +104,7 @@ public class DungeonGenerator : MonoBehaviour
         while (randomSize > 0 && rooms.Count < RoomCount)
         {
             int index = Random.Range(0, randomSize);
-            
+
             while (excludedPoints.ContainsKey(index))
             {
                 index = randomSize + excludedPoints[index];
@@ -94,7 +112,7 @@ public class DungeonGenerator : MonoBehaviour
 
             Vector2Int point = Int2Vector2Int(index, mapSize.x - padConst) + new Vector2Int(Padding, Padding);
 
-            RectInt ? area = IdentifyArea(point);
+            RectInt? area = IdentifyArea(point);
             if (area == null)
             {
                 excludedPoints.Add(index, excludedPoints.Count);
@@ -111,11 +129,6 @@ public class DungeonGenerator : MonoBehaviour
                 MakeRectRoom((RectInt)area);
             }
         }
-
-        MakeTunnels();
-        MergeRooms();
-
-        MapRender();
     }
 
     private RectInt? IdentifyArea(Vector2Int point)
@@ -239,7 +252,7 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
-        rooms.Add(new RoomInfo(room, selectedTemplate.Center));
+        rooms.Add(new RoomInfo(room, selectedTemplate.Center, false));
     }
 
     private void MakeTunnels()
@@ -373,6 +386,32 @@ public class DungeonGenerator : MonoBehaviour
 
         return new Vector2Int(x, y);
     }
+
+    private void MakeObjects()
+    {
+        RoomInfo entranceRoom = rooms[Random.Range(0, rooms.Count)];
+
+        
+
+        RoomInfo exitRoom = rooms[0];
+        float maxDistance = 0f;
+
+        for (int i = 0; i < rooms.Count; i++)
+        {
+
+            float distance = Vector2Int.Distance(entranceRoom.center, rooms[i].center);
+            if (distance > maxDistance)
+            {
+                maxDistance = distance;
+                exitRoom = rooms[i];
+            }
+        }
+
+
+        objects.Add((EnterObject, entranceRoom.center));
+        objects.Add((ExitObject, exitRoom.center));
+    }
+
 
     public Tilemap floorTilemap;
     public Tilemap wallTilemap;
