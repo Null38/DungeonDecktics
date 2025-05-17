@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
     public static event Action PlayerTurnEvent;
     public static event Action EnemyTurnEvent;
 
-
     private Dictionary<int, ITurnBased> activeEntitys = new Dictionary<int, ITurnBased>();
 
     private void Awake()
@@ -39,6 +38,8 @@ public class GameManager : MonoBehaviour
 
         // 필요한 초기화 작업 추가 (예: 플레이어, 적 초기화)
         Debug.Log("게임 시작!");
+
+        StartPlayerTurn();
     }
 
     // 플레이어 턴 시작
@@ -47,7 +48,7 @@ public class GameManager : MonoBehaviour
         activeEntitys.Clear();
 
 
-        activeEntitys.Add(DataManager.player.GetInstanceID(), value: DataManager.player);
+        activeEntitys.Add(DataManager.player.gameObject.GetInstanceID(), value: DataManager.player);
 
         BroadcastTurnStart();
         // 플레이어 엔티티들 활성화
@@ -94,6 +95,7 @@ public class GameManager : MonoBehaviour
         if (activeEntitys.ContainsKey(entityId))
         {
             activeEntitys.Remove(entityId);
+            CheckGameOverCondition();
             CheckEndTurn();
         }
     }
@@ -140,5 +142,5 @@ public class GameManager : MonoBehaviour
 public interface ITurnBased
 {
     void OnTurnBegin();
-    protected void OnTurnEnd();
+    void OnTurnEnd();
 }

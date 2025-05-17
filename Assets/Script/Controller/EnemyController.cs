@@ -1,32 +1,42 @@
 using Astar;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 [RequireComponent(typeof(InfoComponent))]
 public class EnemyController : Controller, ITurnBased
 {
-    public static Dictionary<int, ITurnBased> ActiveEnemy = new(); // 적 오브젝트 || 이거 적 클래스로 옮겨야겠다.
+    public static Dictionary<int, ITurnBased> ActiveEnemy = new(); 
 
-    private bool hasActed = false;
+    private bool hasActed = true;
 
     void Update()
     {
-        if (hasActed)
+        if (!hasActed)
         {
-            GetPath(transform.position + new Vector3(Random.Range(-1,2), Random.Range(-1, 2)));
+            Act();
+            hasActed = true;
         }
     }
 
-    protected override void GetPath(Vector3 targetPos)
+    private void Act()
     {
-        if (path != null && path.Count != 0 || !hasActed)
-            return;
+        if (path.Count == 0)
+        {
+            GetPath(transform.position + new Vector3(Random.Range(-1, 2), Random.Range(-1, 2)));
+        }
 
-        Vector2Int start = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
-        Vector2Int end = new Vector2Int(Mathf.RoundToInt(targetPos.x), Mathf.RoundToInt(targetPos.y));
-        path = PathFinder.FindPath(start, end);
-        if (path != null && path.Count != 0)
-            path.RemoveAt(0);
+        if (path.Count == 0)
+        {
+            OnTurnEnd();
+        }
+    }
+
+    public override void NextStep()
+    {
+        path.RemoveFirst();
+        OnTurnEnd();
     }
 
     private void OnEnable()
@@ -42,12 +52,24 @@ public class EnemyController : Controller, ITurnBased
 
     public void OnTurnBegin()
     {
-        hasActed = true;
+        hasActed = false;
     }
 
-    void ITurnBased.OnTurnEnd()
+    public void OnTurnEnd()
     {
         GameManager.Instance.EntityActionComplete(gameObject.GetInstanceID());
-        throw new System.NotImplementedException();
+    }
+
+    public override Vector3? TargetPos
+    {
+        get
+        {
+            if (GameManager.Instance.isPlayerTurn)
+            {
+                return null;
+            }
+
+            return base.TargetPos;
+        }
     }
 }

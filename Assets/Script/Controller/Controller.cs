@@ -6,29 +6,43 @@ using UnityEngine.InputSystem.XR;
 abstract public class Controller : MonoBehaviour
 {
     [SerializeField]
-    protected List<Vector2Int> path = new();
+    protected LinkedList<Vector2Int> path = new();
+
 
     protected virtual void GetPath(Vector3 targetPos)
     {
-        if (path != null && path.Count != 0)
-            return;
+        path.Clear();
 
         Vector2Int start = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
         Vector2Int end = new Vector2Int(Mathf.RoundToInt(targetPos.x), Mathf.RoundToInt(targetPos.y));
-        path = PathFinder.FindPath(start, end);
-        if (path != null && path.Count != 0)
-            path.RemoveAt(0);
+
+        var newPath = PathFinder.FindPath(start, end);
+        if (newPath == null || newPath.Count == 0)
+            return;
+
+        newPath.RemoveAt(0);
+        foreach (var path in newPath)
+        {
+            this.path.AddLast(path);
+        }
+
     }
+
+    public abstract void NextStep();
 
     public virtual Vector3? TargetPos 
     {
         get
         {
-            if (path == null || path.Count == 0)
+            if (path.First == null)
+            {
                 return null;
+            }
 
-            return (Vector2)path[0];
+
+            return (Vector2)path.First.Value;
         }
     }
+
 
 }
