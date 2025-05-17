@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 
-
 public enum CharacterClass
 {
     Knight
@@ -16,36 +15,25 @@ public enum CharacterSpecies
     Skeleton
 }
 
-[System.Serializable]
-public class Card           // ÀÓ½Ã¿ë
-{
-    public string CardName;
-}
-
-
-
 public abstract class BaseInfo : ScriptableObject
 {
     // HP
     public int MaxHp;
     public int MaxCost;
 
-
-    [SerializeField]
+    [HideInInspector]
     public int currentHp;
     // Cost
-    [SerializeField]
+    [HideInInspector]
     public int currentCost;
 
     // Shield
-    [SerializeField]
+    [HideInInspector]
     public int currentShield;
 
-    // Deck
-    [SerializeField]
-    public List<Card> deck = new List<Card>();
-
-    // È¸ÇÇÀ² Evasion (³­ÀÌµµ ¹®Á¦ ¹ß»ı½Ã »èÁ¦)
-    [SerializeField]
+    // íšŒí”¼ìœ¨ Evasion (ë‚œì´ë„ ë¬¸ì œ ë°œìƒì‹œ ì‚­ì œ)
     public float evasion;
+
+    // Deck
+    public List<CardObject> defaultDeck = new List<CardObject>();
 }
