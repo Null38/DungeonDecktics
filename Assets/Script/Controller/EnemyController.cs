@@ -2,6 +2,7 @@ using Astar;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(InfoComponent))]
 public class EnemyController : Controller, ITurnBased
 {
     public static Dictionary<int, ITurnBased> ActiveEnemy = new(); // 적 오브젝트 || 이거 적 클래스로 옮겨야겠다.

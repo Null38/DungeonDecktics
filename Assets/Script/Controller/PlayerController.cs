@@ -8,25 +8,23 @@ public class PlayerController : Controller, ITurnBased
 {
     private InfoComponent info;
 
-    bool IsActive => GameManager.Instance.isPlayerTurn;
-
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        DataManager.player = this;
         info = GetComponent<InfoComponent>();
     }
 
     void Update()
     {
-        if (IsActive && Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             GetPath(worldPos);
         }
     }
 
-    void ITurnBased.OnTurnBegin()
+    public void OnTurnBegin()
     {
         throw new System.NotImplementedException();
     }

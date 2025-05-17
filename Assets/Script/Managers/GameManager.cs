@@ -104,14 +104,15 @@ public class GameManager : MonoBehaviour
         if (activeEntitys.Count <= 0)
         {
             isPlayerTurn = !isPlayerTurn;
+            currentTurn++;
+
             if (isPlayerTurn)
             {
-                StartEnemyTurn();
+                StartPlayerTurn();
             }
             else
             {
-                currentTurn++;
-                StartPlayerTurn();
+                StartEnemyTurn();
             }
         }
     }
