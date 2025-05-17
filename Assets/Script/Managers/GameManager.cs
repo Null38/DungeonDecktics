@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,8 +10,12 @@ public class GameManager : MonoBehaviour
     public int currentTurn = 0;
     public bool isPlayerTurn { get; private set;}
 
-    public event Action GameOverEvent;
+    public static event Action GameOverEvent;
+    public static event Action PlayerTurnEvent;
     public static event Action EnemyTurnEvent;
+
+
+    private Dictionary<int, ITurnBased> activeEntitys = new Dictionary<int, ITurnBased>();
 
     private void Awake()
     {
@@ -36,21 +41,90 @@ public class GameManager : MonoBehaviour
         Debug.Log("게임 시작!");
     }
 
-    //외부에서 턴 종료 시 호출
-   public void EndTurn()
+    // 플레이어 턴 시작
+    private void StartPlayerTurn()
     {
-        isPlayerTurn = !isPlayerTurn;
-        currentTurn++;
+        activeEntitys.Clear();
 
-        if (false)//게임오버시
+
+        activeEntitys.Add(DataManager.player.GetInstanceID(), value: DataManager.player);
+
+        BroadcastTurnStart();
+        // 플레이어 엔티티들 활성화
+        
+
+        // 턴 시작 이벤트 발생
+        PlayerTurnEvent?.Invoke();
+
+        Debug.Log($"플레이어 턴 시작 (턴: {currentTurn}) - 활성 엔티티: {activeEntitys.Count}");
+
+    }
+
+    // 적 턴 시작
+    private void StartEnemyTurn()
+    {
+        activeEntitys.Clear();
+
+        // 적 엔티티들 활성화
+        foreach (var enemy in EnemyController.ActiveEnemy)
         {
-            EndGame();
-            return;
+            activeEntitys.Add(enemy.Key, enemy.Value);
+            
         }
 
-        if (!isPlayerTurn)
+        BroadcastTurnStart();
+
+        // 턴 시작 이벤트 발생
+        EnemyTurnEvent?.Invoke();
+
+        Debug.Log($"적 턴 시작 (턴: {currentTurn}) - 활성 엔티티: {activeEntitys.Count}");
+    }
+
+    private void BroadcastTurnStart()
+    {
+        foreach (var each in activeEntitys)
         {
-            EnemyTurnEvent?.Invoke();
+            each.Value.OnTurnBegin();
+        }
+    }
+
+    // 엔티티가 자신의 행동을 완료했을 때 호출
+    public void EntityActionComplete(int entityId)
+    {
+        if (activeEntitys.ContainsKey(entityId))
+        {
+            activeEntitys.Remove(entityId);
+            CheckEndTurn();
+        }
+    }
+
+    // 모든 엔티티가 행동을 완료했는지 확인
+    private void CheckEndTurn()
+    {
+        if (activeEntitys.Count <= 0)
+        {
+            isPlayerTurn = !isPlayerTurn;
+            if (isPlayerTurn)
+            {
+                StartEnemyTurn();
+            }
+            else
+            {
+                currentTurn++;
+                StartPlayerTurn();
+            }
+        }
+    }
+
+    // 게임 종료 조건 확인 및 처리
+    public void CheckGameOverCondition()
+    {
+        // 게임 오버 조건 체크 로직
+        bool isGameOver = false; // 실제 게임 오버 조건으로 대체
+
+        if (isGameOver)
+        {
+            EndGame();
         }
     }
 
@@ -60,4 +134,10 @@ public class GameManager : MonoBehaviour
         GameOverEvent?.Invoke();
         Debug.Log("게임 오버!");
     }
+}
+
+public interface ITurnBased
+{
+    void OnTurnBegin();
+    protected void OnTurnEnd();
 }

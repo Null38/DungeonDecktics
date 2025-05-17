@@ -1,18 +1,16 @@
 using Astar;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : Controller
+public class EnemyController : Controller, ITurnBased
 {
-    public override bool IsActive => !GameManager.Instance.isPlayerTurn;
+    public static Dictionary<int, ITurnBased> ActiveEnemy = new(); // 적 오브젝트 || 이거 적 클래스로 옮겨야겠다.
 
-    private bool active = false;
-
-    static int count = 0;
-
+    private bool hasActed = false;
 
     void Update()
     {
-        if (IsActive)
+        if (hasActed)
         {
             GetPath(transform.position + new Vector3(Random.Range(-1,2), Random.Range(-1, 2)));
         }
@@ -20,7 +18,7 @@ public class EnemyController : Controller
 
     protected override void GetPath(Vector3 targetPos)
     {
-        if (path != null && path.Count != 0 || !active)
+        if (path != null && path.Count != 0 || !hasActed)
             return;
 
         Vector2Int start = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
@@ -32,32 +30,23 @@ public class EnemyController : Controller
 
     private void OnEnable()
     {
-        GameManager.EnemyTurnEvent += StartTrun;
+        ActiveEnemy.Add(gameObject.GetInstanceID(), this);
     }
 
     private void OnDisable()
     {
-        GameManager.EnemyTurnEvent -= StartTrun;
+        ActiveEnemy.Remove(gameObject.GetInstanceID());
 
     }
 
-    private void StartTrun()
+    public void OnTurnBegin()
     {
-        count++;
-        active = true;
+        hasActed = true;
     }
 
-
-    public override void Next()
+    void ITurnBased.OnTurnEnd()
     {
-        path.RemoveAt(0);
-
-        count--;
-        active = false;
-        Debug.Log(count);
-        if (count <= 0)
-        {
-            GameManager.Instance.EndTurn();
-        }
+        GameManager.Instance.EntityActionComplete(gameObject.GetInstanceID());
+        throw new System.NotImplementedException();
     }
 }

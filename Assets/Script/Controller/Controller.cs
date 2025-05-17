@@ -7,7 +7,6 @@ abstract public class Controller : MonoBehaviour
 {
     [SerializeField]
     protected List<Vector2Int> path = new();
-    public abstract bool IsActive { get; }
 
     protected virtual void GetPath(Vector3 targetPos)
     {
@@ -32,5 +31,4 @@ abstract public class Controller : MonoBehaviour
         }
     }
 
-    public abstract void Next();
 }

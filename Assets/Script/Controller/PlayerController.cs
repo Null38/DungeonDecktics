@@ -4,11 +4,12 @@ using UnityEngine.UIElements;
 
 
 [RequireComponent(typeof(InfoComponent))]
-public class PlayerController : Controller
+public class PlayerController : Controller, ITurnBased
 {
     private InfoComponent info;
 
-    public override bool IsActive => GameManager.Instance.isPlayerTurn;
+    bool IsActive => GameManager.Instance.isPlayerTurn;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -25,9 +26,13 @@ public class PlayerController : Controller
         }
     }
 
-    public override void Next()
+    void ITurnBased.OnTurnBegin()
     {
-        path.RemoveAt(0);
-        GameManager.Instance.EndTurn();
+        throw new System.NotImplementedException();
+    }
+
+    void ITurnBased.OnTurnEnd()
+    {
+        throw new System.NotImplementedException();
     }
 }

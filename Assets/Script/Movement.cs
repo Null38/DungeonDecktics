@@ -13,7 +13,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (controller.IsActive)
+        if (true)//고쳐야함
         {
             Move();
         }
@@ -31,7 +31,7 @@ public class Movement : MonoBehaviour
 
         if (transform.position == (Vector3)controller.TargetPos)
         {
-            controller.Next();
+            //어케하지
         }
     }
 }
