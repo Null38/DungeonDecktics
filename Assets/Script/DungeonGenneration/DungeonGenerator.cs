@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 using static UnityEditor.Progress;
 using Random = UnityEngine.Random;
 
@@ -415,7 +416,7 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
-        PlaceObjets(EnterObject, entranceRoom.center);
+        PlaceObjets(EnterObject, entranceRoom.center);//확실하게 배치되지 않는다. 나중에 오브젝트가 추가되면 문제가 생길 수 있는 배치 방식이다. 해결할 필요 있음.
         PlaceObjets(NextMapObject, exitRoom.center);
     }
 
@@ -453,14 +454,28 @@ public class DungeonGenerator : MonoBehaviour
 
     private void PlaceObjets(MapObject obj, Vector2Int pos)
     {
+        Collider2D hit = Physics2D.OverlapPoint(pos, DataManager.MapObjectLayer);
+
+        if (hit != null)
+            return;
+
         var Placedobj = Instantiate(obj.basePrefab, (Vector2)pos, Quaternion.identity, this.gameObject.transform);
+        var renderer = Placedobj.GetComponent<SpriteRenderer>();
+        var colider = Placedobj.GetComponent<Collider2D>();
+
+
+        for (int i = 0; i < 32; i++)
+        {
+            if (((DataManager.MapObjectLayer >> i) & 1) == 0)
+                continue;
+
+            Placedobj.layer = i;
+            break;
+        }
 
         Placedobj.name = obj.name;
-
-        var renderer = Placedobj.GetComponent<SpriteRenderer>();
-
         renderer.sprite = obj.sprite;
-
+        colider.includeLayers = obj.layer;
 
         objects.Add((obj, pos));
     }
