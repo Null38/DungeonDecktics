@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using static UnityEditor.Progress;
 using Random = UnityEngine.Random;
 
 public class DungeonGenerator : MonoBehaviour
@@ -414,12 +415,8 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
-        objects.Add((EnterObject, entranceRoom.center));
-        objects.Add((NextMapObject, exitRoom.center));
-
-
-
-        PlaceObjets();
+        PlaceObjets(EnterObject, entranceRoom.center);
+        PlaceObjets(NextMapObject, exitRoom.center);
     }
 
 
@@ -454,16 +451,17 @@ public class DungeonGenerator : MonoBehaviour
         }
     }
 
-    private void PlaceObjets()
+    private void PlaceObjets(MapObject obj, Vector2Int pos)
     {
-        foreach (var item in objects)
-        {
-            var obj = Instantiate(item.Item1.basePrefab, (Vector2)item.Item2, Quaternion.identity, this.gameObject.transform);
-            var renderer = obj.GetComponent<SpriteRenderer>();
+        var Placedobj = Instantiate(obj.basePrefab, (Vector2)pos, Quaternion.identity, this.gameObject.transform);
 
-            renderer.sprite = item.Item1.sprite;
-        }
+        Placedobj.name = obj.name;
 
-        //throw new NotImplementedException("오브젝트 생성 구현해야한다고 하네요");
+        var renderer = Placedobj.GetComponent<SpriteRenderer>();
+
+        renderer.sprite = obj.sprite;
+
+
+        objects.Add((obj, pos));
     }
 }
