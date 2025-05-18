@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject); // GameManager 파괴 방지
+        SceneLoadManager.Initialize(gameObject.GetComponent<SceneLoadManager>());
     }
 
     private void Start()
