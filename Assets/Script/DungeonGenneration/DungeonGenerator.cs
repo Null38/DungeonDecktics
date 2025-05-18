@@ -66,6 +66,12 @@ public class DungeonGenerator : MonoBehaviour
         doors.Clear();
         objects.Clear();
 
+
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
+
         for (int x = 0; x < mapSize.x; x++)
         {
             for (int y = 0; y < mapSize.y; y++)
@@ -408,9 +414,12 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
-
         objects.Add((EnterObject, entranceRoom.center));
         objects.Add((NextMapObject, exitRoom.center));
+
+
+
+        PlaceObjets();
     }
 
 
@@ -443,18 +452,18 @@ public class DungeonGenerator : MonoBehaviour
                 }
             }
         }
-
-        PlaceObjets();
     }
 
     private void PlaceObjets()
     {
         foreach (var item in objects)
         {
+            var obj = Instantiate(item.Item1.basePrefab, (Vector2)item.Item2, Quaternion.identity, this.gameObject.transform);
+            var renderer = obj.GetComponent<SpriteRenderer>();
 
-            Debug.Log(item.Item2);
+            renderer.sprite = item.Item1.sprite;
         }
 
-        throw new NotImplementedException("오브젝트 생성 구현해야한다고 하네요");
+        //throw new NotImplementedException("오브젝트 생성 구현해야한다고 하네요");
     }
 }

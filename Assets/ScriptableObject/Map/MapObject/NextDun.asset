@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: NextDun
   m_EditorClassIdentifier: 
   objectName: NextDun
-  sprite: {fileID: 0}
-  basePrefab: {fileID: 0}
+  sprite: {fileID: -256645631, guid: 1d69e7bdfec45bc4797f21eb03dcbab6, type: 3}
+  basePrefab: {fileID: 6938631846770952499, guid: 45c18e9ffb7690f42b49ff853214b4a2, type: 3}
   layer:
     serializedVersion: 2
     m_Bits: 0

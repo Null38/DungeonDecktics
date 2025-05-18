@@ -5,7 +5,7 @@ MonoImporter:
   serializedVersion: 2
   defaultReferences:
   - EnterObject: {fileID: 11400000, guid: e6bd3d41f5edeaf40a15110b7ec2e54c, type: 2}
-  - ExitObject: {fileID: 11400000, guid: b0837650c954cee47a82f9ca00ea6b4d, type: 2}
+  - NextMapObject: {fileID: 11400000, guid: b0837650c954cee47a82f9ca00ea6b4d, type: 2}
   - floorTilemap: {instanceID: 0}
   - wallTilemap: {instanceID: 0}
   - floorTile: {instanceID: 0}

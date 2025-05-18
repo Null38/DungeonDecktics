@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e3c26aeb953693409a50539195f6522, type: 3}
   m_Name: Enter
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 0}
-  basePrefab: {fileID: 0}
+  objectName: Enter
+  sprite: {fileID: -6200484753934960796, guid: 1d69e7bdfec45bc4797f21eb03dcbab6, type: 3}
+  basePrefab: {fileID: 6938631846770952499, guid: 45c18e9ffb7690f42b49ff853214b4a2, type: 3}
   layer:
     serializedVersion: 2
     m_Bits: 0
-  subData: 0
+  subData: 1
