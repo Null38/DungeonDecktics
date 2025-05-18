@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CardName: "\uBAB0\uB77C"
   description: "\uC124\uBA85\uC740 {0}\uC5D0 \uCCAB\uBC88\uC9F8\uAC00 \uB4E4\uC5B4\uAC04\uB2E4.{0}"
-  artwork: {fileID: -4457850898058260020, guid: dac4e8d83af96784c9effad0910dc0f7, type: 3}
+  artwork: {fileID: 343358781, guid: dac4e8d83af96784c9effad0910dc0f7, type: 3}
   cost: 2
   category: 0
   targetType: 1

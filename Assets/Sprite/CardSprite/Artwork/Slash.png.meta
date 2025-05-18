@@ -74,8 +74,8 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
+    textureFormat: 4
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Card_0
+      name: Slash_0
       rect:
         serializedVersion: 2
         x: 0
@@ -113,10 +113,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: cc1d4971a388222c0800000000000000
-      internalID: -4457850898058260020
+      spriteID: 92e3e5ed26d40054aba1521d046bb2ab
+      internalID: 343358781
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Card_0: -4457850898058260020
+      Slash_0: 343358781
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
