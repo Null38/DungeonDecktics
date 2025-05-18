@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public enum CardCategory { Attack, Armor, Utility }       // 카드 종류 일단 3개 설정 해놓고 공격+방어시 스크립터블 오브젝트 2개 넣는 방향으로 하면 될듯
+public enum CardCategory { Attack, Armor, Utility }       // 카드 종류
 public enum TargetType { Self, Enemy, Point }              // 타겟 타입
 
 public abstract class CardObject : ScriptableObject

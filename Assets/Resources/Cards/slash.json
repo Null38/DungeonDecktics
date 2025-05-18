@@ -1,0 +1,13 @@
+{
+  "CardName": "Slash",
+  "description": "적을 베어 피해를 줍니다.",
+  "artwork": "Slash",
+  "cost": 2,
+  "category": "Attack",
+  "targetType": "Enemy",
+  "range": 1,
+  "valueType": "Flat",
+  "amount": 25,
+  "statusEffectID": "",
+  "lifeStealPercentage": 0
+}

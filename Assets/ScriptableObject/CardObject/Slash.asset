@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26b92b2e14389ff43a57510078ce699e, type: 3}
-  m_Name: "\uACF5\uACA9\uCE74\uB4DC \uC608\uC2DC"
+  m_Script: {fileID: 11500000, guid: 41300e5be343207408dfd98df03b1fe8, type: 3}
+  m_Name: Slash
   m_EditorClassIdentifier: 
-  CardName: "\uBAB0\uB77C"
-  description: "\uC124\uBA85\uC740 {0}\uC5D0 \uCCAB\uBC88\uC9F8\uAC00 \uB4E4\uC5B4\uAC04\uB2E4.{0}"
+  CardName: "\uBCA0\uAE30"
+  description: "\uC801\uC5D0\uAC8C \uAC80\uC744 \uD718\uB458\uB7EC {0}\uC758 \uD53C\uD574\uB97C
+    \uC785\uD799\uB2C8\uB2E4."
   artwork: {fileID: -4457850898058260020, guid: dac4e8d83af96784c9effad0910dc0f7, type: 3}
   cost: 2
   category: 0
   targetType: 1
-  range: 1
-  damage: 10
+  range: 0
+  jsonData: '{"Damage" : 8}'
