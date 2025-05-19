@@ -262,6 +262,11 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
+        foreach (var obj in selectedTemplate.objectList)
+        {
+            PlaceObjets(obj.Item1, obj.Item2);
+        }
+
         rooms.Add(new RoomInfo(room, selectedTemplate.Center, false));
     }
 
