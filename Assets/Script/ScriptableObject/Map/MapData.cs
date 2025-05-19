@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new MapData", menuName = "Scriptable Objects/Map/MapData")]
@@ -13,7 +14,16 @@ public class MapData : ScriptableObject
         public int centerY;
         
         public int[] map;
+        public List<ObjectData> objects;
     }
+    [Serializable]
+    private class ObjectData
+    {
+        public int x;
+        public int y;
+        public int id;
+    }
+
 
     [SerializeField]
     [TextArea(10, 15)]
@@ -21,6 +31,10 @@ public class MapData : ScriptableObject
     private JsonData data;
     private Vector2Int size;
     private Vector2Int center;
+    [SerializeField]
+    public List<MapObject> explainObjects;
+
+    public List<(MapObject, Vector2Int)> objectList;
 
     public int[,] Map { get; private set; }
     public Vector2Int Size { get => size; }
@@ -52,6 +66,11 @@ public class MapData : ScriptableObject
         for (int i = 0; i < data.map.Length; i++)
         {
             Map[i % size.x, i / size.x] = data.map[i];
+        }
+
+        foreach (ObjectData obj in data.objects)
+        {
+            Debug.LogWarning("이거 구현해야함");
         }
     }
 }
