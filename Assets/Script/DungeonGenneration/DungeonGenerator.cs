@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
+using static UnityEditor.PlayerSettings;
 using static UnityEditor.Progress;
 using Random = UnityEngine.Random;
 
@@ -400,7 +401,11 @@ public class DungeonGenerator : MonoBehaviour
     {
         RoomInfo entranceRoom = rooms[Random.Range(0, rooms.Count)];
 
-        
+        var entrancePos = BFS(entranceRoom.center);
+        if (entrancePos == null)
+        {
+            throw new InvalidOperationException("Entrance position not found.");
+        }
 
         RoomInfo exitRoom = rooms[0];
         float maxDistance = 0f;
@@ -408,7 +413,7 @@ public class DungeonGenerator : MonoBehaviour
         for (int i = 0; i < rooms.Count; i++)
         {
 
-            float distance = Vector2Int.Distance(entranceRoom.center, rooms[i].center);
+            float distance = Vector2Int.Distance((Vector2Int)entrancePos, rooms[i].center);
             if (distance > maxDistance)
             {
                 maxDistance = distance;
@@ -416,8 +421,52 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
-        PlaceObjets(EnterObject, entranceRoom.center);//확실하게 배치되지 않는다. 나중에 오브젝트가 추가되면 문제가 생길 수 있는 배치 방식이다. 해결할 필요 있음.
-        PlaceObjets(NextMapObject, exitRoom.center);
+        var exitPos = BFS(exitRoom.center);
+        if (exitPos == null)
+        {
+            throw new InvalidOperationException("Exit position not found.");
+        }
+
+        PlaceObjets(EnterObject, (Vector2Int)entrancePos);
+        PlaceObjets(NextMapObject, (Vector2Int)exitPos);
+    }
+
+    private Vector2Int? BFS(Vector2Int startPos)
+    {
+        bool[,] visited = new bool[mapSize.x, mapSize.y];
+
+        Queue<Vector2Int> queue = new();
+
+        queue.Enqueue(startPos);
+
+        visited[startPos.x, startPos.y] = true;
+
+        while (queue.Count > 0)
+        {
+            Vector2Int check = queue.Dequeue();
+
+            if (IsValidTile(check, (x) => (x == TileType.floor)))
+            {
+                Collider2D hit = Physics2D.OverlapPoint(check, DataManager.MapObjectLayer);
+
+                if (hit == null)
+                    return check;
+            }
+
+            foreach (Vector2Int dir in PathFinder.s_FourDirs)
+            {
+                var newPos = check + dir;
+
+                if (visited[newPos.x, newPos.y] || !IsValidTile(newPos, (_) => true))
+                {
+                    continue;
+                }
+
+                queue.Enqueue(newPos);
+            }
+        }
+
+        return null;
     }
 
 
