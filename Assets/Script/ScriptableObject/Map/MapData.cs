@@ -70,7 +70,7 @@ public class MapData : ScriptableObject
 
         foreach (ObjectData obj in data.objects)
         {
-            Debug.LogWarning("이거 구현해야함");
+            objectList.Add((explainObjects[obj.id], new Vector2Int(obj.x, obj.y)));
         }
     }
 }
