@@ -1,114 +1,146 @@
 using UnityEngine;
 using System.Collections;
+using System;
+using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; } 
-    public int currentTurn = 0; 
-    public bool isGameOver = false; // °ÔÀÓ ¿À¹ö »óÅÂ Ã¼Å©
-    public GameObject player; // ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ®
-    public GameObject enemy; // Àû ¿ÀºêÁ§Æ®
 
-    // ÅÏ ÁøÇàÀ» À§ÇÑ ±âº» °ª
-    private bool isPlayerTurn = true;
+    public int currentTurn = 0;
+    public bool isPlayerTurn { get; private set;}
+
+    public static event Action GameOverEvent;
+    public static event Action PlayerTurnEvent;
+    public static event Action EnemyTurnEvent;
+
+    private Dictionary<int, ITurnBased> activeEntitys = new Dictionary<int, ITurnBased>();
 
     private void Awake()
     {
-        if (Instance == null)
-        {
+        if (Instance == null) 
             Instance = this;
-        }
-        else
-        {
-            Destroy(gameObject); 
-        }
+        else 
+            Destroy(gameObject);
 
-        DontDestroyOnLoad(gameObject); // GameManager ÆÄ±« ¹æÁö
+        DontDestroyOnLoad(gameObject); // GameManager íŒŒê´´ ë°©ì§€
     }
 
     private void Start()
     {
-        StartGame();
+        StartInit();
     }
 
-    // °ÔÀÓ ÃÊ±âÈ­
-    public void StartGame()
+    public void StartInit()
     {
-        currentTurn = 1; // °ÔÀÓ ½ÃÀÛ ½Ã ÅÏ 1·Î ¼³Á¤
-        isGameOver = false;
+        currentTurn = 0; // ê²Œì„ ì‹œì‘ ì‹œ í„´ 0ìœ¼ë¡œ ì„¤ì •
         isPlayerTurn = true;
 
-        // ÇÊ¿äÇÑ ÃÊ±âÈ­ ÀÛ¾÷ Ãß°¡ (¿¹: ÇÃ·¹ÀÌ¾î, Àû ÃÊ±âÈ­)
-        Debug.Log("°ÔÀÓ ½ÃÀÛ!");
-        BeginTurn();
+        // í•„ìš”í•œ ì´ˆê¸°í™” ì‘ì—… ì¶”ê°€ (ì˜ˆ: í”Œë ˆì´ì–´, ì  ì´ˆê¸°í™”)
+        Debug.Log("ê²Œì„ ì‹œì‘!");
+
+        StartPlayerTurn();
     }
 
-    // ÅÏÀ» ÁøÇàÇÏ´Â ÇÔ¼ö
-    private void BeginTurn()
+    // í”Œë ˆì´ì–´ í„´ ì‹œì‘
+    private void StartPlayerTurn()
     {
+        activeEntitys.Clear();
+
+
+        activeEntitys.Add(DataManager.player.gameObject.GetInstanceID(), value: DataManager.player);
+
+        BroadcastTurnStart();
+        // í”Œë ˆì´ì–´ ì—”í‹°í‹°ë“¤ í™œì„±í™”
+        
+
+        // í„´ ì‹œì‘ ì´ë²¤íŠ¸ ë°œìƒ
+        PlayerTurnEvent?.Invoke();
+
+        Debug.Log($"í”Œë ˆì´ì–´ í„´ ì‹œì‘ (í„´: {currentTurn}) - í™œì„± ì—”í‹°í‹°: {activeEntitys.Count}");
+
+    }
+
+    // ì  í„´ ì‹œì‘
+    private void StartEnemyTurn()
+    {
+        activeEntitys.Clear();
+
+        // ì  ì—”í‹°í‹°ë“¤ í™œì„±í™”
+        foreach (var enemy in EnemyController.ActiveEnemy)
+        {
+            activeEntitys.Add(enemy.Key, enemy.Value);
+            
+        }
+
+        BroadcastTurnStart();
+
+        // í„´ ì‹œì‘ ì´ë²¤íŠ¸ ë°œìƒ
+        EnemyTurnEvent?.Invoke();
+
+        Debug.Log($"ì  í„´ ì‹œì‘ (í„´: {currentTurn}) - í™œì„± ì—”í‹°í‹°: {activeEntitys.Count}");
+    }
+
+    private void BroadcastTurnStart()
+    {
+        foreach (var each in activeEntitys)
+        {
+            each.Value.OnTurnBegin();
+        }
+    }
+
+    // ì—”í‹°í‹°ê°€ ìì‹ ì˜ í–‰ë™ì„ ì™„ë£Œí–ˆì„ ë•Œ í˜¸ì¶œ
+    public void EntityActionComplete(int entityId)
+    {
+        if (activeEntitys.ContainsKey(entityId))
+        {
+            activeEntitys.Remove(entityId);
+            CheckGameOverCondition();
+            CheckEndTurn();
+        }
+    }
+
+    // ëª¨ë“  ì—”í‹°í‹°ê°€ í–‰ë™ì„ ì™„ë£Œí–ˆëŠ”ì§€ í™•ì¸
+    private void CheckEndTurn()
+    {
+        if (activeEntitys.Count <= 0)
+        {
+            isPlayerTurn = !isPlayerTurn;
+            currentTurn++;
+
+            if (isPlayerTurn)
+            {
+                StartPlayerTurn();
+            }
+            else
+            {
+                StartEnemyTurn();
+            }
+        }
+    }
+
+    // ê²Œì„ ì¢…ë£Œ ì¡°ê±´ í™•ì¸ ë° ì²˜ë¦¬
+    public void CheckGameOverCondition()
+    {
+        // ê²Œì„ ì˜¤ë²„ ì¡°ê±´ ì²´í¬ ë¡œì§
+        bool isGameOver = false; // ì‹¤ì œ ê²Œì„ ì˜¤ë²„ ì¡°ê±´ìœ¼ë¡œ ëŒ€ì²´
+
         if (isGameOver)
         {
-            Debug.Log("°ÔÀÓÀÌ Á¾·áµÇ¾ú½À´Ï´Ù.");
-            return;
-        }
-
-        if (isPlayerTurn)
-        {
-            Debug.Log("ÇÃ·¹ÀÌ¾îÀÇ ÅÏÀÔ´Ï´Ù.");
-            // ÇÃ·¹ÀÌ¾î ÅÏ °ü·Ã ·ÎÁ÷ Ãß°¡ (¿¹: ÇÃ·¹ÀÌ¾î Çàµ¿ ¼±ÅÃ)
-            // ÀÌ ¿¹½Ã¿¡¼­´Â ´Ü¼øÈ÷ µô·¹ÀÌ¸¦ ÁÖ°í ÀûÀÇ ÅÏÀ¸·Î ³Ñ¾î°¡µµ·Ï ±¸Çö
-            StartCoroutine(PlayerTurn());
-        }
-        else
-        {
-            Debug.Log("ÀûÀÇ ÅÏÀÔ´Ï´Ù.");
-            // Àû ÅÏ °ü·Ã ·ÎÁ÷ Ãß°¡ (¿¹: AI Çàµ¿)
-            StartCoroutine(EnemyTurn());
+            EndGame();
         }
     }
 
-    // ÇÃ·¹ÀÌ¾î ÅÏ Ã³¸® (¿¹½Ã·Î µô·¹ÀÌ¸¦ ÁÖ°í ÅÏÀ» ÀüÈ¯)
-    private IEnumerator PlayerTurn()
+    // ê²Œì„ ì˜¤ë²„ ì²˜ë¦¬
+    private void EndGame()
     {
-        // ÇÃ·¹ÀÌ¾î°¡ Çàµ¿ÇÏ´Â ½Ã°£ (¿¹: Çàµ¿ ¼±ÅÃ È­¸é)
-        yield return new WaitForSeconds(2f);
-
-        // ÇÃ·¹ÀÌ¾î°¡ ÀÌµ¿ÇÏ°Å³ª Çàµ¿ÇÏ´Â °£´ÜÇÑ ¿¹½Ã
-        if (player != null)
-        {
-            player.transform.position = new Vector3(1, 0, 0); // ÇÃ·¹ÀÌ¾î ÀÌµ¿
-            Debug.Log("ÇÃ·¹ÀÌ¾î ÀÌµ¿: " + player.transform.position);
-        }
-
-        // ÅÏ ÀüÈ¯
-        isPlayerTurn = false;
-        currentTurn++;
-        BeginTurn(); // ÀûÀÇ ÅÏÀ¸·Î ³Ñ¾î°¨
+        GameOverEvent?.Invoke();
+        Debug.Log("ê²Œì„ ì˜¤ë²„!");
     }
+}
 
-    // Àû ÅÏ Ã³¸® (¿¹½Ã·Î °£´ÜÇÑ µô·¹ÀÌ ÈÄ ÅÏÀ» ÀüÈ¯)
-    private IEnumerator EnemyTurn()
-    {
-        // ÀûÀÇ Çàµ¿ ½Ã°£ (AIÀÇ ÅÏ Ã³¸®)
-        yield return new WaitForSeconds(2f);
-
-        // ÀûÀÇ Çàµ¿ ¿¹½Ã: Àû ÀÌµ¿
-        if (enemy != null)
-        {
-            enemy.transform.position = new Vector3(-1, 0, 0); // Àû ÀÌµ¿
-            Debug.Log("Àû ÀÌµ¿: " + enemy.transform.position);
-        }
-
-        // ÅÏ ÀüÈ¯
-        isPlayerTurn = true;
-        currentTurn++;
-        BeginTurn(); // ÇÃ·¹ÀÌ¾îÀÇ ÅÏÀ¸·Î ³Ñ¾î°¨
-    }
-
-    // °ÔÀÓ ¿À¹ö Ã³¸®
-    public void EndGame()
-    {
-        isGameOver = true;
-        Debug.Log("°ÔÀÓ ¿À¹ö!");
-    }
+public interface ITurnBased
+{
+    void OnTurnBegin();
+    void OnTurnEnd();
 }

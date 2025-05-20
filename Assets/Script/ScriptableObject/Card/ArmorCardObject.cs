@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ArmorCardObject", menuName = "ScriptableObjects/Card/ArmorCard")]
+[CreateAssetMenu(fileName = "ArmorCardObject", menuName = "Scriptable Objects/Card/ArmorCard")]
 public class ArmorCardObject : CardObject
 {
     public int armor;
