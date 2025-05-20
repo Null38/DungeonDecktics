@@ -20,9 +20,16 @@ public class SceneLoadManager :MonoBehaviour
 
     private void OnSceneLoading()
     {
-        throw new NotImplementedException("씬이 로딩될때 이 메소드로 작동되도록 구현하면 됩니다. \n 씬을 모두 로드하면 loadingScene을 null로 바꿔주세요");
-        //loadingScene.isDone == true 이거로 로딩 완료를 체크하시면 됩니다.
+        if (loadingScene.isDone)
+        {
+            // 로드 완료됐으면 씬 활성화
+            loadingScene.allowSceneActivation = true;
+
+            // 로딩 끝났으니 초기화
+            loadingScene = null;
+        }
     }
+
 
     /// <summary>
     /// This method runs only once in the Game Manager. Do not call it carelessly.
@@ -36,20 +43,23 @@ public class SceneLoadManager :MonoBehaviour
     {
         IsSceneLoadAllowed();
 
+        // 실제 메인 씬 이름 적기
+        string mainSceneName = "MainScene";
 
-
-        throw new NotImplementedException("밑에 올바른 씬 이름을 적어주세요");
-        instance.loadingScene = SceneManager.LoadSceneAsync("");
+        // 비동기 로드 시작 (allowSceneActivation은 false로 해서 자동 전환 방지)
+        instance.loadingScene = SceneManager.LoadSceneAsync(mainSceneName);
         instance.loadingScene.allowSceneActivation = false;
     }
+
 
     private static void IsSceneLoadAllowed()
     {
         if (instance.loadingScene != null)
             throw new InvalidOperationException("Another scene is already loading.");
 
-
-        throw new NotImplementedException("밑에 로딩 중 띄울 씬을 설정해주세요");
-        SceneManager.LoadScene("");
+        // 로딩씬 이름을 여기에 적는다
+        SceneManager.LoadScene("LoadingScene");
     }
 }
+//로딩할 때 보여주는 화면이랑 씬 로딩 구현
+
