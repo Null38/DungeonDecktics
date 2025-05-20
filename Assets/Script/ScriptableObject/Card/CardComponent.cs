@@ -27,11 +27,10 @@ public class CardComponent : MonoBehaviour
 
     public void DisplayCard()
     {
-        cardBase.color = Color.white;
-        Debug.LogWarning("색 적용 아직 안함");
+        cardBase.color = cardInfo.backgroundColor;
         artworkImage.sprite = cardInfo.artwork;
         nameText.text = cardInfo.CardName;
-        //descriptionText.text = cardInfo.FormatDescription();
+        descriptionText.text = cardInfo.FormatDescription();
         costText.text = cardInfo.cost.ToString();
     }
 }

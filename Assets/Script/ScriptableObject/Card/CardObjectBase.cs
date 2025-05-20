@@ -13,6 +13,8 @@ public abstract class CardObjectBase : ScriptableObject
     public string CardName;
     [TextArea(3,5)]
     public string description;
+    public Color backgroundColor;
+
     public Sprite artwork;
     public int cost;
     public int distance;
