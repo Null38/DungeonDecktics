@@ -9,6 +9,10 @@ public class SceneLoadManager :MonoBehaviour
     private static SceneLoadManager instance;
 
     private AsyncOperation loadingScene = null;
+    void Start()
+    {
+        SceneLoadManager.Initialize(this);
+    }
 
     private void Update()
     {
@@ -49,6 +53,11 @@ public class SceneLoadManager :MonoBehaviour
         // 비동기 로드 시작 (allowSceneActivation은 false로 해서 자동 전환 방지)
         instance.loadingScene = SceneManager.LoadSceneAsync(mainSceneName);
         instance.loadingScene.allowSceneActivation = false;
+    }
+    public float GetLoadingProgress()
+    {
+        if (loadingScene == null) return 0f;
+        return Mathf.Clamp01(loadingScene.progress / 0.9f);
     }
 
 
