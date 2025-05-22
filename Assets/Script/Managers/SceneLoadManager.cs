@@ -24,13 +24,14 @@ public class SceneLoadManager :MonoBehaviour
 
     private void OnSceneLoading()
     {
-        if (loadingScene.isDone)
+        if (loadingScene.isDone && false)
         {
             // 로드 완료됐으면 씬 활성화
             loadingScene.allowSceneActivation = true;
-
+            
             // 로딩 끝났으니 초기화
             loadingScene = null;
+
         }
     }
 
@@ -46,18 +47,20 @@ public class SceneLoadManager :MonoBehaviour
     public static void LoadMainScene()
     {
         IsSceneLoadAllowed();
-
-        // 실제 메인 씬 이름 적기
-        string mainSceneName = "MainScene";
-
+       
         // 비동기 로드 시작 (allowSceneActivation은 false로 해서 자동 전환 방지)
-        instance.loadingScene = SceneManager.LoadSceneAsync(mainSceneName);
+
+        instance.loadingScene = SceneManager.LoadSceneAsync("LoadingTEST");
         instance.loadingScene.allowSceneActivation = false;
     }
-    public float GetLoadingProgress()
+
+    public static float GetLoadingProgress()
     {
-        if (loadingScene == null) return 0f;
-        return Mathf.Clamp01(loadingScene.progress / 0.9f);
+        Debug.LogWarning("asdf");
+        if (instance == null)
+            throw new InvalidOperationException("씬로드메니저 인스턴스가 아직 초기화 안됨");
+        return Mathf.Clamp01(instance.loadingScene.progress / 0.9f);
+
     }
 
 
@@ -68,7 +71,8 @@ public class SceneLoadManager :MonoBehaviour
 
         // 로딩씬 이름을 여기에 적는다
         SceneManager.LoadScene("LoadingScene");
+
+      
     }
 }
 //로딩할 때 보여주는 화면이랑 씬 로딩 구현
-

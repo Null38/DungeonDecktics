@@ -1,25 +1,22 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoadingUIManager : MonoBehaviour
 {
-    public RectTransform progressBar;
-    private SceneLoadManager loadManager;
+    public Slider progressBar;
 
     private float maxWidth;
 
     private void Start()
     {
-        loadManager = FindFirstObjectByType<SceneLoadManager>();
-        maxWidth = progressBar.sizeDelta.x;
-        progressBar.sizeDelta = new Vector2(0, progressBar.sizeDelta.y);
+        Debug.Log("asdf");
+        progressBar.value = 0f;
+
     }
 
     private void Update()
     {
-        if (loadManager != null)
-        {
-            float progress = loadManager.GetLoadingProgress();
-            progressBar.sizeDelta = new Vector2(maxWidth * progress, progressBar.sizeDelta.y);
-        }
+        Debug.Log("asdg");
+        progressBar.value = SceneLoadManager.GetLoadingProgress();
     }
 }
