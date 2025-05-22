@@ -1,14 +1,15 @@
 using UnityEngine;
-using System.Collections;
 using System;
 using System.Collections.Generic;
 
+
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; } 
+    public static GameManager Instance { get; private set; }
 
+    [Header("Turn Management")]
     public int currentTurn = 0;
-    public bool isPlayerTurn { get; private set;}
+    public bool isPlayerTurn { get; private set; }
 
     public static event Action GameOverEvent;
     public static event Action PlayerTurnEvent;
@@ -16,14 +17,24 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<int, ITurnBased> activeEntitys = new Dictionary<int, ITurnBased>();
 
+    [Header("Enemy Spawning")]
+    [Tooltip("씬에 배치할 적 Prefab")]
+    public GameObject enemyPrefab;
+    [Tooltip("적을 스폰할 위치들")]
+    public List<Transform> spawnPoints = new List<Transform>();
+
     private void Awake()
     {
-        if (Instance == null) 
-            Instance = this;
-        else 
+        // 싱글톤 초기화
+        if (Instance != null && Instance != this)
+        {
             Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
 
-        DontDestroyOnLoad(gameObject); // GameManager 파괴 방지
+        Debug.Log("GameManager initialized");
     }
 
     private void Start()
@@ -33,50 +44,57 @@ public class GameManager : MonoBehaviour
 
     public void StartInit()
     {
-        currentTurn = 0; // 게임 시작 시 턴 0으로 설정
+        currentTurn = 0;
         isPlayerTurn = true;
 
-        // 필요한 초기화 작업 추가 (예: 플레이어, 적 초기화)
         Debug.Log("게임 시작!");
 
+
+        // 씬 시작 시 적 스폰
+        SpawnAllEnemies();
+
+        // 플레이어 턴으로 진입
         StartPlayerTurn();
     }
 
-    // 플레이어 턴 시작
+    /// <summary>
+    /// inspector에 지정된 위치에 enemyPrefab을 Instantiate 합니다.
+    /// </summary>
+    private void SpawnAllEnemies()
+    {
+        if (enemyPrefab == null || spawnPoints.Count == 0)
+            return;
+
+        foreach (var pt in spawnPoints)
+        {
+            Instantiate(enemyPrefab, pt.position, pt.rotation);
+        }
+        Debug.Log($"적 {spawnPoints.Count}마리 스폰 완료");
+    }
+
     private void StartPlayerTurn()
     {
         activeEntitys.Clear();
+        // DataManager.player는 이미 Awake 단계에서 세팅되어 있어야 합니다.
+        activeEntitys.Add(DataManager.player.gameObject.GetInstanceID(), DataManager.player);
 
-
-        activeEntitys.Add(DataManager.player.gameObject.GetInstanceID(), value: DataManager.player);
-
-        BroadcastTurnStart();
-        // 플레이어 엔티티들 활성화
-        
-
-        // 턴 시작 이벤트 발생
         PlayerTurnEvent?.Invoke();
+        BroadcastTurnStart();
 
         Debug.Log($"플레이어 턴 시작 (턴: {currentTurn}) - 활성 엔티티: {activeEntitys.Count}");
-
     }
 
-    // 적 턴 시작
     private void StartEnemyTurn()
     {
         activeEntitys.Clear();
-
-        // 적 엔티티들 활성화
-        foreach (var enemy in EnemyController.ActiveEnemy)
+        // EnemyController.ActiveEnemy는 스폰된 Enemy들이 자동 등록됩니다.
+        foreach (var kv in EnemyController.ActiveEnemy)
         {
-            activeEntitys.Add(enemy.Key, enemy.Value);
-            
+            activeEntitys.Add(kv.Key, kv.Value);
         }
 
-        BroadcastTurnStart();
-
-        // 턴 시작 이벤트 발생
         EnemyTurnEvent?.Invoke();
+        BroadcastTurnStart();
 
         Debug.Log($"적 턴 시작 (턴: {currentTurn}) - 활성 엔티티: {activeEntitys.Count}");
     }
@@ -84,54 +102,38 @@ public class GameManager : MonoBehaviour
     private void BroadcastTurnStart()
     {
         foreach (var each in activeEntitys)
-        {
             each.Value.OnTurnBegin();
-        }
     }
 
-    // 엔티티가 자신의 행동을 완료했을 때 호출
     public void EntityActionComplete(int entityId)
     {
-        if (activeEntitys.ContainsKey(entityId))
-        {
-            activeEntitys.Remove(entityId);
-            CheckGameOverCondition();
-            CheckEndTurn();
-        }
+        if (!activeEntitys.ContainsKey(entityId))
+            return;
+
+        activeEntitys.Remove(entityId);
+        CheckGameOverCondition();
+        CheckEndTurn();
     }
 
-    // 모든 엔티티가 행동을 완료했는지 확인
     private void CheckEndTurn()
     {
-        if (activeEntitys.Count <= 0)
-        {
-            isPlayerTurn = !isPlayerTurn;
-            currentTurn++;
+        if (activeEntitys.Count > 0)
+            return;
 
-            if (isPlayerTurn)
-            {
-                StartPlayerTurn();
-            }
-            else
-            {
-                StartEnemyTurn();
-            }
-        }
+        isPlayerTurn = !isPlayerTurn;
+        currentTurn++;
+
+        if (isPlayerTurn) StartPlayerTurn();
+        else StartEnemyTurn();
     }
 
-    // 게임 종료 조건 확인 및 처리
-    public void CheckGameOverCondition()
+    private void CheckGameOverCondition()
     {
-        // 게임 오버 조건 체크 로직
-        bool isGameOver = false; // 실제 게임 오버 조건으로 대체
-
-        if (isGameOver)
-        {
-            EndGame();
-        }
+        // TODO: 실제 게임 오버 로직으로 교체
+        bool isGameOver = false;
+        if (isGameOver) EndGame();
     }
 
-    // 게임 오버 처리
     private void EndGame()
     {
         GameOverEvent?.Invoke();

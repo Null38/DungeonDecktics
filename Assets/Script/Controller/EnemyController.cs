@@ -64,12 +64,12 @@ public class EnemyController : Controller, ITurnBased
     {
         get
         {
-            if (GameManager.Instance.isPlayerTurn)
-            {
+            // GameManager가 준비되지 않았거나, 플레이어 턴이면 이동 금지
+            if (GameManager.Instance == null || GameManager.Instance.isPlayerTurn)
                 return null;
-            }
 
             return base.TargetPos;
         }
     }
+
 }
