@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 7bdbf4494c5fb36429d34a6b961020c8
+guid: a6531f9080b2d8340a7a657b8305041f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2573042656218583696
-    second: trophyIcon_0
+      213: 6439400265479458411
+    second: mainClickBar_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: trophyIcon_0
+      name: mainClickBar_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 32
-        height: 32
+        y: 5
+        width: 96
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 09216dbc9a845b320800000000000000
-      internalID: 2573042656218583696
+      spriteID: b6e857e8c685d5950800000000000000
+      internalID: 6439400265479458411
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      trophyIcon_0: 2573042656218583696
+      mainClickBar_0: 6439400265479458411
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
