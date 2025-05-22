@@ -5,18 +5,6 @@ public class Movement : MonoBehaviour
 {
     private Controller controller;
 
-    [Header("Collision Layers")]
-    [Tooltip("캐릭터(플레이어·적)가 올라가는 Layer")]
-    [SerializeField] private LayerMask unitLayerMask;
-    [Tooltip("벽으로 사용할 Tilemap/Collider가 적용된 Layer")]
-    [SerializeField] private LayerMask wallLayerMask;
-
-    [Header("Movement Settings")]
-    [Tooltip("이동 속도 (유닛 단위/sec)")]
-    [SerializeField] private float moveSpeed = 5f;
-    [Tooltip("충돌 검사 반지름 (유닛 크기보다 약간 작게)")]
-    [SerializeField] private float checkRadius = 0.15f;
-
     private void Awake()
     {
         controller = GetComponent<Controller>();
@@ -34,7 +22,7 @@ public class Movement : MonoBehaviour
         Vector3 nextPos = Vector3.MoveTowards(
             transform.position,
             target,
-            moveSpeed * Time.fixedDeltaTime
+            DataManager.Speed * Time.fixedDeltaTime
         );
 
         // 3) 벽 또는 다른 유닛과 겹치면, 해당 스텝을 건너뛰고 NextStep() 호출
@@ -61,12 +49,7 @@ public class Movement : MonoBehaviour
     /// </summary>
     private bool IsBlocked(Vector3 pos)
     {
-        // 1) 벽 충돌 검사
-        if (Physics2D.OverlapCircle(pos, checkRadius, wallLayerMask))
-            return true;
-
-        // 2) 유닛 충돌 검사 (자기 자신은 무시)
-        Collider2D hit = Physics2D.OverlapCircle(pos, checkRadius, unitLayerMask);
+        Collider2D hit = Physics2D.OverlapPoint(pos, DataManager.UnPassableLayer);
         if (hit != null && hit.gameObject != gameObject)
             return true;
 
