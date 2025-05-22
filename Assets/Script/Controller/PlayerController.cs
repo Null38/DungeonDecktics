@@ -62,7 +62,7 @@ public class PlayerController : Controller, ITurnBased
 
     public void OnTurnEnd()
     {
-        GameManager.Instance.EntityActionComplete(gameObject);
+        GameManager.Instance.EntityActionComplete(this);
     }
 
     public override Vector3? TargetPos => GameManager.Instance.IsPlayerTurn ? target : null;

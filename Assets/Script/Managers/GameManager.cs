@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public static event Action PlayerTurnEvent;
     public static event Action EnemyTurnEvent;
 
-    private Dictionary<GameObject, ITurnBased> activeEntitys = new();
+    private Dictionary<Controller, ITurnBased> activeEntitys = new();
 
     [Header("Enemy Spawning")]
     [Tooltip("씬에 배치할 적 Prefab")]
@@ -77,7 +77,7 @@ public class GameManager : MonoBehaviour
     {
         activeEntitys.Clear();
         // DataManager.player는 이미 Awake 단계에서 세팅되어 있어야 합니다.
-        activeEntitys.Add(DataManager.player.gameObject, DataManager.player);
+        activeEntitys.Add(DataManager.player, DataManager.player);
 
         PlayerTurnEvent?.Invoke();
         BroadcastTurnStart();
@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
             each.Value.OnTurnBegin();
     }
 
-    public void EntityActionComplete(GameObject entity)
+    public void EntityActionComplete(Controller entity)
     {
         if (!activeEntitys.ContainsKey(entity))
             return;
@@ -141,16 +141,16 @@ public class GameManager : MonoBehaviour
         Debug.Log("게임 오버!");
     }
 
-    public bool IsSameTargetPosition(GameObject self ,Vector3? targetPos)
+    public bool IsSameTargetPosition(Controller self ,Vector3? targetPos)
     {
-        foreach (KeyValuePair<GameObject, ITurnBased> entity in activeEntitys)
+        foreach (KeyValuePair<Controller, ITurnBased> entity in activeEntitys)
         {
             if (self == entity.Key)
             {
                 continue;
             }
 
-            Vector3? entityTarget = entity.Key.GetComponent<Controller>().TargetPos;
+            Vector3? entityTarget = entity.Key.TargetPos;
 
             if (!entityTarget.HasValue || entityTarget != targetPos)
                 continue;

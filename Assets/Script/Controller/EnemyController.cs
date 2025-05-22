@@ -7,7 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 [RequireComponent(typeof(InfoComponent))]
 public class EnemyController : Controller, ITurnBased
 {
-    public static Dictionary<GameObject, ITurnBased> ActiveEnemy = new(); 
+    public static Dictionary<Controller, ITurnBased> ActiveEnemy = new(); 
 
     private bool hasActed = true;
 
@@ -41,12 +41,12 @@ public class EnemyController : Controller, ITurnBased
 
     private void OnEnable()
     {
-        ActiveEnemy.Add(gameObject, this);
+        ActiveEnemy.Add(this, this);
     }
 
     private void OnDisable()
     {
-        ActiveEnemy.Remove(gameObject);
+        ActiveEnemy.Remove(this);
 
     }
 
@@ -57,7 +57,7 @@ public class EnemyController : Controller, ITurnBased
 
     public void OnTurnEnd()
     {
-        GameManager.Instance.EntityActionComplete(gameObject);
+        GameManager.Instance.EntityActionComplete(this);
     }
 
     public override Vector3? TargetPos
