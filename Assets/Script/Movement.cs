@@ -21,7 +21,12 @@ public class Movement : MonoBehaviour
     private void Move()
     {
         Vector3 target = controller.TargetPos.Value;
-        
+
+        if (!controller.IsPassable(new((int)target.x, (int)target.y)))
+        {
+            controller.Stop();
+            return;
+        }
 
         // 4) 이동
         transform.position = Vector3.MoveTowards(

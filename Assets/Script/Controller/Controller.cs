@@ -58,7 +58,7 @@ abstract public class Controller : MonoBehaviour
         }
     }
 
-    protected virtual bool IsPassable(Vector2Int position)
+    public virtual bool IsPassable(Vector2Int position)
     {
         Collider2D hit = Physics2D.OverlapPoint(position, DataManager.UnPassableLayer);
 
@@ -73,5 +73,10 @@ abstract public class Controller : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void Stop()
+    {
+        path.Clear();
     }
 }
