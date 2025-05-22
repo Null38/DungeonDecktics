@@ -6,7 +6,6 @@ using System.Linq;
 public class PlayerController : Controller, ITurnBased
 {
     private InfoComponent info;
-    private bool hasMove = false;
     private Vector3? target = null;
 
     void Awake()
@@ -21,7 +20,7 @@ public class PlayerController : Controller, ITurnBased
             return;
 
         // 클릭 입력 처리
-        if (hasMove && Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
 
             // 마우스 포인터 → 월드 좌표 변환 (Z값 지정!)
@@ -36,7 +35,6 @@ public class PlayerController : Controller, ITurnBased
                 // LinkedList<Vector2Int> → Vector3 변환
                 Vector2Int nextNode = path.First.Value;
                 target = new Vector3(nextNode.x, nextNode.y, 0f);
-                hasMove = false;
             }
         }
     }
@@ -56,8 +54,7 @@ public class PlayerController : Controller, ITurnBased
 
     public void OnTurnBegin()
     {
-        hasMove = true;
-        target = null;
+        
     }
 
     public void OnTurnEnd()

@@ -1,4 +1,5 @@
 using Astar;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
@@ -11,21 +12,34 @@ abstract public class Controller : MonoBehaviour
 
     protected virtual void GetPath(Vector3 targetPos)
     {
-        path.Clear();
+        if (GameManager.Instance.IsSameTargetPosition(this, targetPos))
+        {
+            return;
+        }
 
         Vector2Int start = new(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
         Vector2Int end = new(Mathf.RoundToInt(targetPos.x), Mathf.RoundToInt(targetPos.y));
 
-        var newPath = PathFinder.FindPath(start, end);
-        if (newPath == null || newPath.Count == 0)
-            return;
+        List<Vector2Int> newPath;
 
-        newPath.RemoveAt(0);
+        do
+        {
+            path.Clear();
+
+            newPath = PathFinder.FindPath(start, end, PathFinder.GetCost, IsPassable);
+            if (newPath == null || newPath.Count == 0)
+                return;
+
+            newPath.RemoveAt(0);
+
+
+        } while (newPath.Count > 0 && GameManager.Instance.IsSameTargetPosition(this, (Vector2)newPath[0]));
+
+
         foreach (var path in newPath)
         {
             this.path.AddLast(path);
         }
-
     }
 
     public abstract void NextStep();
@@ -44,5 +58,20 @@ abstract public class Controller : MonoBehaviour
         }
     }
 
+    protected virtual bool IsPassable(Vector2Int position)
+    {
+        Collider2D hit = Physics2D.OverlapPoint(position, DataManager.UnPassableLayer);
 
+        if (hit == null
+            || hit.gameObject == this)
+            return true;
+
+        Controller cont = hit.gameObject.GetComponent<Controller>();
+        if (cont != null && (cont == this || cont.TargetPos.HasValue))
+        {
+            return true;
+        }
+
+        return false;
+    }
 }
