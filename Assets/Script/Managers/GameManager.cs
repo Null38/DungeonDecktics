@@ -18,13 +18,12 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null) 
+        if (Instance == null)
             Instance = this;
-        else 
+        else
             Destroy(gameObject);
 
         DontDestroyOnLoad(gameObject); // GameManager 파괴 방지
-        SceneLoadManager.Initialize(gameObject.GetComponent<SceneLoadManager>());
     }
 
     private void Start()
