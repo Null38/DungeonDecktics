@@ -7,7 +7,7 @@ using static UnityEngine.GraphicsBuffer;
 [RequireComponent(typeof(InfoComponent))]
 public class EnemyController : Controller, ITurnBased
 {
-    public static Dictionary<int, ITurnBased> ActiveEnemy = new(); 
+    public static Dictionary<GameObject, ITurnBased> ActiveEnemy = new(); 
 
     private bool hasActed = true;
 
@@ -41,12 +41,12 @@ public class EnemyController : Controller, ITurnBased
 
     private void OnEnable()
     {
-        ActiveEnemy.Add(gameObject.GetInstanceID(), this);
+        ActiveEnemy.Add(gameObject, this);
     }
 
     private void OnDisable()
     {
-        ActiveEnemy.Remove(gameObject.GetInstanceID());
+        ActiveEnemy.Remove(gameObject);
 
     }
 
@@ -57,7 +57,7 @@ public class EnemyController : Controller, ITurnBased
 
     public void OnTurnEnd()
     {
-        GameManager.Instance.EntityActionComplete(gameObject.GetInstanceID());
+        GameManager.Instance.EntityActionComplete(gameObject);
     }
 
     public override Vector3? TargetPos
@@ -65,7 +65,7 @@ public class EnemyController : Controller, ITurnBased
         get
         {
             // GameManager가 준비되지 않았거나, 플레이어 턴이면 이동 금지
-            if (GameManager.Instance == null || GameManager.Instance.isPlayerTurn)
+            if (GameManager.Instance == null || GameManager.Instance.IsPlayerTurn)
                 return null;
 
             return base.TargetPos;

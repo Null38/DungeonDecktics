@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 
 public class GameManager : MonoBehaviour
@@ -9,19 +10,19 @@ public class GameManager : MonoBehaviour
 
     [Header("Turn Management")]
     public int currentTurn = 0;
-    public bool isPlayerTurn { get; private set; }
+    public bool IsPlayerTurn { get; private set; }
 
     public static event Action GameOverEvent;
     public static event Action PlayerTurnEvent;
     public static event Action EnemyTurnEvent;
 
-    private Dictionary<int, ITurnBased> activeEntitys = new Dictionary<int, ITurnBased>();
+    private Dictionary<GameObject, ITurnBased> activeEntitys = new();
 
     [Header("Enemy Spawning")]
     [Tooltip("씬에 배치할 적 Prefab")]
     public GameObject enemyPrefab;
     [Tooltip("적을 스폰할 위치들")]
-    public List<Transform> spawnPoints = new List<Transform>();
+    public List<Transform> spawnPoints = new();
 
     private void Awake()
     {
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
     public void StartInit()
     {
         currentTurn = 0;
-        isPlayerTurn = true;
+        IsPlayerTurn = true;
 
         Debug.Log("게임 시작!");
 
@@ -76,7 +77,7 @@ public class GameManager : MonoBehaviour
     {
         activeEntitys.Clear();
         // DataManager.player는 이미 Awake 단계에서 세팅되어 있어야 합니다.
-        activeEntitys.Add(DataManager.player.gameObject.GetInstanceID(), DataManager.player);
+        activeEntitys.Add(DataManager.player.gameObject, DataManager.player);
 
         PlayerTurnEvent?.Invoke();
         BroadcastTurnStart();
@@ -105,12 +106,12 @@ public class GameManager : MonoBehaviour
             each.Value.OnTurnBegin();
     }
 
-    public void EntityActionComplete(int entityId)
+    public void EntityActionComplete(GameObject entity)
     {
-        if (!activeEntitys.ContainsKey(entityId))
+        if (!activeEntitys.ContainsKey(entity))
             return;
 
-        activeEntitys.Remove(entityId);
+        activeEntitys.Remove(entity);
         CheckGameOverCondition();
         CheckEndTurn();
     }
@@ -120,10 +121,10 @@ public class GameManager : MonoBehaviour
         if (activeEntitys.Count > 0)
             return;
 
-        isPlayerTurn = !isPlayerTurn;
+        IsPlayerTurn = !IsPlayerTurn;
         currentTurn++;
 
-        if (isPlayerTurn) StartPlayerTurn();
+        if (IsPlayerTurn) StartPlayerTurn();
         else StartEnemyTurn();
     }
 
@@ -138,6 +139,25 @@ public class GameManager : MonoBehaviour
     {
         GameOverEvent?.Invoke();
         Debug.Log("게임 오버!");
+    }
+
+    public bool IsSameTargetPosition(GameObject self ,Vector3? targetPos)
+    {
+        foreach (KeyValuePair<GameObject, ITurnBased> entity in activeEntitys)
+        {
+            if (self == entity.Key)
+            {
+                continue;
+            }
+
+            Vector3? entityTarget = entity.Key.GetComponent<Controller>().TargetPos;
+
+            if (!entityTarget.HasValue || entityTarget != targetPos)
+                continue;
+            return true;
+        }
+
+        return false;
     }
 }
 

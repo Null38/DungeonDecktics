@@ -13,8 +13,8 @@ abstract public class Controller : MonoBehaviour
     {
         path.Clear();
 
-        Vector2Int start = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
-        Vector2Int end = new Vector2Int(Mathf.RoundToInt(targetPos.x), Mathf.RoundToInt(targetPos.y));
+        Vector2Int start = new(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
+        Vector2Int end = new(Mathf.RoundToInt(targetPos.x), Mathf.RoundToInt(targetPos.y));
 
         var newPath = PathFinder.FindPath(start, end);
         if (newPath == null || newPath.Count == 0)

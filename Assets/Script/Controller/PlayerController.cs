@@ -17,31 +17,26 @@ public class PlayerController : Controller, ITurnBased
 
     void Update()
     {
-        if (!GameManager.Instance.isPlayerTurn)
+        if (!GameManager.Instance.IsPlayerTurn)
             return;
 
         // 클릭 입력 처리
-        if (Input.GetMouseButtonDown(0))
+        if (hasMove && Input.GetMouseButtonDown(0))
         {
-            Debug.Log("PlayerController: Left Click Detected");
 
             // 마우스 포인터 → 월드 좌표 변환 (Z값 지정!)
-            Vector3 sp = Input.mousePosition;
-            sp.z = Mathf.Abs(Camera.main.transform.position.z);
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(sp);
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             worldPos.z = 0f;
-            Debug.Log($"PlayerController: World Click at {worldPos}");
 
             // 경로 계산
             GetPath(worldPos);
-            Debug.Log($"PlayerController: Path nodes count = {path.Count}");
 
             if (path.Count > 0)
             {
                 // LinkedList<Vector2Int> → Vector3 변환
                 Vector2Int nextNode = path.First.Value;
                 target = new Vector3(nextNode.x, nextNode.y, 0f);
-                hasMove = true;
+                hasMove = false;
             }
         }
     }
@@ -61,14 +56,14 @@ public class PlayerController : Controller, ITurnBased
 
     public void OnTurnBegin()
     {
-        hasMove = false;
+        hasMove = true;
         target = null;
     }
 
     public void OnTurnEnd()
     {
-        GameManager.Instance.EntityActionComplete(gameObject.GetInstanceID());
+        GameManager.Instance.EntityActionComplete(gameObject);
     }
 
-    public override Vector3? TargetPos => GameManager.Instance.isPlayerTurn ? target : null;
+    public override Vector3? TargetPos => GameManager.Instance.IsPlayerTurn ? target : null;
 }
