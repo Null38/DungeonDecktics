@@ -35,5 +35,5 @@ public abstract class BaseInfo : ScriptableObject
     public float evasion;
 
     // Deck
-    public List<CardObject> defaultDeck = new List<CardObject>();
+    public List<CardObjectBase> defaultDeck = new List<CardObjectBase>();
 }
