@@ -30,11 +30,18 @@ public class SceneLoadManager :MonoBehaviour
     {
         LoadScene("GameTestScene");
     }
-    
+
     public static void LoadMain()
     {
         LoadScene("MainScene");
     }
+
+    public static void LoadOption()
+    {
+        SceneManager.LoadSceneAsync("OptionScene", LoadSceneMode.Additive);
+    }
+
+
 
     private static void LoadScene(String scene)
     {
