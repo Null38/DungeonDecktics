@@ -1,4 +1,4 @@
-﻿using Astar;
+using Astar;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,6 +51,11 @@ public class DungeonGenerator : MonoBehaviour
             RoomRect = roomRect;
             this.center = center + roomRect.position;
         }
+    }
+
+    private void Awake()
+    {
+        DataManager.generator = this;
     }
 
     private void Initialize()

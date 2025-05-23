@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         //StartInit();
+        //DataManager.generator.Generate();
     }
 
     public void StartInit()
