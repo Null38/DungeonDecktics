@@ -1,2 +1,17 @@
 fileFormatVersion: 2
 guid: 2f6bda9a6824f7348b509c9e15d267be
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - EnterObject: {fileID: 11400000, guid: e6bd3d41f5edeaf40a15110b7ec2e54c, type: 2}
+  - NextMapObject: {fileID: 11400000, guid: b0837650c954cee47a82f9ca00ea6b4d, type: 2}
+  - floorTilemap: {instanceID: 0}
+  - wallTilemap: {instanceID: 0}
+  - floorTile: {instanceID: 0}
+  - wallTile: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

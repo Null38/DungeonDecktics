@@ -13,11 +13,11 @@ TagManager:
   - UI
   - Card
   - 
+  - MapObjects
+  - 
+  - 
   - 
   - Wall
-  - 
-  - 
-  - 
   - 
   - 
   - 
@@ -49,4 +49,5 @@ TagManager:
     locked: 0
   m_RenderingLayers:
   - Default
-  - Mask
+  - Floor
+  - Objects

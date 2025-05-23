@@ -3,10 +3,16 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
+using static UnityEditor.PlayerSettings;
+using static UnityEditor.Progress;
 using Random = UnityEngine.Random;
 
 public class DungeonGenerator : MonoBehaviour
 {
+    public MapObject EnterObject;
+    public MapObject NextMapObject;
+
     public Vector2Int mapSize;
     public List<MapData> templateMaps; 
 
@@ -22,6 +28,7 @@ public class DungeonGenerator : MonoBehaviour
 
     List<RoomInfo> rooms = new List<RoomInfo>();
     List<Vector2Int> doors = new List<Vector2Int>();
+    List<(MapObject, Vector2Int)> objects = new();
 
     enum TileType
     {
@@ -40,14 +47,16 @@ public class DungeonGenerator : MonoBehaviour
     {
         public RectInt RoomRect { get; private set; }
         public readonly Vector2Int center;
-
-        public RoomInfo(RectInt roomRect)
+        public bool isSpecific;
+        public RoomInfo(RectInt roomRect, bool isSpecific = false)
         {
+            this.isSpecific = isSpecific;
             RoomRect = roomRect;
             center = new Vector2Int((int)roomRect.center.x, (int)roomRect.center.y);
         }
-        public RoomInfo(RectInt roomRect, Vector2Int center)
+        public RoomInfo(RectInt roomRect, Vector2Int center, bool isSpecific)
         {
+            this.isSpecific = isSpecific;
             RoomRect = roomRect;
             this.center = center + roomRect.position;
         }
@@ -63,6 +72,13 @@ public class DungeonGenerator : MonoBehaviour
         map = new TileType[mapSize.x, mapSize.y];
         rooms.Clear();
         doors.Clear();
+        objects.Clear();
+
+
+        for (int i = transform.childCount - 1; i >= 0; i--)
+        {
+            Destroy(transform.GetChild(i).gameObject);
+        }
 
         for (int x = 0; x < mapSize.x; x++)
         {
@@ -83,6 +99,18 @@ public class DungeonGenerator : MonoBehaviour
     {
         Initialize();
 
+        MakeRooms();
+
+        MakeTunnels();
+        MergeRooms();
+
+        MakeObjects();
+
+        MapRender();
+    }
+
+    private void MakeRooms()
+    {
         Dictionary<int, int> excludedPoints = new Dictionary<int, int>();
 
         int padConst = Padding * 2;
@@ -91,7 +119,7 @@ public class DungeonGenerator : MonoBehaviour
         while (randomSize > 0 && rooms.Count < RoomCount)
         {
             int index = Random.Range(0, randomSize);
-            
+
             while (excludedPoints.ContainsKey(index))
             {
                 index = randomSize + excludedPoints[index];
@@ -99,7 +127,7 @@ public class DungeonGenerator : MonoBehaviour
 
             Vector2Int point = Int2Vector2Int(index, mapSize.x - padConst) + new Vector2Int(Padding, Padding);
 
-            RectInt ? area = IdentifyArea(point);
+            RectInt? area = IdentifyArea(point);
             if (area == null)
             {
                 excludedPoints.Add(index, excludedPoints.Count);
@@ -116,11 +144,6 @@ public class DungeonGenerator : MonoBehaviour
                 MakeRectRoom((RectInt)area);
             }
         }
-
-        MakeTunnels();
-        MergeRooms();
-
-        MapRender();
     }
 
     private RectInt? IdentifyArea(Vector2Int point)
@@ -244,7 +267,12 @@ public class DungeonGenerator : MonoBehaviour
             }
         }
 
-        rooms.Add(new RoomInfo(room, selectedTemplate.Center));
+        foreach (var obj in selectedTemplate.objectList)
+        {
+            PlaceObjets(obj.Item1, obj.Item2);
+        }
+
+        rooms.Add(new RoomInfo(room, selectedTemplate.Center, false));
     }
 
     private void MakeTunnels()
@@ -379,6 +407,79 @@ public class DungeonGenerator : MonoBehaviour
         return new Vector2Int(x, y);
     }
 
+    private void MakeObjects()
+    {
+        RoomInfo entranceRoom = rooms[Random.Range(0, rooms.Count)];
+
+        var entrancePos = BFS(entranceRoom.center);
+        if (entrancePos == null)
+        {
+            throw new InvalidOperationException("Entrance position not found.");
+        }
+
+        RoomInfo exitRoom = rooms[0];
+        float maxDistance = 0f;
+
+        for (int i = 0; i < rooms.Count; i++)
+        {
+
+            float distance = Vector2Int.Distance((Vector2Int)entrancePos, rooms[i].center);
+            if (distance > maxDistance)
+            {
+                maxDistance = distance;
+                exitRoom = rooms[i];
+            }
+        }
+
+        var exitPos = BFS(exitRoom.center);
+        if (exitPos == null)
+        {
+            throw new InvalidOperationException("Exit position not found.");
+        }
+
+        PlaceObjets(EnterObject, (Vector2Int)entrancePos);
+        PlaceObjets(NextMapObject, (Vector2Int)exitPos);
+    }
+
+    private Vector2Int? BFS(Vector2Int startPos)
+    {
+        bool[,] visited = new bool[mapSize.x, mapSize.y];
+
+        Queue<Vector2Int> queue = new();
+
+        queue.Enqueue(startPos);
+
+        visited[startPos.x, startPos.y] = true;
+
+        while (queue.Count > 0)
+        {
+            Vector2Int check = queue.Dequeue();
+
+            if (IsValidTile(check, (x) => (x == TileType.floor)))
+            {
+                Collider2D hit = Physics2D.OverlapPoint(check, DataManager.MapObjectLayer);
+
+                if (hit == null)
+                    return check;
+            }
+
+            foreach (Vector2Int dir in PathFinder.s_FourDirs)
+            {
+                var newPos = check + dir;
+
+                if (visited[newPos.x, newPos.y] || !IsValidTile(newPos, (_) => true))
+                {
+                    continue;
+                }
+
+                queue.Enqueue(newPos);
+            }
+        }
+
+        return null;
+    }
+
+
     public Tilemap floorTilemap;
     public Tilemap wallTilemap;
 
@@ -408,5 +509,33 @@ public class DungeonGenerator : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void PlaceObjets(MapObject obj, Vector2Int pos)
+    {
+        Collider2D hit = Physics2D.OverlapPoint(pos, DataManager.MapObjectLayer);
+
+        if (hit != null)
+            return;
+
+        var Placedobj = Instantiate(obj.basePrefab, (Vector2)pos, Quaternion.identity, this.gameObject.transform);
+        var renderer = Placedobj.GetComponent<SpriteRenderer>();
+        var colider = Placedobj.GetComponent<Collider2D>();
+
+
+        for (int i = 0; i < 32; i++)
+        {
+            if (((DataManager.MapObjectLayer >> i) & 1) == 0)
+                continue;
+
+            Placedobj.layer = i;
+            break;
+        }
+
+        Placedobj.name = obj.name;
+        renderer.sprite = obj.sprite;
+        colider.includeLayers = obj.layer;
+
+        objects.Add((obj, pos));
     }
 }

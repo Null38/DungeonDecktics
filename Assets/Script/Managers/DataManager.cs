@@ -7,6 +7,7 @@ public static class DataManager
 
     public static DungeonGenerator generator;
     public static LayerMask WallLayer = LayerMask.GetMask("Wall");
+    public static LayerMask MapObjectLayer = LayerMask.GetMask("MapObjects");
     public static LayerMask UnitLayer = LayerMask.GetMask("Unit");
     public static LayerMask UnPassableLayer => UnitLayer | WallLayer;
 
