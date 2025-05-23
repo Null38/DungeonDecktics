@@ -1,14 +1,14 @@
 using Astar;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem.XR;
 
 abstract public class Controller : MonoBehaviour
 {
     [SerializeField]
     protected LinkedList<Vector2Int> path = new();
 
+    [SerializeField]
+    protected BaseInfo info;
 
     protected virtual void GetPath(Vector3 targetPos)
     {

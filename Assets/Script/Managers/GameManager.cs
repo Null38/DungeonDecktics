@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
@@ -40,7 +41,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartInit();
+        if (SceneManager.GetActiveScene().rootCount >= 2)
+            StartInit();
     }
 
     public void StartInit()

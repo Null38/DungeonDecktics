@@ -1,17 +1,12 @@
-using Astar;
 using UnityEngine;
-using System.Linq;
 
-[RequireComponent(typeof(InfoComponent))]
 public class PlayerController : Controller, ITurnBased
 {
-    private InfoComponent info;
     private Vector3? target = null;
 
     void Awake()
     {
         DataManager.player = this;
-        info = GetComponent<InfoComponent>();
     }
 
     void Update()
