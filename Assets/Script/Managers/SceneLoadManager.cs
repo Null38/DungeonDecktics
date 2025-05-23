@@ -3,13 +3,21 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using AsyncOperation = UnityEngine.AsyncOperation;
 
-[RequireComponent(typeof(GameManager))]
-public static class SceneLoadManager
+public class SceneLoadManager :MonoBehaviour
 {
+    public enum SceneState
+    {
+        Loading,
+        Main,
+        InGame
+    }
+
     private static AsyncOperation loadingScene;
     private static string sceneName;
 
-    private static void OnSceneLoading(AsyncOperation op)
+    public static SceneState State { get; }
+
+    public static void SceneLoaded()
     {
         // 로드 완료됐으면 씬 활성화
         loadingScene.allowSceneActivation = true;
@@ -18,19 +26,25 @@ public static class SceneLoadManager
         loadingScene = null;
     }
 
-    public static void LoadScene(String scene)
+    public static void LoadGame()
     {
-        IsSceneLoadAllowed().completed += LoadSceneAsync;
-
-        sceneName = scene;
+        LoadScene("GameTestScene");
+    }
+    
+    public static void LoadMain()
+    {
+        LoadScene("MainScene");
     }
 
-    private static void LoadSceneAsync(AsyncOperation op)
+    private static void LoadScene(String scene)
     {
+        IsSceneLoadAllowed((_) =>
+        {
+            loadingScene = SceneManager.LoadSceneAsync(sceneName);
+            loadingScene.allowSceneActivation = false;
+        });
 
-        loadingScene = SceneManager.LoadSceneAsync(sceneName);
-        loadingScene.allowSceneActivation = false;
-        loadingScene.completed += OnSceneLoading;
+        sceneName = scene;
     }
 
     public static float GetLoadingProgress()
@@ -40,12 +54,14 @@ public static class SceneLoadManager
     }
 
 
-    private static AsyncOperation IsSceneLoadAllowed()
+    private static void IsSceneLoadAllowed(Action<AsyncOperation> loadScene)
     {
         if (loadingScene != null)
             throw new InvalidOperationException("Another scene is already loading.");
 
-        // 로딩씬 이름을 여기에 적는다
-        return SceneManager.LoadSceneAsync("LoadingScene");
+        AsyncOperation load = SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Additive);
+        load.completed += loadScene;
+        
+        return;
     }
 }

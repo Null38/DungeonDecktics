@@ -5,18 +5,21 @@ public class LoadingUIManager : MonoBehaviour
 {
     public Slider progressBar;
 
-    private float maxWidth;
-
     private void Start()
     {
-        Debug.Log("asdf");
         progressBar.value = 0f;
 
     }
 
     private void Update()
     {
-        Debug.Log("asdg");
-        progressBar.value = SceneLoadManager.GetLoadingProgress();
+        float value = SceneLoadManager.GetLoadingProgress();
+        progressBar.value = value;
+
+        if (value == 1)
+        {
+            Debug.Log("comp");
+            SceneLoadManager.SceneLoaded();
+        }
     }
 }
