@@ -7,7 +7,8 @@ public class Inventory : MonoBehaviour
         Weapon = 0,
         Armor = 1,
         Accessory_0 = 2,
-        Accessory_1 = 3
+        Accessory_1 = 3,
+        notEquipment = -1
     }
 
     [SerializeField]

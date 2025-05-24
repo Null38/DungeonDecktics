@@ -4,15 +4,21 @@ using UnityEngine;
 public class SimpleAttack : CardObjectBase
 {
 
-    public int damage;
+    public int[] damage;
 
     public override string FormatDescription()
     {
         return string.Format(description, damage);
     }
 
+    public override string Upgrad()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public override void UseCard(Controller user)
     {
         throw new System.NotImplementedException();
+        isUpgraded = true;
     }
 }
