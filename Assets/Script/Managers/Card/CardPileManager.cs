@@ -9,7 +9,7 @@ public class CardPileManager
 
     private struct CardInfo
     {
-        public EquipmentId parentId;
+        public int parentId;
         public CardObjectBase card;
     }
 
@@ -53,8 +53,7 @@ public class CardPileManager
         discardPile.Clear();
 
         throw new NotImplementedException();
-
-        // 인벤토리에서 캐릭터 카드, 장비 카드, 아이템 카드 합치기.
+        // 인벤토리에서 GetCardPile()로 가져오기? 그러면 부모는?
         // 합친거는 드로우 파일에 저장.
 
         ShuffleDrawPile();
