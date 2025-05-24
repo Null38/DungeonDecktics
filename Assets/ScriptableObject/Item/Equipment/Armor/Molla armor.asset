@@ -9,7 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 07365c45d5b20ba4eb078e767e2ce6b3, type: 3}
-  m_Name: DeckData
+  m_Script: {fileID: 11500000, guid: f566e14c93707c640a555c0b6dce92a3, type: 3}
+  m_Name: Molla armor
   m_EditorClassIdentifier: 
-  cards: []
+  deck: {fileID: 0}
+  type: 1

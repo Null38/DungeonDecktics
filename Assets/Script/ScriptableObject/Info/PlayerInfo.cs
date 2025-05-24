@@ -10,12 +10,11 @@ public class PlayerInfo : BaseInfo
 {
     public CharacterClass CharacterClass;
 
-    [SerializeField]
     public int Experience;
 
-    [SerializeField]
     public int additionalHp;
 
-    [SerializeField]
     public int additionalShield;
+
+    public EquipmentItemObject[] equipment;
 }

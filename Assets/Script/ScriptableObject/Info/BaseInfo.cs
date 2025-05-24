@@ -29,5 +29,5 @@ public abstract class BaseInfo : ScriptableObject
     public float evasion;
 
     // Deck
-    public DeckObject defaultDeck = new();
+    public DeckObject defaultDeck;
 }
