@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public enum equipmentId
+    public enum EquipmentId
     {
         Weapon = 0,
         Armor = 1,

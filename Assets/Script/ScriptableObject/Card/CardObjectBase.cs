@@ -1,8 +1,4 @@
-using System;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 
 public abstract class CardObjectBase : ScriptableObject
@@ -32,4 +28,9 @@ public abstract class CardObjectBase : ScriptableObject
     /// 끝나고서 isUpgraded는 참으로 바꿔주세요.
     /// </summary>
     public abstract string Upgrad();
+}
+
+interface IAfterUseHandler
+{
+
 }

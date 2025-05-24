@@ -1,8 +1,5 @@
-using NUnit.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.Mathematics;
 using UnityEngine;
 using static Inventory;
 using Random = UnityEngine.Random;
@@ -12,7 +9,7 @@ public class CardPileManager
 
     private struct CardInfo
     {
-        public equipmentId parentId;
+        public EquipmentId parentId;
         public CardObjectBase card;
     }
 
@@ -27,7 +24,7 @@ public class CardPileManager
     [SerializeField] private Inventory inventory;
 
 
-    public List<CardObjectBase> cardPile
+    public List<CardObjectBase> CardPile
     {
         get
         {
@@ -43,13 +40,13 @@ public class CardPileManager
 
     public void Initalize()
     {
-        cardPileInitalize();
+        CardPileInitalize();
     }
 
     /// <summary>
     /// 카드 더미 초기화
     /// </summary>
-    private void cardPileInitalize()
+    private void CardPileInitalize()
     {
         drawPile.Clear();
         handPile.Clear();
