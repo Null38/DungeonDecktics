@@ -16,6 +16,7 @@ public class PlayerController : Controller, ITurnBased
 
     void Update()
     {
+
         if (!GameManager.Instance.IsPlayerTurn)
             return;
 
