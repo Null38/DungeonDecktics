@@ -1,5 +1,10 @@
 using UnityEngine;
 
+public enum CharacterClass
+{
+    Knight
+}
+
 [CreateAssetMenu(fileName = "new PlayerInfo", menuName = "Scriptable Objects/Info/PlayerInfo")]
 public class PlayerInfo : BaseInfo
 {

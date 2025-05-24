@@ -9,15 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35d37f07b59e4744d91e29d30a3d348c, type: 3}
-  m_Name: Fist
+  m_Script: {fileID: 11500000, guid: 07365c45d5b20ba4eb078e767e2ce6b3, type: 3}
+  m_Name: DeckData
   m_EditorClassIdentifier: 
-  CardName: 
-  description: 
-  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
-  artwork: {fileID: 0}
-  cost: 0
-  distance: 0
-  category: 0
-  targetType: 0
-  damage: 0
+  cards: []

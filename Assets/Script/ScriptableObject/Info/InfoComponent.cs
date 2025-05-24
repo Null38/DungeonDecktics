@@ -14,11 +14,6 @@ public class InfoComponent : MonoBehaviour
     public void Initialize()
     {
         Deck.Clear();
-
-        foreach (var card in info.defaultDeck)
-        {
-            Deck.Add(Instantiate(card));
-        }
         info.MaxHp = 0;
     }
 

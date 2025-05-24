@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d37f07b59e4744d91e29d30a3d348c, type: 3}
+  m_Name: Power Punch
+  m_EditorClassIdentifier: 
+  CardName: "\uAC15\uD0C0"
+  description: "\uD63C\uC2E0\uC758 \uD798\uC73C\uB85C {0}\uC758 \uB370\uBBF8\uC9C0\uB97C
+    \uAC00\uD55C\uB2E4."
+  backgroundColor: {r: 0.972549, g: 0.1254902, b: 0.21568628, a: 0}
+  artwork: {fileID: -1937265061, guid: b604bb98c93866549b35b30d045ef6cb, type: 3}
+  cost: 4
+  distance: 1
+  category: 0
+  targetType: 1
+  isUpgraded: 0
+  damage: 06000000

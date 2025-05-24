@@ -1,11 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-
-public enum CharacterClass
-{
-    Knight
-}
 
 public enum CharacterSpecies
 {
@@ -35,5 +29,5 @@ public abstract class BaseInfo : ScriptableObject
     public float evasion;
 
     // Deck
-    public List<CardObjectBase> defaultDeck = new List<CardObjectBase>();
+    public DeckObject defaultDeck = new();
 }
