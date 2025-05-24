@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(GameManager))]
 public class CardSpawner : MonoBehaviour
 {
     [SerializeField]
