@@ -1,6 +1,5 @@
-using Astar;
 using UnityEngine;
-using System.Linq;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(InfoComponent))]
 public class PlayerController : Controller, ITurnBased

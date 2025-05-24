@@ -2,14 +2,15 @@ using UnityEngine;
 
 /// 카메라를 플레이어 등 지정된 대상에 부드럽게 따라다니게 하거나,
 /// 타겟 잠금(On/Off) 기능 및 수동 패닝과 줌 기능을 지원함.
-/// Tab 키로 타겟 잠금/해제 토글을 실행할 수 있음.
-/// 
+/// UI 버튼을 통해 토글을 실행함.
+
 public class CameraController : MonoBehaviour
 {
     [Header("Follow Settings")]
     [Tooltip("따라갈 대상. 비워두면 수동 패닝 모드로 전환됩니다.")]
     public Transform target;
     private Transform initialTarget;
+
     [Tooltip("대상과의 오프셋 (Z는 -10 권장)")]
     public Vector3 offset = new Vector3(0, 0, -10);
     [Tooltip("부드러운 따라가기 시간 (초)")]
@@ -39,29 +40,27 @@ public class CameraController : MonoBehaviour
         initialTarget = target;
     }
 
-    void Update()
+    /// UI 버튼에서 호출할 타겟 토글 함수
+    
+    public void ToggleFollow()
     {
-        // Tab 키 입력 감지: Toggle followEnabled
-        if (Input.GetKeyDown(KeyCode.Tab))
-        {
-            followEnabled = !followEnabled;
-            Debug.Log($"[CameraController] Tab pressed. followEnabled = {followEnabled}");
-        }
+        followEnabled = !followEnabled;
+        if (followEnabled && target == null) target = initialTarget;
+        Debug.Log($"[CameraController] ToggleFollow called. followEnabled = {followEnabled}");
     }
 
     void LateUpdate()
     {
-        // Follow 모드가 꺼졌거나, 타겟이 없는 경우 수동 패닝으로 전환
+        // Follow 모드가 켜져 있고, 타겟이 있으면 부드럽게 따라갑니다.
         if (followEnabled && target != null)
         {
-            // 따라가기 로직
             Vector3 desired = target.position + offset;
             Vector3 smoothed = Vector3.SmoothDamp(transform.position, desired, ref velocity, smoothTime);
             transform.position = smoothed;
         }
         else
         {
-            // 수동 패닝 로직
+            // 수동 패닝 로직 (모바일 조작 시 가상 조이스틱이나 화면 드래그로 확장 가능)
             float x = Input.GetAxis("Horizontal");
             float y = Input.GetAxis("Vertical");
             Vector3 pos = transform.position + new Vector3(x, y, 0) * panSpeed * Time.deltaTime;
@@ -70,7 +69,7 @@ public class CameraController : MonoBehaviour
             transform.position = pos;
         }
 
-        // 줌 로직 (언제나 가능)
+        // 줌 로직 (터치 핀치 제스처로 확장 가능)
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (Mathf.Abs(scroll) > 0.01f)
         {

@@ -2,7 +2,6 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
-using System.Collections;
 
 
 public class GameManager : MonoBehaviour
@@ -41,13 +40,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        // PlayerController.Awake()가 모두 끝날 때까지 한 프레임만 기다렸다가 StartInit 호출
-        StartCoroutine(DelayedStartInit());
-    }
-    private IEnumerator DelayedStartInit()
-    {
-        yield return null;
         StartInit();
+        DataManager.generator.Generate();
     }
 
     public void StartInit()
