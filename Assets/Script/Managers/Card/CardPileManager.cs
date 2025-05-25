@@ -11,6 +11,12 @@ public class CardPileManager
     {
         public int parentId;
         public CardObjectBase card;
+
+        public CardInfo(int id, CardObjectBase card)
+        {
+            parentId = id;
+            this.card = card;
+        }
     }
 
     [Header("Card Piles")]
@@ -33,14 +39,29 @@ public class CardPileManager
     }
 
 
-    public List<CardObjectBase> GetDrawPile() => throw new NotImplementedException("GetDrawPile 미구현");
-    public List<CardObjectBase> GetHandPile() => throw new NotImplementedException("GetHandPile 미구현");
-    public List<CardObjectBase> GetDiscardPile() => throw new NotImplementedException("GetDiscardPile 미구현");
+    public List<CardObjectBase> GetDrawPile => throw new NotImplementedException("GetDrawPile 미구현");
+    public List<CardObjectBase> GetHandPile 
+    {
+        get
+        {
+            List<CardObjectBase> value = new();
+
+            Debug.LogWarning("임시로 대충 구현한거 위험함");
+            foreach (CardInfo card in handPile)
+            {
+                value.Add(card.card);
+            }
+
+            return value;
+        }
+    }
+    public List<CardObjectBase> GetDiscardPile => throw new NotImplementedException("GetDiscardPile 미구현");
 
 
     public void Initalize()
     {
         CardPileInitalize();
+        DrawToHand(5);
     }
 
     /// <summary>
@@ -52,11 +73,40 @@ public class CardPileManager
         handPile.Clear();
         discardPile.Clear();
 
-        throw new NotImplementedException();
-        // 인벤토리에서 GetCardPile()로 가져오기? 그러면 부모는?
-        // 합친거는 드로우 파일에 저장.
+
+        List<List<CardObjectBase>> pile =  DataManager.player.inventory.GetCardPile();
+
+        for (int i = 0; i < pile.Count; i++)
+        {
+            foreach (CardObjectBase card in pile[i])
+            {
+                drawPile.Add(new CardInfo(i, card));
+            }
+        }
 
         ShuffleDrawPile();
+    }
+
+    private void DrawToHand(int count)
+    {
+        foreach (CardInfo card in handPile)
+        {
+            discardPile.Add(card);
+        }
+
+        handPile.Clear();
+
+        for (int i = 0; i < count; i++)
+        {
+            if (drawPile.Count == 0)
+            {
+                drawPile.AddRange(discardPile);
+                discardPile.Clear();
+            }
+            CardInfo card = drawPile[drawPile.Count - 1];
+            drawPile.RemoveAt(drawPile.Count - 1);
+            handPile.Add(card);
+        }
     }
 
     /// <summary>

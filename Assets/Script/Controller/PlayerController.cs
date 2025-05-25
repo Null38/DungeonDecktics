@@ -5,7 +5,7 @@ public class PlayerController : Controller, ITurnBased
     private Vector3? target = null;
 
     [SerializeField]
-    private PlayerInventory inventory;
+    public PlayerInventory inventory;
 
     public CardPileManager CardPile {get; private set;}
 

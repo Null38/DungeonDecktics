@@ -29,7 +29,7 @@ public class PlayerInventory : Inventory
             }
         }
 
-        throw new NotImplementedException();
+        Debug.LogError("캐릭터 특수 카드랑 인벤 템은 안보내고 있어요.\n구현해야합니다.");
 
         return combined;
     }

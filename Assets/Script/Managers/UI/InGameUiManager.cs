@@ -13,4 +13,9 @@ public class InGameUiManager : MonoBehaviour
     {
         Pause.SetActive(true);
     }
+
+    private void Start()
+    {
+
+    }
 }
