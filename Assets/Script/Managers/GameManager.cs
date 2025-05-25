@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //StartInit();
+        StartInit();
         //DataManager.generator.Generate();
     }
 
