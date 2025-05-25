@@ -6,5 +6,5 @@ using UnityEngine;
 public class DeckObject : ScriptableObject
 {
     [SerializeField]
-    private List<CardObjectBase> cards;
+    public List<CardObjectBase> cards;
 }
