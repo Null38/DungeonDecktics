@@ -1,12 +1,17 @@
-using Astar;
 using UnityEngine;
-using System.Linq;
+using UnityEngine.EventSystems;
+using System.Collections.Generic;
+using UnityEngine.InputSystem;
+using TouchPhase = UnityEngine.TouchPhase;
 
 [RequireComponent(typeof(InfoComponent))]
 public class PlayerController : Controller, ITurnBased
 {
     private InfoComponent info;
     private Vector3? target = null;
+
+    private bool touch = false;
+    private bool isTouchMove = true;
 
     void Awake()
     {
@@ -19,13 +24,14 @@ public class PlayerController : Controller, ITurnBased
         if (!GameManager.Instance.IsPlayerTurn)
             return;
 
-        // 클릭 입력 처리
-        if (Input.GetMouseButtonDown(0))
-        {
+        TouchCheck();
 
+        // 클릭 입력 처리
+        if (touch)
+        {
             // 마우스 포인터 → 월드 좌표 변환 (Z값 지정!)
-            Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            worldPos.z = 0f;
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+            //z값 어짜피 무시됨
 
             // 경로 계산
             GetPath(worldPos);
@@ -36,7 +42,43 @@ public class PlayerController : Controller, ITurnBased
                 Vector2Int nextNode = path.First.Value;
                 target = new Vector3(nextNode.x, nextNode.y, 0f);
             }
+            touch = false;
         }
+    }
+
+    private void TouchCheck()
+    {
+        if (Input.touchCount != 1)
+            return;
+
+        Touch touch = Input.GetTouch(0);
+        Debug.Log(IsPointerOverUIObject());
+        switch (touch.phase)
+        {
+            case TouchPhase.Began:
+                if (IsPointerOverUIObject())
+                    return;
+                isTouchMove = false;
+                break;
+            case TouchPhase.Moved:
+                isTouchMove = true;
+                break;
+            case TouchPhase.Ended:
+                if (!isTouchMove)
+                {
+                    this.touch = true;
+                }
+                break;
+        }
+    }
+
+    private bool IsPointerOverUIObject()
+    {
+        var touchPosition = Touchscreen.current.position.ReadValue();
+        var eventData = new PointerEventData(EventSystem.current) { position = touchPosition };
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+        return results.Count > 0;
     }
 
     public override void NextStep()
