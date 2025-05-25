@@ -169,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardPrefab: {fileID: 8301965483769881750, guid: ac83e1f9a03d17f44a08135c69ff8340, type: 3}
+  parent: {fileID: 1109791593}
 --- !u!1 &146177141
 GameObject:
   m_ObjectHideFlags: 0
@@ -3614,7 +3615,7 @@ MonoBehaviour:
     m_Top: 15
     m_Bottom: 0
   m_ChildAlignment: 1
-  m_Spacing: 0
+  m_Spacing: 10
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -4044,6 +4045,7 @@ MonoBehaviour:
   currentTurn: 0
   enemyPrefab: {fileID: 0}
   spawnPoints: []
+  test: {fileID: 11400000, guid: 9130db0d2a3bb0b4b88d6cb110418547, type: 2}
 --- !u!4 &1323081026
 Transform:
   m_ObjectHideFlags: 0
