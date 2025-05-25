@@ -8,18 +8,9 @@ public class InGameUiManager : MonoBehaviour
     [SerializeField]
     Slider ShildBar;
     [SerializeField]
-    Button MenuButton;
-    [SerializeField]
-    GameObject Hand;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    GameObject Pause;
+    public void OnPauseUI()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Pause.SetActive(true);
     }
 }

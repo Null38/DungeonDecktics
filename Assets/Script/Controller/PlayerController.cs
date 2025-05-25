@@ -4,9 +4,15 @@ public class PlayerController : Controller, ITurnBased
 {
     private Vector3? target = null;
 
+    [SerializeField]
+    private PlayerInventory inventory;
+
+    public CardPileManager CardPile {get; private set;}
+
     void Awake()
     {
         DataManager.player = this;
+        CardPile = new();
     }
 
     void Update()
