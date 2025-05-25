@@ -2452,12 +2452,9 @@ MonoBehaviour:
   target: {fileID: 1777974631}
   offset: {x: 0, y: 0, z: -10}
   smoothTime: 0.3
-  panSpeed: 20
+  panSpeed: 5
   panLimitMin: {x: -50, y: -50}
   panLimitMax: {x: 50, y: 50}
-  scrollSpeed: 5
-  minZoom: 5
-  maxZoom: 15
 --- !u!1 &877919379
 GameObject:
   m_ObjectHideFlags: 0
