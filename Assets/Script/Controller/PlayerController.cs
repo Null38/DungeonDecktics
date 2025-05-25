@@ -69,4 +69,5 @@ public class PlayerController : Controller, ITurnBased
     }
 
     public override Vector3? TargetPos => GameManager.Instance.IsPlayerTurn ? target : null;
+
 }
