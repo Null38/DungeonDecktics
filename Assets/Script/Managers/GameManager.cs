@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
         Debug.LogWarning("던전 생성 안함");
         //DataManager.generator.Generate();
 
+
         Debug.Log("게임 시작!");
 
 

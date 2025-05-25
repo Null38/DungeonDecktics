@@ -12,7 +12,12 @@ public class PlayerController : Controller, ITurnBased
     void Awake()
     {
         DataManager.player = this;
-        CardPile = new();
+        CardPile = new(inventory);
+        CardPile.Initalize();
+    }
+
+    void Start()
+    {
     }
 
     void Update()

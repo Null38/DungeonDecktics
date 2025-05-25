@@ -7,5 +7,5 @@ public abstract class Inventory : MonoBehaviour
     [SerializeField]
     protected DeckObject[] decks;
 
-    public abstract List<List<CardObjectBase>> GetCardPile();
+    public abstract List<CardObjectBase>[] GetCardPile();
 }

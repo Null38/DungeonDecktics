@@ -11,12 +11,16 @@ public class SimpleAttack : CardObjectBase
     {
         int total = 0;
 
+        object[] formatArray = new object[damage.Length + 1];
+
         for (int i = 0; i < damage.Length; i++)
         {
+            formatArray[i] = damage[i];
             total += damage[i];
         }
+        formatArray[damage.Length] = total;
 
-        return string.Format(description, damage, total);
+        return string.Format(description, formatArray);
     }
 
     public override string Upgrad()

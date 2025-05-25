@@ -29,6 +29,11 @@ public class CardPileManager
 
     [SerializeField] private Inventory inventory;
 
+    public CardPileManager(Inventory inventory)
+    {
+        this.inventory = inventory;
+    }
+
 
     public List<CardObjectBase> CardPile
     {
@@ -46,7 +51,7 @@ public class CardPileManager
         {
             List<CardObjectBase> value = new();
 
-            Debug.LogWarning("임시로 대충 구현한거 위험함");
+            Debug.LogWarning("임시로 대충 구현한거 아마도 위험함");
             foreach (CardInfo card in handPile)
             {
                 value.Add(card.card);
@@ -74,10 +79,14 @@ public class CardPileManager
         discardPile.Clear();
 
 
-        List<List<CardObjectBase>> pile =  DataManager.player.inventory.GetCardPile();
+        List<CardObjectBase>[] pile =  inventory.GetCardPile();
 
-        for (int i = 0; i < pile.Count; i++)
+        for (int i = 0; i < pile.Length; i++)
         {
+            if (pile[i] == null)
+            {
+                continue;
+            }
             foreach (CardObjectBase card in pile[i])
             {
                 drawPile.Add(new CardInfo(i, card));
@@ -106,6 +115,11 @@ public class CardPileManager
             CardInfo card = drawPile[drawPile.Count - 1];
             drawPile.RemoveAt(drawPile.Count - 1);
             handPile.Add(card);
+        }
+
+        foreach (var item in handPile)
+        {
+            Debug.Log(item.card.name);
         }
     }
 

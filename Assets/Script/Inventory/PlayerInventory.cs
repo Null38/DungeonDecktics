@@ -17,12 +17,19 @@ public class PlayerInventory : Inventory
 
     private DeckObject[] specific = new DeckObject[2];
 
-    public override List<List<CardObjectBase>> GetCardPile()
+    public override List<CardObjectBase>[] GetCardPile()
     {
-        List<List<CardObjectBase>> combined = new();
+        List<CardObjectBase>[] combined = new List<CardObjectBase>[Enum.GetValues(typeof(ParentId)).Length];
 
         for (int i = 0; i < decks.Length; i++)
         {
+            if (decks[i] == null)
+            {
+                continue;
+            }
+
+            combined[i] = new();
+
             foreach (var card in decks[i].cards)
             {
                 combined[i].Add(card);

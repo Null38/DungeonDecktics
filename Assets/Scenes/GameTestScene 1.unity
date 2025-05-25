@@ -5250,8 +5250,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   decks:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 095e2b9efb0a7824ab1bd4973ad50a6d, type: 2}
+  - {fileID: 11400000, guid: 73efc818b4d5e7242bad140536f19015, type: 2}
   - {fileID: 0}
   - {fileID: 0}
 --- !u!1 &1832285952

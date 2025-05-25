@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07365c45d5b20ba4eb078e767e2ce6b3, type: 3}
   m_Name: Molla armor Deck
   m_EditorClassIdentifier: 
-  cards: []
+  cards:
+  - {fileID: 11400000, guid: 3d00bf4ced15fa84b834bd18ffbfc486, type: 2}
+  - {fileID: 11400000, guid: f017dec0213f6964a90033afcef153b0, type: 2}
+  - {fileID: 11400000, guid: f017dec0213f6964a90033afcef153b0, type: 2}

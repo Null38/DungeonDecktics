@@ -15,7 +15,7 @@ MonoBehaviour:
   CardName: "\uBAB0\uB77C \uC77C\uB2E8 \uC388 \uC274\uB4DC\uC784"
   description: "\uB354\uC6B1 \uBFDC\uBFDC\uD55C \uBC29\uC544\uB825\uC73C\uB85C {0}\uC758
     \uC274\uB4DC\uB97C \uC5BB\uB294\uB2E4."
-  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  backgroundColor: {r: 0.3066038, g: 0.7295698, b: 1, a: 1}
   artwork: {fileID: 0}
   cost: 1
   distance: 0
