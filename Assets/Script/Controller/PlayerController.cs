@@ -52,7 +52,7 @@ public class PlayerController : Controller, ITurnBased
             return;
 
         Touch touch = Input.GetTouch(0);
-        Debug.Log(IsPointerOverUIObject());
+        
         switch (touch.phase)
         {
             case TouchPhase.Began:

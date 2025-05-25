@@ -3715,7 +3715,7 @@ GameObject:
   - component: {fileID: 1832285953}
   - component: {fileID: 1832285955}
   - component: {fileID: 1832285954}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4867,7 +4867,7 @@ GameObject:
   - component: {fileID: 1888362830}
   - component: {fileID: 1888362829}
   - component: {fileID: 1888362828}
-  m_Layer: 9
+  m_Layer: 12
   m_Name: RenderTilemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
