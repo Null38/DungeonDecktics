@@ -40,7 +40,6 @@ public class PlayerController : Controller, ITurnBased
         // 클릭 입력 처리
         if (touch)
         {
-            Debug.Log(touch);
             // 마우스 포인터 → 월드 좌표 변환 (Z값 지정!)
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
             //z값 어짜피 무시됨

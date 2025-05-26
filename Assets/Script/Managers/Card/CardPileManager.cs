@@ -116,11 +116,6 @@ public class CardPileManager
             drawPile.RemoveAt(drawPile.Count - 1);
             handPile.Add(card);
         }
-
-        foreach (var item in handPile)
-        {
-            Debug.Log(item.card.name);
-        }
     }
 
     /// <summary>
