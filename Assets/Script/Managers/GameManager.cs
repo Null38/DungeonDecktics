@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
     {
         currentTurn = 0;
         IsPlayerTurn = true;
-        Debug.LogWarning("던전 생성 안함");
+        Debug.LogWarning("던전 생성 안함\n구현은 되어있는데 맵생성이 아직 몹생성이나 플레이어 위치를 바꾸는 코드가 없음.");
         //DataManager.generator.Generate();
 
 
