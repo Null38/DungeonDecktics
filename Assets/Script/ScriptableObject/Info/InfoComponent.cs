@@ -5,9 +5,7 @@ using static UnityEditor.PlayerSettings;
 public class InfoComponent : MonoBehaviour
 {
     [SerializeField]
-    BaseInfo Info;//Info를 수정하지 마세요 info기반으로 작동해야합니다.
-
-    private BaseInfo info;
+    BaseInfo info;
 
     [HideInInspector]
     public List<CardObjectBase> Deck = new List<CardObjectBase>();
@@ -16,13 +14,7 @@ public class InfoComponent : MonoBehaviour
     public void Initialize()
     {
         Deck.Clear();
-
-        foreach (var card in Info.defaultDeck)
-        {
-            Deck.Add(Instantiate(card));
-        }
-
-        info = Instantiate(Info);//info값은 변동될것이기에 참조한것이 수정되지 않게 하기위해 복제를 하고 있습니다.
+        info.MaxHp = 0;
     }
 
     void TakeDamage(int damage)

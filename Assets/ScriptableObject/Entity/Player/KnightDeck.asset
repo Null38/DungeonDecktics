@@ -10,6 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07365c45d5b20ba4eb078e767e2ce6b3, type: 3}
-  m_Name: DeckData
+  m_Name: KnightDeck
   m_EditorClassIdentifier: 
-  cards: []
+  cards:
+  - {fileID: 11400000, guid: 818b2a3beff853440b921bb6195779d9, type: 2}
+  - {fileID: 11400000, guid: 818b2a3beff853440b921bb6195779d9, type: 2}
+  - {fileID: 11400000, guid: 818b2a3beff853440b921bb6195779d9, type: 2}

@@ -1,11 +1,18 @@
 using UnityEngine;
 
-[RequireComponent(typeof(GameManager))]
 public class CardSpawner : MonoBehaviour
 {
     [SerializeField]
     private GameObject CardPrefab;
-    public GameObject SpawnCard(CardObjectBase info, GameObject parent)
+    [SerializeField]
+    private Transform parent;
+
+    private void Awake()
+    {
+        DataManager.cardSpawner = this;
+    }
+
+    public GameObject SpawnCard(CardObjectBase info)
     {
         if (info == null)
         {
@@ -14,7 +21,7 @@ public class CardSpawner : MonoBehaviour
         }
 
 
-        GameObject cardInstance = Instantiate(CardPrefab, parent.transform);
+        GameObject cardInstance = Instantiate(CardPrefab, parent);
 
         CardComponent cardComponent = cardInstance.GetComponent<CardComponent>();
 

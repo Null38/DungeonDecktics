@@ -18,11 +18,14 @@ public class CardComponent : MonoBehaviour
     private TMP_Text descriptionText;
     [SerializeField]
     private TMP_Text costText;
+    [SerializeField]
+    private Button interaction;
 
     public void CardInit(CardObjectBase card)
     {
         cardInfo = card;
         DisplayCard();
+        interaction.onClick.AddListener( () => Debug.Log("test") );
     }
 
     public void DisplayCard()

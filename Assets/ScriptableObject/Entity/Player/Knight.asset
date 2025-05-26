@@ -18,9 +18,7 @@ MonoBehaviour:
   currentCost: 0
   currentShield: 0
   evasion: 0
-  defaultDeck:
-  - {fileID: 11400000, guid: aae784ac0ff0a734fafc1539fb1c55d1, type: 2}
-  - {fileID: 11400000, guid: aae784ac0ff0a734fafc1539fb1c55d1, type: 2}
+  defaultDeck: {fileID: 0}
   CharacterClass: 0
   Experience: 0
   additionalHp: 0

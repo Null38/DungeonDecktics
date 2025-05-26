@@ -6,6 +6,7 @@ public static class DataManager
     public static PlayerController player; // 플레이어 오브젝트
 
     public static DungeonGenerator generator;
+    public static CardSpawner cardSpawner;
     public static LayerMask WallLayer = LayerMask.GetMask("Wall");
     public static LayerMask MapObjectLayer = LayerMask.GetMask("MapObjects");
     public static LayerMask UnitLayer = LayerMask.GetMask("Unit");

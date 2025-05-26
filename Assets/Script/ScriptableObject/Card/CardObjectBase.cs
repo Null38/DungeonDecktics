@@ -1,8 +1,4 @@
-using System;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 
 public abstract class CardObjectBase : ScriptableObject
@@ -21,6 +17,20 @@ public abstract class CardObjectBase : ScriptableObject
     public CardCategory category;
     public TargetType targetType;
 
+
+    public bool isUpgraded = false;
+
     public abstract void UseCard(Controller user);
     public abstract string FormatDescription();
+
+    /// <summary>
+    /// 카드 강화.
+    /// 끝나고서 isUpgraded는 참으로 바꿔주세요.
+    /// </summary>
+    public abstract string Upgrad();
+}
+
+interface IAfterUseHandler
+{
+
 }

@@ -1,10 +1,6 @@
-using Astar;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
-[RequireComponent(typeof(InfoComponent))]
 public class EnemyController : Controller, ITurnBased
 {
     public static Dictionary<Controller, ITurnBased> ActiveEnemy = new(); 

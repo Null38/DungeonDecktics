@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using TouchPhase = UnityEngine.TouchPhase;
 
-[RequireComponent(typeof(InfoComponent))]
 public class PlayerController : Controller, ITurnBased
 {
-    private InfoComponent info;
     private Vector3? target = null;
+
+    [SerializeField]
+    public PlayerInventory inventory;
+
+    public CardPileManager CardPile {get; private set;}
 
     private bool touch = false;
     private bool isTouchMove = true;
@@ -16,7 +19,12 @@ public class PlayerController : Controller, ITurnBased
     void Awake()
     {
         DataManager.player = this;
-        info = GetComponent<InfoComponent>();
+        CardPile = new(inventory);
+        CardPile.Initalize();
+    }
+
+    void Start()
+    {
     }
 
     void Update()
@@ -105,4 +113,5 @@ public class PlayerController : Controller, ITurnBased
     }
 
     public override Vector3? TargetPos => GameManager.Instance.IsPlayerTurn ? target : null;
+
 }

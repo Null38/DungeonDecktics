@@ -2,6 +2,7 @@ using UnityEngine;
 using System;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
@@ -40,14 +41,17 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        StartInit();
-        //DataManager.generator.Generate();
+        if (SceneManager.GetActiveScene().rootCount >= 2)
+            StartInit();
     }
 
     public void StartInit()
     {
         currentTurn = 0;
         IsPlayerTurn = true;
+        Debug.LogWarning("던전 생성 안함");
+        //DataManager.generator.Generate();
+
 
         Debug.Log("게임 시작!");
 
