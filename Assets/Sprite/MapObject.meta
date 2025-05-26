@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Sprite/MapObject.meta
-guid: ba17aad686e180e4289ba9264d29003f
-========
 guid: b9c161c642363314bad26fbd46516820
->>>>>>>> Card-for-fight:Assets/Script/Managers/Card.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
