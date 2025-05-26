@@ -3,9 +3,12 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using TouchPhase = UnityEngine.TouchPhase;
+using System;
 
 public class PlayerController : Controller, ITurnBased
 {
+    public static event Action Moved;
+
     private Vector3? target = null;
 
     [SerializeField]
@@ -29,14 +32,15 @@ public class PlayerController : Controller, ITurnBased
 
     void Update()
     {
+
         if (!GameManager.Instance.IsPlayerTurn)
             return;
 
         TouchCheck();
-
         // 클릭 입력 처리
         if (touch)
         {
+            Debug.Log(touch);
             // 마우스 포인터 → 월드 좌표 변환 (Z값 지정!)
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
             //z값 어짜피 무시됨
@@ -49,6 +53,7 @@ public class PlayerController : Controller, ITurnBased
                 // LinkedList<Vector2Int> → Vector3 변환
                 Vector2Int nextNode = path.First.Value;
                 target = new Vector3(nextNode.x, nextNode.y, 0f);
+                Moved();
             }
             touch = false;
         }
@@ -60,12 +65,15 @@ public class PlayerController : Controller, ITurnBased
             return;
 
         Touch touch = Input.GetTouch(0);
-        
+
         switch (touch.phase)
         {
             case TouchPhase.Began:
                 if (IsPointerOverUIObject())
+                {
+                    isTouchMove = true;
                     return;
+                }
                 isTouchMove = false;
                 break;
             case TouchPhase.Moved:
