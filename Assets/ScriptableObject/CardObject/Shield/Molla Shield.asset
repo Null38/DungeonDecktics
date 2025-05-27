@@ -19,7 +19,7 @@ MonoBehaviour:
   artwork: {fileID: 0}
   cost: 1
   distance: 0
-  category: 0
+  category: 1
   targetType: 0
   isUpgraded: 0
   shield: 2

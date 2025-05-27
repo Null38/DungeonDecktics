@@ -8,14 +8,14 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Unit
+  - 
   - Water
   - UI
   - Card
   - 
   - MapObjects
-  - 
-  - 
+  - Target
+  - Unit
   - 
   - Wall
   - 
