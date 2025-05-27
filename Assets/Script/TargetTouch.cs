@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TargetTouchEventController : MonoBehaviour, IPointerClickHandler
+public class TargetTouch : MonoBehaviour, IPointerClickHandler
 {
     public void OnMouseDown()
     {
@@ -12,12 +12,5 @@ public class TargetTouchEventController : MonoBehaviour, IPointerClickHandler
     {
         throw new System.NotImplementedException();
     }
-
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0)) {
-    }
-
-}
 }
 
