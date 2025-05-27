@@ -31,5 +31,6 @@ public class SimpleAttack : CardObjectBase
     public override void UseCard(Controller user)
     {
         throw new System.NotImplementedException();
+        isUpgraded = true;
     }
 }
