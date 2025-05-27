@@ -25,7 +25,7 @@ public class CardComponent : MonoBehaviour
     {
         cardInfo = card;
         DisplayCard();
-        interaction.onClick.AddListener( () => Debug.Log("test") );
+        interaction.onClick.AddListener( () => GameManager.Instance.SpawnTarget(cardInfo.targetType) );
     }
 
     public void DisplayCard()

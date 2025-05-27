@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
+    public GameObject targetPrefab;
+
     [Header("Turn Management")]
     public int currentTurn = 0;
     public bool IsPlayerTurn { get; private set; }
@@ -18,6 +20,8 @@ public class GameManager : MonoBehaviour
     public static event Action EnemyTurnEvent;
 
     private Dictionary<Controller, ITurnBased> activeEntitys = new();
+    private List<GameObject> targetObjs = new();
+
 
     [Header("Enemy Spawning")]
     [Tooltip("씬에 배치할 적 Prefab")]
@@ -163,6 +167,40 @@ public class GameManager : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void SpawnTarget(CardObjectBase.TargetType target)
+    {
+        RemoveAllTarget();
+
+        List<Vector2> points = new();
+
+        switch (target)
+        {
+            case CardObjectBase.TargetType.Self:
+                points.Add(DataManager.player.transform.position);
+                break;
+            case CardObjectBase.TargetType.other:
+                foreach (KeyValuePair<Controller, ITurnBased> enemy in EnemyController.ActiveEnemy)
+                {
+                    points.Add(enemy.Key.transform.position);
+                }
+                break;
+        }
+
+        foreach (var position in points)
+        {
+            targetObjs.Add(Instantiate(targetPrefab, position, Quaternion.identity));
+        }
+    }
+
+    public void RemoveAllTarget()
+    {
+
+        foreach (var obj in targetObjs)
+        {
+            Destroy(obj);
+        }
     }
 }
 

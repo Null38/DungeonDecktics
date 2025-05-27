@@ -11,10 +11,6 @@ public class PlayerController : Controller, ITurnBased
 
     private Vector3? target = null;
 
-    [SerializeField]
-    public PlayerInventory inventory;
-
-    public CardPileManager CardPile {get; private set;}
 
     private bool touch = false;
     private bool isTouchMove = true;
@@ -22,8 +18,6 @@ public class PlayerController : Controller, ITurnBased
     void Awake()
     {
         DataManager.player = this;
-        CardPile = new(inventory);
-        CardPile.Initalize();
     }
 
     void Start()
