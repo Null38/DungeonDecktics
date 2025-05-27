@@ -5186,7 +5186,6 @@ GameObject:
   - component: {fileID: 1777974629}
   - component: {fileID: 1777974628}
   - component: {fileID: 1777974633}
-  - component: {fileID: 1777974634}
   m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
@@ -5219,7 +5218,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   info: {fileID: 11400000, guid: fb8676b4fa0510845902539eec0ccede, type: 2}
-  inventory: {fileID: 1777974634}
 --- !u!212 &1777974630
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5336,23 +5334,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1777974634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1777974627}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c916f9d1e1926a40bf522dc8aad9457, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  decks:
-  - {fileID: 11400000, guid: 095e2b9efb0a7824ab1bd4973ad50a6d, type: 2}
-  - {fileID: 11400000, guid: 73efc818b4d5e7242bad140536f19015, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &1832285952
 GameObject:
   m_ObjectHideFlags: 0

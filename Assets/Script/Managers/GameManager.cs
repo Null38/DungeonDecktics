@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public static event Action EnemyTurnEvent;
 
     private Dictionary<Controller, ITurnBased> activeEntitys = new();
+    private List<GameObject> targetObjs = new();
 
 
     [Header("Enemy Spawning")]
@@ -170,6 +171,8 @@ public class GameManager : MonoBehaviour
 
     public void SpawnTarget(CardObjectBase.TargetType target)
     {
+        RemoveAllTarget();
+
         List<Vector2> points = new();
 
         switch (target)
@@ -187,7 +190,16 @@ public class GameManager : MonoBehaviour
 
         foreach (var position in points)
         {
-            Instantiate(targetPrefab, position, Quaternion.identity);
+            targetObjs.Add(Instantiate(targetPrefab, position, Quaternion.identity));
+        }
+    }
+
+    public void RemoveAllTarget()
+    {
+
+        foreach (var obj in targetObjs)
+        {
+            Destroy(obj);
         }
     }
 }
