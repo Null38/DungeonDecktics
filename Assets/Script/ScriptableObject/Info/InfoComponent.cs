@@ -7,6 +7,8 @@ public class InfoComponent : MonoBehaviour
     [SerializeField]
     BaseInfo info;
 
+    public int currentHp => info.currentHp;
+
     [HideInInspector]
     public List<CardObjectBase> Deck = new List<CardObjectBase>();
 
@@ -14,10 +16,12 @@ public class InfoComponent : MonoBehaviour
     public void Initialize()
     {
         Deck.Clear();
-        info.MaxHp = 0;
+        info.currentHp = info.MaxHp;
+        info.currentShield = 0;
+        info.currentCost = info.MaxCost;
     }
 
-     void TakeDamage(int damage)
+     public void TakeDamage(int damage)
     {
         int remainingDamage = damage;
                 
@@ -52,7 +56,7 @@ public class InfoComponent : MonoBehaviour
     // 죽음 처리 메서드
     protected virtual void Die()
     {
-        Debug.Log("이(가) 죽었습니다.");
+        Debug.Log("'player'이(가) 죽었습니다.");
     }
 
     // Cost 조정 메서드
