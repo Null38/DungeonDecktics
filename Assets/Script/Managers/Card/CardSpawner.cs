@@ -7,7 +7,7 @@ public class CardSpawner : MonoBehaviour
     [SerializeField]
     private Transform parent;
 
-    public GameObject SpawnCard(CardObjectBase info)
+    public GameObject SpawnCard(CardBase info)
     {
         if (info == null)
         {

@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 public class CardComponent : MonoBehaviour
 {
     [SerializeField]
-    private CardObjectBase cardInfo;
+    private CardBase cardInfo;
 
     [SerializeField]
     private Image cardBase;
@@ -21,7 +21,7 @@ public class CardComponent : MonoBehaviour
     [SerializeField]
     private Button interaction;
 
-    public void CardInit(CardObjectBase card)
+    public void CardInit(CardBase card)
     {
         cardInfo = card;
         DisplayCard();

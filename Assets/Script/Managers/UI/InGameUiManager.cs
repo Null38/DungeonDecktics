@@ -20,7 +20,7 @@ public class InGameUiManager : MonoBehaviour
 
     private void Start()
     {
-        foreach (CardObjectBase card in GameManager.Instance.cardPile.GetHandPile)
+        foreach (CardBase card in GameManager.Instance.cardPile.GetHandPile)
         {
             spawner.SpawnCard(card);
         }

@@ -17,9 +17,9 @@ public class Inventory : MonoBehaviour
 
     public DeckObject[] decks;
 
-    public List<CardObjectBase>[] GetCardPile()
+    public List<CardBase>[] GetCardPile()
     {
-        List<CardObjectBase>[] combined = new List<CardObjectBase>[Enum.GetValues(typeof(ParentId)).Length];
+        List<CardBase>[] combined = new List<CardBase>[Enum.GetValues(typeof(ParentId)).Length];
 
         for (int i = 0; i < decks.Length; i++)
         {

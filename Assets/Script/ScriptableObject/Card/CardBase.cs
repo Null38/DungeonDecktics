@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public abstract class CardObjectBase : ScriptableObject
+public abstract class CardBase : ScriptableObject
 {
     public enum CardCategory { Attack, Armor, Utility }       // 카드 종류 일단 3개 설정 해놓고 공격+방어시 스크립터블 오브젝트 2개 넣는 방향으로 하면 될듯
     public enum TargetType { Self, other }             // 타겟 타입
@@ -25,6 +25,7 @@ public abstract class CardObjectBase : ScriptableObject
 
     /// <summary>
     /// 카드 강화.
+    /// 이거 구현 안할듯
     /// 끝나고서 isUpgraded는 참으로 바꿔주세요.
     /// </summary>
     public abstract string Upgrad();

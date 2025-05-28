@@ -10,9 +10,9 @@ public class CardPileManager
     private struct CardInfo
     {
         public int parentId;
-        public CardObjectBase card;
+        public CardBase card;
 
-        public CardInfo(int id, CardObjectBase card)
+        public CardInfo(int id, CardBase card)
         {
             parentId = id;
             this.card = card;
@@ -35,7 +35,7 @@ public class CardPileManager
     }
 
 
-    public List<CardObjectBase> CardPile
+    public List<CardBase> CardPile
     {
         get
         {
@@ -44,12 +44,12 @@ public class CardPileManager
     }
 
 
-    public List<CardObjectBase> GetDrawPile => throw new NotImplementedException("GetDrawPile 미구현");
-    public List<CardObjectBase> GetHandPile 
+    public List<CardBase> GetDrawPile => throw new NotImplementedException("GetDrawPile 미구현");
+    public List<CardBase> GetHandPile 
     {
         get
         {
-            List<CardObjectBase> value = new();
+            List<CardBase> value = new();
 
             Debug.LogWarning("임시로 대충 구현한거 아마도 위험함");
             foreach (CardInfo card in handPile)
@@ -60,7 +60,7 @@ public class CardPileManager
             return value;
         }
     }
-    public List<CardObjectBase> GetDiscardPile => throw new NotImplementedException("GetDiscardPile 미구현");
+    public List<CardBase> GetDiscardPile => throw new NotImplementedException("GetDiscardPile 미구현");
 
 
     public void Initalize()
@@ -79,7 +79,7 @@ public class CardPileManager
         discardPile.Clear();
 
 
-        List<CardObjectBase>[] pile =  inventory.GetCardPile();
+        List<CardBase>[] pile =  inventory.GetCardPile();
 
         for (int i = 0; i < pile.Length; i++)
         {
@@ -87,7 +87,7 @@ public class CardPileManager
             {
                 continue;
             }
-            foreach (CardObjectBase card in pile[i])
+            foreach (CardBase card in pile[i])
             {
                 drawPile.Add(new CardInfo(i, card));
             }

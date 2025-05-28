@@ -179,7 +179,7 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    public void SpawnTarget(CardObjectBase.TargetType target)
+    public void SpawnTarget(CardBase.TargetType target)
     {
         RemoveAllTarget();
 
@@ -187,10 +187,10 @@ public class GameManager : MonoBehaviour
 
         switch (target)
         {
-            case CardObjectBase.TargetType.Self:
+            case CardBase.TargetType.Self:
                 points.Add(DataManager.player.transform.position);
                 break;
-            case CardObjectBase.TargetType.other:
+            case CardBase.TargetType.other:
                 foreach (KeyValuePair<Controller, ITurnBased> enemy in EnemyController.ActiveEnemy)
                 {
                     points.Add(enemy.Key.transform.position);
@@ -211,6 +211,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(obj);
         }
+    }
+
+    public void UseCard()
+    {
+        Debug.LogError("카드 사용 구현하기");
+        //selectCard의 cardinfo에 있는 UseCard를 작동시키는식으로 가야할거같긴한데.
     }
 
     public static void CardSelectEvent(CardComponent cardInfo, RectTransform cardTransform)

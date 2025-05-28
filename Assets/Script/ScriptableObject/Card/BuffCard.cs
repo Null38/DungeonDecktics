@@ -2,7 +2,7 @@ using System.Runtime.InteropServices;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new Buff Card", menuName = "Scriptable Objects/Cards/Buff Card", order = 1)]
-public class BuffCard : CardObjectBase
+public class BuffCard : CardBase
 {
     //구현 하나도 안했고 그냥 형태 잡기 위해 만든겁니다.
 

@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "new Simple Shield", menuName = "Scriptable Objects/Cards/Simple Shield", order = 1)]
-public class SimpleShield : CardObjectBase
+public class SimpleShield : CardBase
 {
     public int shield;
 

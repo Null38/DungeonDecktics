@@ -1,16 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TargetTouch : MonoBehaviour, IPointerClickHandler
+public class TargetTouch : MonoBehaviour
 {
     public void OnMouseDown()
     {
-        Debug.Log("터치됨");
-    }
-
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        throw new System.NotImplementedException();
+        Debug.LogWarning("아마.. 이놈과 겹쳐있는 유닛을 가져오는 식으로 뭐 할듯?");
+        GameManager.Instance.UseCard();
     }
 }
 

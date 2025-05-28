@@ -24,7 +24,7 @@ public class Selector : MonoBehaviour
     void MoveToTarget()
     {
         Vector3 targetPos = target.position;
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.fixedDeltaTime);
+        transform.position = Vector3.Lerp(transform.position, targetPos, speed * Time.fixedDeltaTime);
 
         RectTransform rectTransform = transform as RectTransform;
         Vector2 targetSizeWithPadding = (target.sizeDelta / 2) + padding;
