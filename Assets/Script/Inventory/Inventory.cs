@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory
+public class Inventory : MonoBehaviour
 {
     public enum ParentId
     {
@@ -15,8 +15,7 @@ public class Inventory
     }
 
 
-    private DeckObject[] specific = new DeckObject[2];
-    protected DeckObject[] decks;
+    public DeckObject[] decks;
 
     public List<CardObjectBase>[] GetCardPile()
     {

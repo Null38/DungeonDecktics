@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     public GameObject targetPrefab;
+    public Inventory inventory;
+    public CardPileManager cardPile;
 
     [Header("Turn Management")]
     public int currentTurn = 0;
@@ -40,13 +42,18 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        cardPile = new(inventory);
+        cardPile.Initalize();
+
         Debug.Log("GameManager initialized");
     }
 
     private void Start()
     {
         if (SceneManager.GetActiveScene().rootCount >= 2)
+        {
             StartInit();
+        }
     }
 
     public void StartInit()

@@ -16,11 +16,9 @@ public class InGameUiManager : MonoBehaviour
 
     private void Start()
     {
-        /*
-        foreach (CardObjectBase card in DataManager.player.CardPile.GetHandPile)
+        foreach (CardObjectBase card in GameManager.Instance.cardPile.GetHandPile)
         {
             DataManager.cardSpawner.SpawnCard(card);
         }
-        */
     }
 }
