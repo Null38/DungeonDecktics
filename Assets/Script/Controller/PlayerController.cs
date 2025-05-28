@@ -32,7 +32,7 @@ public class PlayerController : Controller, ITurnBased
 
         TouchCheck();
         // 클릭 입력 처리
-        if (touch)
+        if (touch && GameManager.Instance.selectCard == null)
         {
             // 마우스 포인터 → 월드 좌표 변환 (Z값 지정!)
             Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
