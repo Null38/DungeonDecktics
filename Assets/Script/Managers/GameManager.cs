@@ -24,6 +24,9 @@ public class GameManager : MonoBehaviour
     private Dictionary<Controller, ITurnBased> activeEntitys = new();
     private List<GameObject> targetObjs = new();
 
+    public CardObjectBase selectCard;
+    public static event Action<RectTransform> CardSelectedEvent;
+    
 
     [Header("Enemy Spawning")]
     [Tooltip("씬에 배치할 적 Prefab")]
@@ -208,6 +211,12 @@ public class GameManager : MonoBehaviour
         {
             Destroy(obj);
         }
+    }
+
+    public static void CardSelectEvent(CardObjectBase cardInfo, RectTransform cardTransform)
+    {
+        Instance.selectCard = cardInfo;
+        CardSelectedEvent(cardTransform);
     }
 }
 

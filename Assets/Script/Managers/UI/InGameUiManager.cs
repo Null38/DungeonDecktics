@@ -9,6 +9,10 @@ public class InGameUiManager : MonoBehaviour
     Slider ShildBar;
     [SerializeField]
     GameObject Pause;
+    [SerializeField]
+    CardSpawner spawner;
+    [SerializeField]
+    Selector selector;
     public void OnPauseUI()
     {
         Pause.SetActive(true);
@@ -18,7 +22,9 @@ public class InGameUiManager : MonoBehaviour
     {
         foreach (CardObjectBase card in GameManager.Instance.cardPile.GetHandPile)
         {
-            DataManager.cardSpawner.SpawnCard(card);
+            spawner.SpawnCard(card);
         }
+
+        GameManager.CardSelectedEvent += selector.Select;
     }
 }
