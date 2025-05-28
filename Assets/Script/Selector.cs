@@ -32,7 +32,7 @@ public class Selector : MonoBehaviour
     }
     void MoveToInitialPosition()
     {
-        transform.localPosition = Vector3.MoveTowards(transform.localPosition, initialPosition, speed * Time.fixedDeltaTime);
+        transform.localPosition = Vector3.Lerp(transform.localPosition, initialPosition, speed * Time.fixedDeltaTime);
 
         RectTransform rectTransform = transform as RectTransform;
         rectTransform.sizeDelta = Vector2.Lerp(rectTransform.sizeDelta, initialSize, speed * Time.fixedDeltaTime);

@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     private Dictionary<Controller, ITurnBased> activeEntitys = new();
     private List<GameObject> targetObjs = new();
 
-    public CardObjectBase selectCard;
+    public CardComponent selectCard;
     public static event Action<RectTransform> CardSelectedEvent;
     
 
@@ -213,10 +213,19 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public static void CardSelectEvent(CardObjectBase cardInfo, RectTransform cardTransform)
+    public static void CardSelectEvent(CardComponent cardInfo, RectTransform cardTransform)
     {
-        Instance.selectCard = cardInfo;
-        CardSelectedEvent(cardTransform);
+        if (Instance.selectCard == cardInfo)
+        {
+            Instance.selectCard = null;
+            CardSelectedEvent(null);
+            Instance.RemoveAllTarget();
+        }
+        else
+        {
+            Instance.selectCard = cardInfo;
+            CardSelectedEvent(cardTransform);
+        }
     }
 }
 

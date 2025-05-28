@@ -25,11 +25,14 @@ public class CardComponent : MonoBehaviour
     {
         cardInfo = card;
         DisplayCard();
-        interaction.onClick.AddListener( () =>
-        { 
-            GameManager.Instance.SpawnTarget(cardInfo.targetType);
-            GameManager.CardSelectEvent(cardInfo, transform as RectTransform);
-        });
+
+        interaction.onClick.AddListener(OnCardClicked);
+    }
+
+    private void OnCardClicked()
+    {
+        GameManager.Instance.SpawnTarget(cardInfo.targetType);
+        GameManager.CardSelectEvent(this, transform as RectTransform);
     }
 
     public void DisplayCard()
