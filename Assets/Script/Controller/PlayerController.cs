@@ -22,6 +22,11 @@ public class PlayerController : Controller, ITurnBased
     void Awake()
     {
         DataManager.player = this;
+
+        var infoComp = GetComponent<InfoComponent>();
+        if (infoComp != null)
+            infoComp.Initialize();
+
         CardPile = new(inventory);
         //CardPile.Initalize();
     }
