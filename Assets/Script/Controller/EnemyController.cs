@@ -14,7 +14,6 @@ public class EnemyController : Controller, ITurnBased
 
     void OnEnable() => ActiveEnemy[this] = this;
     void OnDisable() => ActiveEnemy.Remove(this);
-
     
     public void OnTurnBegin()
     {
@@ -108,24 +107,10 @@ public class EnemyController : Controller, ITurnBased
 
     public override void NextStep()
     {
-        if (path.Count > 0)
-        {
-            path.RemoveFirst();
-            if (path.Count > 0)
-            {
-                var next = path.First.Value;
-                target = new Vector3(next.x, next.y, 0f);
-            }
-            else
-            {
-                target = null;
-                OnTurnEnd();
-            }
-        }
-        else
-        {
-            OnTurnEnd();
-        }
+        // 이동 후 즉시 턴 종료 (한 칸만 이동)
+        path.Clear();
+        target = null;
+        OnTurnEnd();
     }
 
     public void OnTurnEnd()
