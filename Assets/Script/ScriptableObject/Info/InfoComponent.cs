@@ -17,18 +17,10 @@ public class InfoComponent : MonoBehaviour
         info.MaxHp = 0;
     }
 
-    void TakeDamage(int damage)
+     void TakeDamage(int damage)
     {
         int remainingDamage = damage;
-
-        // 회피율(evasion) 적용
-        float roll = Random.value;
-        if (roll < info.evasion)
-        {
-            Debug.Log($"[회피] 공격을 회피했습니다! (회피 확률: {info.evasion * 100:F1}%)");
-            return;
-        }
-
+                
         // 1. 쉴드 먼저 깎기
         if (info.currentShield > 0)
         {

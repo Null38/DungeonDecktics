@@ -23,7 +23,7 @@ public class PlayerController : Controller, ITurnBased
     {
         DataManager.player = this;
         CardPile = new(inventory);
-        CardPile.Initalize();
+        //CardPile.Initalize();
     }
 
     void Start()
