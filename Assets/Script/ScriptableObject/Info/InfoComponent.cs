@@ -8,7 +8,7 @@ public class InfoComponent : MonoBehaviour
     BaseInfo info;
 
     [HideInInspector]
-    public List<CardObjectBase> Deck = new List<CardObjectBase>();
+    public List<CardBase> Deck = new List<CardBase>();
 
 
     public void Initialize()

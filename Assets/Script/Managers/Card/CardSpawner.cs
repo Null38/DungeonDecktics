@@ -7,12 +7,7 @@ public class CardSpawner : MonoBehaviour
     [SerializeField]
     private Transform parent;
 
-    private void Awake()
-    {
-        DataManager.cardSpawner = this;
-    }
-
-    public GameObject SpawnCard(CardObjectBase info)
+    public GameObject SpawnCard(CardBase info)
     {
         if (info == null)
         {
