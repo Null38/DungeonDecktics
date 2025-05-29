@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 public class CardComponent : MonoBehaviour
 {
     [SerializeField]
-    private CardBase cardInfo;
+    public CardBase cardInfo;
 
     [SerializeField]
     private Image cardBase;
