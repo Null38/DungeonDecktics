@@ -3014,6 +3014,7 @@ GameObject:
   - component: {fileID: 877919382}
   - component: {fileID: 877919385}
   - component: {fileID: 877919386}
+  - component: {fileID: 877919387}
   m_Layer: 3
   m_Name: Enemy
   m_TagString: Untagged
@@ -3177,6 +3178,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   info: {fileID: 0}
   Deck: []
+--- !u!95 &877919387
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877919379}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 693f4decddd5cf04c935a7163fe9ed91, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &930304696
 GameObject:
   m_ObjectHideFlags: 0
@@ -3840,6 +3863,12 @@ MonoBehaviour:
   HpBar: {fileID: 1131179288}
   ShildBar: {fileID: 1521018835}
   Pause: {fileID: 841605111}
+  spawner: {fileID: 0}
+  selector: {fileID: 0}
+  settingIcon: {fileID: 0}
+  deckUI: {fileID: 0}
+  DeckUIShowPos: {x: 0, y: 0}
+  DeckUIHidePos: {x: 0, y: 0}
 --- !u!1 &1131179286
 GameObject:
   m_ObjectHideFlags: 0
@@ -4156,7 +4185,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d87e8520f3825247a78f1354f2bccf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPrefab: {fileID: 0}
+  inventory: {fileID: 0}
   currentTurn: 0
+  selectCard: {fileID: 0}
   enemyPrefab: {fileID: 0}
   spawnPoints: []
 --- !u!4 &1323081026
@@ -5158,7 +5190,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   info: {fileID: 11400000, guid: fb8676b4fa0510845902539eec0ccede, type: 2}
-  inventory: {fileID: 0}
 --- !u!212 &1777974630
 SpriteRenderer:
   m_ObjectHideFlags: 0

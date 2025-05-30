@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         cardPile = new(inventory);
-        cardPile.Initalize();
+        //cardPile.Initalize();
 
         Debug.Log("GameManager initialized");
     }

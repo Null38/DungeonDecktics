@@ -18,6 +18,8 @@ public class PlayerController : Controller, ITurnBased
     void Awake()
     {
         DataManager.player = this;
+        var infocomp = GetComponent<InfoComponent>();
+        if (infocomp != null) infocomp.Initialize();
     }
 
     void Start()
