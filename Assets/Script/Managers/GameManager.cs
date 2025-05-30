@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 
 public class GameManager : MonoBehaviour
@@ -33,6 +34,10 @@ public class GameManager : MonoBehaviour
     public GameObject enemyPrefab;
     [Tooltip("적을 스폰할 위치들")]
     public List<Transform> spawnPoints = new();
+
+    [Header("Damage Popup")]
+    [SerializeField] private GameObject damagePopupPrefab;
+    [SerializeField] private Canvas Canvas;  
 
     private void Awake()
     {
@@ -237,6 +242,26 @@ public class GameManager : MonoBehaviour
             CardSelectedEvent(cardTransform);
         }
     }
+    /// <summary>
+    /// 적/플레이어의 데미지 팝업을 화면에 띄움.
+    /// </summary>
+    public void ShowDamagePopup(int dmg, Vector3 worldPos)
+    {
+        if (damagePopupPrefab == null || Canvas == null) return;
+
+        // 팝업 인스턴스화
+        var go = Instantiate(damagePopupPrefab, Canvas.transform);
+        // 월드 → 스크린 좌표 변환
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos + Vector3.up * 0.5f);
+        go.GetComponent<RectTransform>().position = screenPos;
+        // 데미지 텍스트 초기화
+        var popup = go.GetComponent<DamagePopup>();
+        if (popup != null) popup.Init(dmg);
+    }
+
+
+
+
 }
 
 public interface ITurnBased
