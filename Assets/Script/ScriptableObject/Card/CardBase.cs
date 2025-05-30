@@ -20,7 +20,7 @@ public abstract class CardBase : ScriptableObject
 
     public bool isUpgraded = false;
 
-    public abstract void UseCard(Controller user);
+    public abstract void UseCard(Controller target);
     public abstract string FormatDescription();
 
     /// <summary>

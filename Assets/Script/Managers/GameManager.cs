@@ -201,7 +201,16 @@ public class GameManager : MonoBehaviour
 
         foreach (var position in points)
         {
-            targetObjs.Add(Instantiate(targetPrefab, position, Quaternion.identity));
+            GameObject obj = Instantiate(targetPrefab, position, Quaternion.identity);
+
+            Collider2D hit = Physics2D.OverlapPoint(position, DataManager.UnitLayer);
+
+            if (hit == null)
+                throw new InvalidOperationException($"타겟 위치 {position}에 유닛이 존재하지 않습니다.");
+
+            obj.GetComponent<TargetTouch>().target = hit.GetComponent<Controller>();
+
+            targetObjs.Add(obj);
         }
     }
 
@@ -212,12 +221,6 @@ public class GameManager : MonoBehaviour
         {
             Destroy(obj);
         }
-    }
-
-    public void UseCard()
-    {
-        Debug.LogError("카드 사용 구현하기");
-        //selectCard의 cardinfo에 있는 UseCard를 작동시키는식으로 가야할거같긴한데.
     }
 
     public static void CardSelectEvent(CardComponent cardInfo, RectTransform cardTransform)
