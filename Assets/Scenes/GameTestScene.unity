@@ -583,7 +583,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 483952814}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1112612931}
+        m_TargetAssemblyTypeName: InGameUiManager, Assembly-CSharp
+        m_MethodName: DeckUImove
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &483952814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3590,7 +3602,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1033715920}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1112612931}
+        m_TargetAssemblyTypeName: InGameUiManager, Assembly-CSharp
+        m_MethodName: OnPauseUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1033715920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3825,6 +3849,13 @@ MonoBehaviour:
   HpBar: {fileID: 1131179288}
   ShildBar: {fileID: 1521018835}
   Pause: {fileID: 841605111}
+  spawner: {fileID: 0}
+  selector: {fileID: 0}
+  settingIcon: {fileID: 1033715919}
+  deckIcon: {fileID: 483952813}
+  deckUI: {fileID: 662115694}
+  DeckUIUp: {x: 0, y: 0}
+  DeckUIDown: {x: 0, y: 0}
 --- !u!1 &1131179286
 GameObject:
   m_ObjectHideFlags: 0
@@ -4141,7 +4172,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d87e8520f3825247a78f1354f2bccf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetPrefab: {fileID: 0}
+  inventory: {fileID: 0}
   currentTurn: 0
+  selectCard: {fileID: 0}
   enemyPrefab: {fileID: 0}
   spawnPoints: []
 --- !u!4 &1323081026
@@ -5142,7 +5176,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   info: {fileID: 11400000, guid: fb8676b4fa0510845902539eec0ccede, type: 2}
-  inventory: {fileID: 0}
 --- !u!212 &1777974630
 SpriteRenderer:
   m_ObjectHideFlags: 0

@@ -55,7 +55,8 @@ public class GameManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().rootCount >= 2)
         {
-            StartInit();
+            Debug.Log(SceneManager.GetActiveScene().rootCount);
+            //StartInit();
         }
     }
 

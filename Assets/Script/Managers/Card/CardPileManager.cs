@@ -65,8 +65,8 @@ public class CardPileManager
 
     public void Initalize()
     {
-        CardPileInitalize();
-        DrawToHand(5);
+    //    CardPileInitalize();
+    //    DrawToHand(5);
     }
 
     /// <summary>
