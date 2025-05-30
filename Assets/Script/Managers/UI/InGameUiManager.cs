@@ -59,7 +59,7 @@ public class InGameUiManager : MonoBehaviour
 
     bool isMoving = false;
 
-    public void DeckUIMove()
+    public void DeckUImove()
     {
         if (deckUI == null || isMoving) return;
 
