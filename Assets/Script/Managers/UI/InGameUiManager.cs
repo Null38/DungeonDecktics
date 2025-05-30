@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 
 public class InGameUiManager : MonoBehaviour
 {
@@ -18,15 +19,12 @@ public class InGameUiManager : MonoBehaviour
     [SerializeField]
     Button settingIcon;
     [SerializeField]
-    Button deckIcon;
+    RectTransform deckUI;
     [SerializeField]
-    GameObject deckUI;
+    Vector2 DeckUIShowPos;
     [SerializeField]
-    Vector2 DeckUIUp;
-    [SerializeField]
-    Vector2 DeckUIDown;
-    bool isDeckUIMove = false;
-    RectTransform deckRect;
+    Vector2 DeckUIHidePos;
+    bool isDeckUIHide = false;
 
     public void OnPauseUI()
     {
@@ -35,6 +33,9 @@ public class InGameUiManager : MonoBehaviour
 
     private void Start()
     {
+        if (deckUI == null)
+            throw new ArgumentNullException("deckUI is null");
+
         foreach (CardBase card in GameManager.Instance.cardPile.GetHandPile)
         {
             spawner.SpawnCard(card);
@@ -42,18 +43,7 @@ public class InGameUiManager : MonoBehaviour
 
         GameManager.CardSelectedEvent += selector.Select;
 
-        if (deckIcon != null)
-        {
-            settingIcon.onClick.AddListener(OnPauseUI);
-        }
-        else
-        {
-        }
-        if (deckUI != null)
-        {
-            deckRect = deckUI.GetComponent<RectTransform>();
-            deckRect.anchoredPosition = DeckUIDown;
-        }
+        settingIcon.onClick.AddListener(OnPauseUI);
     }
 
 
@@ -65,31 +55,26 @@ public class InGameUiManager : MonoBehaviour
 
         isMoving = true;
 
-        foreach (Transform child in deckUI.transform)
-        {
-            StartCoroutine(MoveUI(child.GetComponent<RectTransform>(), isDeckUIMove ? 100f : -100f));
-        }
+        isDeckUIHide = !isDeckUIHide;
 
-        isDeckUIMove = !isDeckUIMove;
+        StartCoroutine(MoveUI());
     }
 
-    IEnumerator MoveUI(RectTransform target, float moveAmount)
+    IEnumerator MoveUI()
     {
-        if (target == null) yield break;
-
-        Vector2 startPos = target.anchoredPosition;
-        Vector2 endPos = new(startPos.x, startPos.y + moveAmount);
+        Vector2 startPos = deckUI.anchoredPosition;
+        Vector2 endPos = isDeckUIHide ? DeckUIHidePos : DeckUIShowPos;
         float elapsed = 0f;
-        float duration = 0.3f;
+        float duration = 0.1f;
 
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
-            target.anchoredPosition = Vector2.Lerp(startPos, endPos, elapsed / duration);
+            deckUI.anchoredPosition = Vector2.Lerp(startPos, endPos, elapsed / duration);
             yield return null;
         }
 
-        target.anchoredPosition = endPos;
+        deckUI.anchoredPosition = endPos;
 
         isMoving = false;
     }

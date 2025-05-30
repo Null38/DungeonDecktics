@@ -53,10 +53,10 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (SceneManager.GetActiveScene().rootCount >= 2)
+        if (SceneManager.GetActiveScene().buildIndex >= 2)
         {
             Debug.Log(SceneManager.GetActiveScene().rootCount);
-            //StartInit();
+            StartInit();
         }
     }
 
