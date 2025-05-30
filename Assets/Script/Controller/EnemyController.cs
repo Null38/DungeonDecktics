@@ -40,24 +40,36 @@ public class EnemyController : Controller, ITurnBased
     /// </summary>
     private void Act()
     {
-        // 내 위치와 플레이어 위치를 그리드 좌표로 변환
-        Vector2Int myPos = new Vector2Int(
-            Mathf.RoundToInt(transform.position.x),
-            Mathf.RoundToInt(transform.position.y)
-        );
-        Vector3 playerWorld = DataManager.player.transform.position;
-        Vector2Int playerPos = new Vector2Int(
-            Mathf.RoundToInt(playerWorld.x),
-            Mathf.RoundToInt(playerWorld.y)
-        );
+    // 내 위치와 플레이어 위치를 그리드 좌표로 변환
+    Vector2Int myPos = new Vector2Int(
+        Mathf.RoundToInt(transform.position.x),
+        Mathf.RoundToInt(transform.position.y)
+    );
+    Vector3 playerWorld = DataManager.player.transform.position;
+    Vector2Int playerPos = new Vector2Int(
+        Mathf.RoundToInt(playerWorld.x),
+        Mathf.RoundToInt(playerWorld.y)
+    );
 
         int dx = playerPos.x - myPos.x;
         int dy = playerPos.y - myPos.y;
 
         // 대각선 포함 8방향 인접 체크
         if (Mathf.Abs(dx) <= 1 && Mathf.Abs(dy) <= 1)
-        {
-            Debug.Log($"[EnemyController] {name}이(가) 플레이어에게 {attackDamage} 데미지 공격!");
+        {           
+            //데미지 출력
+            var playerInfoComp = DataManager.player.GetComponent<InfoComponent>();
+            if (playerInfoComp != null)
+            {
+                Debug.Log($"[EnemyController] {name}이(가) 플레이어에게 {attackDamage} 데미지 공격!");
+                playerInfoComp.TakeDamage(attackDamage);
+                Debug.Log($"[EnemyController] 남은 HP: {playerInfoComp.currentHp}");
+
+            }
+            else
+            {
+                Debug.LogWarning("[EnemyController] InfoComponent를 찾을 수 없습니다!");
+            }
             OnTurnEnd();
             return;
         }

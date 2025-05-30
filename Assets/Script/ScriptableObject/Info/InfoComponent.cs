@@ -7,6 +7,8 @@ public class InfoComponent : MonoBehaviour
     [SerializeField]
     BaseInfo info;
 
+    public int currentHp => info.currentHp;
+
     [HideInInspector]
     public List<CardBase> Deck = new List<CardBase>();
 
@@ -14,21 +16,15 @@ public class InfoComponent : MonoBehaviour
     public void Initialize()
     {
         Deck.Clear();
-        info.MaxHp = 0;
+        info.currentHp = info.MaxHp;
+        info.currentShield = 0;
+        info.currentCost = info.MaxCost;
     }
 
-    void TakeDamage(int damage)
+     public void TakeDamage(int damage)
     {
         int remainingDamage = damage;
-
-        // 회피율(evasion) 적용
-        float roll = Random.value;
-        if (roll < info.evasion)
-        {
-            Debug.Log($"[회피] 공격을 회피했습니다! (회피 확률: {info.evasion * 100:F1}%)");
-            return;
-        }
-
+                
         // 1. 쉴드 먼저 깎기
         if (info.currentShield > 0)
         {
@@ -60,7 +56,7 @@ public class InfoComponent : MonoBehaviour
     // 죽음 처리 메서드
     protected virtual void Die()
     {
-        Debug.Log("이(가) 죽었습니다.");
+        Debug.Log("'player'이(가) 죽었습니다.");
     }
 
     // Cost 조정 메서드

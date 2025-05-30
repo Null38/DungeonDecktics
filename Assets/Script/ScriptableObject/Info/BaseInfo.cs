@@ -25,9 +25,6 @@ public abstract class BaseInfo : ScriptableObject
     [HideInInspector]
     public int currentShield;
 
-    // 회피율 Evasion (난이도 문제 발생시 삭제)
-    public float evasion;
-
     // Deck
     public DeckObject defaultDeck;
 }
