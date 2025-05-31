@@ -35,7 +35,7 @@ abstract public class Controller : MonoBehaviour
             newPath.RemoveAt(0);
 
 
-            if (GameManager.Instance.IsSameTargetPosition(this, (Vector2)newPath[0]))
+            if (newPath.Count > 0 && GameManager.Instance.IsSameTargetPosition(this, (Vector2)newPath[0]))
             {
                 ImpossiblePath.Add(newPath[0]);
             }

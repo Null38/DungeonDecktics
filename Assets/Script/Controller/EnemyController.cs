@@ -82,15 +82,11 @@ public class EnemyController : Controller, ITurnBased
             adjacent.Add(playerPos + pos);
         }
 
-        adjacent.Sort((a, b) =>
-            (a - myPos).sqrMagnitude.CompareTo((b - myPos).sqrMagnitude)
-        );
 
         for (int i = 0; i < adjacent.Count; i++)
         {
             if (path.Count > 0)
                 break;
-
 
             GetPath((Vector2)adjacent[i]);
         }
