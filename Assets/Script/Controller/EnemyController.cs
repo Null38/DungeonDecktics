@@ -75,51 +75,31 @@ public class EnemyController : Controller, ITurnBased
         }
 
         // 인접 8칸 중 가장 가까운 통과 가능한 칸을 골라 goal로 설정
-        var adjacent = new List<Vector2Int>(8);
-        for (int ix = -1; ix <= 1; ix++)
-            for (int iy = -1; iy <= 1; iy++)
-                if (ix != 0 || iy != 0)
-                    adjacent.Add(playerPos + new Vector2Int(ix, iy));
+        var adjacent = new List<Vector2Int>();
+
+        foreach (var pos in PathFinder.s_DiagDirs)
+        {
+            adjacent.Add(playerPos + pos);
+        }
 
         adjacent.Sort((a, b) =>
             (a - myPos).sqrMagnitude.CompareTo((b - myPos).sqrMagnitude)
         );
 
-        Vector2Int goal = playerPos;
-        bool found = false;
-        foreach (var cell in adjacent)
+        for (int i = 0; i < adjacent.Count; i++)
         {
-            if (IsPassable(cell))
-            {
-                goal = cell;
-                found = true;
+            if (path.Count > 0)
                 break;
-            }
-        }
-        if (!found)
-        {
-            Debug.LogWarning($"[EnemyController] {name} 주변 8칸 모두 막힘 → 턴 종료");
-            OnTurnEnd();
-            return;
+
+
+            GetPath((Vector2)adjacent[i]);
         }
 
-        // goal로 A* 경로 생성
-        Vector3 goalWorld = new Vector3(goal.x, goal.y, 0f);
-        GetPath(goalWorld);
-
-        //Debug.Log($"[EnemyController] {name} ▶ 목표 인접칸={goal}, 경로 노드 수={path.Count}");
 
         if (path.Count > 0)
-        {
-            var next = path.First.Value;
-            target = new Vector3(next.x, next.y, 0f);
-            //Debug.Log($"[EnemyController] {name} 이동 목표 → {target.Value}");
-        }
+            target = (Vector2)path.First.Value;
         else
-        {
-            Debug.Log($"[EnemyController] {name} 경로 없음 → 턴 종료");
             OnTurnEnd();
-        }
     }
 
     public override Vector3? TargetPos
