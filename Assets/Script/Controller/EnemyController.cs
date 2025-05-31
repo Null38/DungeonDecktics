@@ -89,11 +89,6 @@ public class EnemyController : Controller, ITurnBased
             (a - myPos).sqrMagnitude.CompareTo((b - myPos).sqrMagnitude)
         );
 
-        foreach (var item in adjacent)
-        {
-            Debug.Log(item);
-        }
-
         for (int i = 0; i < adjacent.Count; i++)
         {
             if (path.Count > 0)

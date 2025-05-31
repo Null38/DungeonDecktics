@@ -485,7 +485,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1178087450663199309, guid: a7aafc0f641ae934dbd7a781cbb078d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a9af4972a07e6f2478a791fa90d88dea, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -585,8 +585,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InGameUiManager, Assembly-CSharp
+      - m_Target: {fileID: 1112612931}
+        m_TargetAssemblyTypeName: InGameUIManager, Assembly-CSharp
         m_MethodName: DeckUImove
         m_Mode: 1
         m_Arguments:
@@ -867,8 +867,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: InGameUiManager, Assembly-CSharp
+      - m_Target: {fileID: 1112612931}
+        m_TargetAssemblyTypeName: InGameUIManager, Assembly-CSharp
         m_MethodName: ClosePauseUI
         m_Mode: 1
         m_Arguments:
@@ -3950,7 +3950,7 @@ MonoBehaviour:
   spawner: {fileID: 136178219}
   selector: {fileID: 973104411}
   DeckUIShowPos: {x: 0, y: 0}
-  DeckUIHidePos: {x: 0, y: -60}
+  DeckUIHidePos: {x: 0, y: -120}
 --- !u!1 &1131179286
 GameObject:
   m_ObjectHideFlags: 0
@@ -4298,7 +4298,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1323081024}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c916f9d1e1926a40bf522dc8aad9457, type: 3}
+  m_Script: {fileID: 11500000, guid: b681bb413502a574a9f244539d4a4354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   decks:
@@ -5026,7 +5026,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1178087450663199309, guid: a7aafc0f641ae934dbd7a781cbb078d8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a9af4972a07e6f2478a791fa90d88dea, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
