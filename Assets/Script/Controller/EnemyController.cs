@@ -76,12 +76,23 @@ public class EnemyController : Controller, ITurnBased
 
         // 인접 8칸 중 가장 가까운 통과 가능한 칸을 골라 goal로 설정
         var adjacent = new List<Vector2Int>();
-
         foreach (var pos in PathFinder.s_DiagDirs)
         {
             adjacent.Add(playerPos + pos);
         }
+        foreach (var pos in PathFinder.s_FourDirs)
+        {
+            adjacent.Add(playerPos + pos);
+        }
 
+        adjacent.Sort((a, b) =>
+            (a - myPos).sqrMagnitude.CompareTo((b - myPos).sqrMagnitude)
+        );
+
+        foreach (var item in adjacent)
+        {
+            Debug.Log(item);
+        }
 
         for (int i = 0; i < adjacent.Count; i++)
         {

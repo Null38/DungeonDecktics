@@ -4,31 +4,45 @@ using UnityEngine.UI;
 using System.Collections;
 using System;
 
-public class InGameUiManager : MonoBehaviour
+public class InGameUIManager : MonoBehaviour
 {
     [SerializeField]
     Slider HpBar;
     [SerializeField]
     Slider ShildBar;
     [SerializeField]
+    Button settingIcon;
+    [SerializeField]
+    Button LoadMainButton;
+    [SerializeField]
+    Button OptionButton;
+
+
+    [SerializeField]
+    RectTransform deckUI;
+    [SerializeField]
     GameObject Pause;
+
     [SerializeField]
     CardSpawner spawner;
     [SerializeField]
     Selector selector;
-    [SerializeField]
-    Button settingIcon;
-    [SerializeField]
-    RectTransform deckUI;
+
     [SerializeField]
     Vector2 DeckUIShowPos;
     [SerializeField]
     Vector2 DeckUIHidePos;
+
     bool isDeckUIHide = false;
 
     public void OnPauseUI()
     {
         Pause.SetActive(true);
+    }
+
+    public void ClosePauseUI()
+    {
+        Pause.SetActive(false);
     }
 
     private void Start()
@@ -43,6 +57,8 @@ public class InGameUiManager : MonoBehaviour
 
         GameManager.CardSelectedEvent += selector.Select;
 
+        LoadMainButton.onClick.AddListener(SceneLoadManager.LoadMain);
+        OptionButton.onClick.AddListener(SceneLoadManager.LoadOption);
         settingIcon.onClick.AddListener(OnPauseUI);
     }
 

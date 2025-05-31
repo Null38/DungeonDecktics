@@ -304,7 +304,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB300\uCDA9 \uBC84\uD2BC"
+  m_text: "\uBA54\uC778\uC73C\uB85C \uAC00\uAE30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a1ff70225fc6384d8c54ab2e46afd45, type: 2}
   m_sharedMaterial: {fileID: 2333765052754836236, guid: 5a1ff70225fc6384d8c54ab2e46afd45, type: 2}
@@ -585,7 +585,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1112612931}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: InGameUiManager, Assembly-CSharp
         m_MethodName: DeckUImove
         m_Mode: 1
@@ -866,7 +866,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 686999899}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: InGameUiManager, Assembly-CSharp
+        m_MethodName: ClosePauseUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &686999899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3461,7 +3473,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB300\uCDA9 \uBC84\uD2BC"
+  m_text: "\uC124\uC815"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a1ff70225fc6384d8c54ab2e46afd45, type: 2}
   m_sharedMaterial: {fileID: 2333765052754836236, guid: 5a1ff70225fc6384d8c54ab2e46afd45, type: 2}
@@ -3930,13 +3942,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HpBar: {fileID: 1131179288}
   ShildBar: {fileID: 1521018835}
+  settingIcon: {fileID: 1033715919}
+  LoadMainButton: {fileID: 2119523962}
+  OptionButton: {fileID: 1310650465}
+  deckUI: {fileID: 662115695}
   Pause: {fileID: 841605111}
   spawner: {fileID: 136178219}
   selector: {fileID: 973104411}
-  settingIcon: {fileID: 1033715919}
-  deckUI: {fileID: 662115695}
   DeckUIShowPos: {x: 0, y: 0}
-  DeckUIHidePos: {x: 0, y: -150}
+  DeckUIHidePos: {x: 0, y: -60}
 --- !u!1 &1131179286
 GameObject:
   m_ObjectHideFlags: 0
@@ -4013,7 +4027,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1907204838}
   m_HandleRect: {fileID: 0}
@@ -4703,7 +4717,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 548350696}
   m_HandleRect: {fileID: 0}
@@ -4711,7 +4725,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 1
-  m_Value: 100
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -8777,7 +8791,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB300\uCDA9 \uBC84\uD2BC"
+  m_text: "\uAC8C\uC784 \uC7AC\uAC1C"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a1ff70225fc6384d8c54ab2e46afd45, type: 2}
   m_sharedMaterial: {fileID: 2333765052754836236, guid: 5a1ff70225fc6384d8c54ab2e46afd45, type: 2}

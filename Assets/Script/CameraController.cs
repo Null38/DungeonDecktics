@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// 카메라 따라가기와 수동 드래그 패닝을 지원합니다.
@@ -72,7 +75,7 @@ public class CameraController : MonoBehaviour
     private void HandleDragPan()
     {
         // 드래그 시작
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !IsPointerOverUIObject())
         {
             isDragging = true;
             lastMousePosition = Input.mousePosition;
@@ -102,6 +105,15 @@ public class CameraController : MonoBehaviour
         {
             isDragging = false;
         }
+    }
+
+    private bool IsPointerOverUIObject()
+    {
+        var touchPosition = Touchscreen.current.position.ReadValue();
+        var eventData = new PointerEventData(EventSystem.current) { position = touchPosition };
+        var results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, results);
+        return results.Count > 0;
     }
 
     private void HandleZoom()
