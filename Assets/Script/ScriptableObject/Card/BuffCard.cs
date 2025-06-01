@@ -17,7 +17,7 @@ public class BuffCard : CardBase
         isUpgraded = true;
     }
 
-    public override void RunCard(Controller user)
+    protected override void RunCard(Controller user)
     {
         throw new System.NotImplementedException();
     }

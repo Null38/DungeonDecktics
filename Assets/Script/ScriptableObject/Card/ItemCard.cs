@@ -14,7 +14,7 @@ public class ItemCard : CardBase
         throw new System.NotImplementedException();
     }
 
-    public override void RunCard(Controller user)
+    protected override void RunCard(Controller user)
     {
         throw new System.NotImplementedException();
     }

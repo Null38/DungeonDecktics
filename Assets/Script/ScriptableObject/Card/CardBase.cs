@@ -24,11 +24,12 @@ public abstract class CardBase : ScriptableObject
     {
         if (cost > DataManager.player.info.currentCost)
             return false;
+        DataManager.player.info.currentCost -= cost;
 
         RunCard(target);
         return true;
     }
-    public abstract void RunCard(Controller target);
+    protected abstract void RunCard(Controller target);
     public abstract string FormatDescription();
 
     /// <summary>

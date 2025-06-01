@@ -29,7 +29,7 @@ public class SimpleAttack : CardBase
         isUpgraded = true;
     }
 
-    public override void RunCard(Controller target)
+    protected override void RunCard(Controller target)
     {
 
         foreach (var damage in damages)
