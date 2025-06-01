@@ -33,9 +33,7 @@ public class SimpleAttack : CardBase
     {
         foreach (var damage in damages)
         {
-            Debug.Log(target);
             target.info.currentHp -= damage;
         }
-        Debug.Log("damaged");
     }
 }

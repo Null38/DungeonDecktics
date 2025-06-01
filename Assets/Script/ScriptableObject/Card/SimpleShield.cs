@@ -13,11 +13,11 @@ public class SimpleShield : CardBase
     public override string Upgrad()
     {
         throw new System.NotImplementedException();
+        isUpgraded = true;
     }
 
     public override void UseCard(Controller user)
     {
-        throw new System.NotImplementedException();
-        isUpgraded = true;
+        user.info.currentShield += shield;
     }
 }
