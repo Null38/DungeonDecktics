@@ -16,7 +16,14 @@ public class InGameUIManager : MonoBehaviour
     Button LoadMainButton;
     [SerializeField]
     Button OptionButton;
-
+    [SerializeField]
+    Button invenIcon;
+    [SerializeField]
+    Button restIcon;
+    [SerializeField]
+    Button disCardPile;
+    [SerializeField]
+    Button drawPile;
 
     [SerializeField]
     RectTransform deckUI;
@@ -39,7 +46,22 @@ public class InGameUIManager : MonoBehaviour
     {
         Pause.SetActive(true);
     }
-
+    public void OpenInventory()
+    {
+        Debug.Log("인벤 버튼 눌림");
+    }
+    public void GetRest()
+    {
+        Debug.Log("휴식 버튼 눌림");
+    }
+    public void CheckDrawPile()
+    {
+        Debug.Log("뽑을 카드 확인 버튼 눌림");
+    }
+    public void CheckDisCardPile()
+    {
+        Debug.Log("버린 카드 확인 버튼 눌림");
+    }
     public void ClosePauseUI()
     {
         Pause.SetActive(false);
@@ -60,6 +82,11 @@ public class InGameUIManager : MonoBehaviour
         LoadMainButton.onClick.AddListener(SceneLoadManager.LoadMain);
         OptionButton.onClick.AddListener(SceneLoadManager.LoadOption);
         settingIcon.onClick.AddListener(OnPauseUI);
+
+        invenIcon.onClick.AddListener (OpenInventory);
+        restIcon.onClick.AddListener(GetRest);
+        disCardPile.onClick.AddListener(CheckDisCardPile);
+        drawPile.onClick.AddListener(CheckDrawPile);
     }
 
 

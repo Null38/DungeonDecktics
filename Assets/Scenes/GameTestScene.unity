@@ -396,7 +396,7 @@ GameObject:
   - component: {fileID: 426878740}
   - component: {fileID: 426878739}
   m_Layer: 5
-  m_Name: deckIcon (1)
+  m_Name: drawPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3760,7 +3760,7 @@ GameObject:
   - component: {fileID: 1093835939}
   - component: {fileID: 1093835938}
   m_Layer: 5
-  m_Name: Button
+  m_Name: restIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4065,6 +4065,10 @@ MonoBehaviour:
   settingIcon: {fileID: 1033715919}
   LoadMainButton: {fileID: 2119523962}
   OptionButton: {fileID: 1310650465}
+  invenIcon: {fileID: 1464009391}
+  restIcon: {fileID: 1093835938}
+  disCardPile: {fileID: 1652282608}
+  drawPile: {fileID: 426878739}
   deckUI: {fileID: 662115695}
   Pause: {fileID: 841605111}
   spawner: {fileID: 136178219}
@@ -5058,7 +5062,7 @@ GameObject:
   - component: {fileID: 1652282609}
   - component: {fileID: 1652282608}
   m_Layer: 5
-  m_Name: deckIcon (2)
+  m_Name: disCardPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
