@@ -3067,10 +3067,10 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7399533318584292489, guid: 9db3bc53e48138643b912be061f496b9, type: 3}
+  m_Sprite: {fileID: 1208040086343421634, guid: e95ccac3c2f39a14d9bc70cf758e3845, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
-  m_FlipY: 1
+  m_FlipX: 0
+  m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
@@ -3119,7 +3119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   info: {fileID: 0}
   attackDamage: 5
-  animator: {fileID: 0}
+  animator: {fileID: 877919387}
   audioSource: {fileID: 0}
   attackClip: {fileID: 0}
 --- !u!61 &877919385
@@ -3195,10 +3195,10 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 693f4decddd5cf04c935a7163fe9ed91, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
+  m_AnimatePhysics: 1
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -3961,6 +3961,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8950d0f77102a93459e8334ac483280a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HpBar: {fileID: 0}
+  ShildBar: {fileID: 0}
+  Pause: {fileID: 0}
+  spawner: {fileID: 0}
+  selector: {fileID: 0}
+  settingIcon: {fileID: 0}
+  deckUI: {fileID: 0}
+  DeckUIShowPos: {x: 0, y: 0}
+  DeckUIHidePos: {x: 0, y: 0}
 --- !u!1 &1131179286
 GameObject:
   m_ObjectHideFlags: 0
@@ -5446,6 +5455,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5804840397177954898, guid: e49fe50f83f721a458a1f42df85397d2, type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5804840397177954898, guid: e49fe50f83f721a458a1f42df85397d2, type: 3}
       propertyPath: m_sharedMaterial
       value: 
       objectReference: {fileID: 2333765052754836236, guid: 5a1ff70225fc6384d8c54ab2e46afd45, type: 2}
@@ -5460,6 +5473,10 @@ PrefabInstance:
     - target: {fileID: 5891820554498457677, guid: e49fe50f83f721a458a1f42df85397d2, type: 3}
       propertyPath: m_Name
       value: DamagePopup
+      objectReference: {fileID: 0}
+    - target: {fileID: 5891820554498457677, guid: e49fe50f83f721a458a1f42df85397d2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
