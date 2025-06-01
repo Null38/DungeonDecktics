@@ -29,8 +29,9 @@ public class SimpleAttack : CardBase
         isUpgraded = true;
     }
 
-    public override void UseCard(Controller target)
+    public override void RunCard(Controller target)
     {
+
         foreach (var damage in damages)
         {
             target.info.currentHp -= damage;

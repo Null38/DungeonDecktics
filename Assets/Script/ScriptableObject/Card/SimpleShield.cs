@@ -16,7 +16,7 @@ public class SimpleShield : CardBase
         isUpgraded = true;
     }
 
-    public override void UseCard(Controller user)
+    public override void RunCard(Controller user)
     {
         user.info.currentShield += shield;
     }

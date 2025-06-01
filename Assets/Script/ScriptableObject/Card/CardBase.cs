@@ -20,7 +20,15 @@ public abstract class CardBase : ScriptableObject
 
     public bool isUpgraded = false;
 
-    public abstract void UseCard(Controller target);
+    public bool UseCard(Controller target)
+    {
+        if (cost > DataManager.player.info.currentCost)
+            return false;
+
+        RunCard(target);
+        return true;
+    }
+    public abstract void RunCard(Controller target);
     public abstract string FormatDescription();
 
     /// <summary>

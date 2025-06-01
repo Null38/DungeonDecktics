@@ -14,11 +14,11 @@ public class BuffCard : CardBase
     public override string Upgrad()
     {
         throw new System.NotImplementedException();
+        isUpgraded = true;
     }
 
-    public override void UseCard(Controller user)
+    public override void RunCard(Controller user)
     {
         throw new System.NotImplementedException();
-        isUpgraded = true;
     }
 }
