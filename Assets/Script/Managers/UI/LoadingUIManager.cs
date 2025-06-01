@@ -18,7 +18,6 @@ public class LoadingUIManager : MonoBehaviour
 
         if (value == 1)
         {
-            Debug.Log("comp");
             SceneLoadManager.SceneLoaded();
         }
     }
