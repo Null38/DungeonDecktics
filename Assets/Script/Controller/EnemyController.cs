@@ -74,10 +74,11 @@ public class EnemyController : Controller, ITurnBased
                 // 공격 애니메이션
                 if (animator != null) animator.SetTrigger(HashAttack);
                 // 공격 사운드 설정
-                audioSource?.PlayOneShot(attackClip);
+                //audioSource?.PlayOneShot(attackClip);
                 // 플레이어에게 데미지 적용
                 playerInfoComp.TakeDamage(attackDamage);
                 // 플레이어에게 데미지 팝업 표시
+                Debug.Log("[EnemyController] 팝업 호출 시도");
                 GameManager.Instance.ShowDamagePopup(
                     attackDamage,
                     DataManager.player.transform.position
