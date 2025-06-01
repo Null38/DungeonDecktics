@@ -180,13 +180,13 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
-    public void SpawnTarget(CardBase.TargetType target)
+    public void SpawnTarget(CardBase info)
     {
         RemoveAllTarget();
 
         List<Vector2> points = new();
 
-        switch (target)
+        switch (info.targetType)
         {
             case CardBase.TargetType.Self:
                 points.Add(DataManager.player.transform.position);
@@ -194,7 +194,10 @@ public class GameManager : MonoBehaviour
             case CardBase.TargetType.other:
                 foreach (KeyValuePair<Controller, ITurnBased> enemy in EnemyController.ActiveEnemy)
                 {
-                    points.Add(enemy.Key.transform.position);
+                    if (Vector2.Distance(enemy.Key.transform.position, DataManager.player.transform.position) <= info.distance + 0.5f)
+                    {
+                        points.Add(enemy.Key.transform.position);
+                    }
                 }
                 break;
         }

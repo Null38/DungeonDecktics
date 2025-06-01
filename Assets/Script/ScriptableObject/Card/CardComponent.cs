@@ -31,7 +31,7 @@ public class CardComponent : MonoBehaviour
 
     private void OnCardClicked()
     {
-        GameManager.Instance.SpawnTarget(cardInfo.targetType);
+        GameManager.Instance.SpawnTarget(cardInfo);
         GameManager.CardSelectEvent(this, transform as RectTransform);
     }
 
