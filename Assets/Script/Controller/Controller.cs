@@ -8,7 +8,7 @@ abstract public class Controller : MonoBehaviour
     protected LinkedList<Vector2Int> path = new();
 
     [SerializeField]
-    protected BaseInfo info;
+    public BaseInfo info;
     private List<Vector2Int> ImpossiblePath = new();
 
     protected virtual void GetPath(Vector3 targetPos)
