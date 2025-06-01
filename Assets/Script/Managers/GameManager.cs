@@ -252,29 +252,8 @@ public class GameManager : MonoBehaviour
         // 1) 인스턴스화 (instantiate)
         GameObject go = Instantiate(damagePopupPrefab, Canvas.transform);
 
-        // 2) 화면 픽셀 좌표 구하기
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos + Vector3.up * 0.5f);
-        Debug.Log($"[ShowDamagePopup] screenPos = {screenPos}");
+        go.transform.position = worldPos;
 
-        // 3) RectTransform 컴포넌트 얻기
-        RectTransform popupRt = go.GetComponent<RectTransform>();
-
-        // 4) Canvas RectTransform 얻기
-        RectTransform canvasRt = Canvas.GetComponent<RectTransform>();
-
-        // 5) 스크린 좌표를 AnchoredPosition 좌표로 변환
-        //    - Canvas 크기의 절반을 뺀 뒤, 
-        //    - RectTransform의 Pivot/Anchors 보정
-        Vector2 localPos;
-        // screenPos.x, screenPos.y: (0,0)은 화면 좌측 하단
-        // Canvas의 RectTransform은 (0,0)이 중앙이므로, 반씩 보정
-        localPos.x = screenPos.x - (canvasRt.rect.width * 0.5f);
-        localPos.y = screenPos.y - (canvasRt.rect.height * 0.5f);
-
-        // 6) 앵커/피벗 관계 없이 중앙 기준으로 배치
-        popupRt.anchoredPosition = localPos;
-
-        // 7) 데미지 텍스트 초기화
         var popup = go.GetComponent<DamagePopup>();
         if (popup != null) popup.Init(dmg);
     }
