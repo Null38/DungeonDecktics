@@ -22,4 +22,4 @@ MonoBehaviour:
   category: 0
   targetType: 1
   isUpgraded: 0
-  damage: 06000000
+  damages: 05000000
