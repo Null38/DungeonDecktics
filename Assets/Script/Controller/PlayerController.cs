@@ -8,9 +8,11 @@ using System;
 public class PlayerController : Controller, ITurnBased
 {
     public static event Action Moved;
+    // 애니메이션 컴포넌트
+    [SerializeField] private Animator animator;
+    private static readonly int HashWalk = Animator.StringToHash("IsWalking");
 
-    private Vector3? target = null;
-
+    private Vector3? target = null; 
 
     private bool touch = false;
     private bool isTouchMove = true;
@@ -20,17 +22,26 @@ public class PlayerController : Controller, ITurnBased
         DataManager.player = this;
         var infocomp = GetComponent<InfoComponent>();
         if (infocomp != null) infocomp.Initialize();
+
+        // 게임 시작 직후엔 반드시 Idle (IsWalking = false)
+        if (animator != null)
+            animator.SetBool(HashWalk, false);
     }
 
     void Start()
     {
+        if (animator == null)
+            Debug.LogWarning("[PlayerController] Animator 컴포넌트가 연결되지 않았습니다.");
     }
 
     void Update()
-    {
-
+    {                
         if (!GameManager.Instance.IsPlayerTurn)
+        {
+            if (animator != null)
+                animator.SetBool(HashWalk, false);
             return;
+        }
 
         TouchCheck();
         // 클릭 입력 처리
@@ -45,13 +56,21 @@ public class PlayerController : Controller, ITurnBased
 
             if (path.Count > 0)
             {
-                // LinkedList<Vector2Int> → Vector3 변환
                 Vector2Int nextNode = path.First.Value;
                 target = new Vector3(nextNode.x, nextNode.y, 0f);
+
                 Moved();
             }
-            touch = false;
+            else
+            {
+                target = null;
+            }
+                touch = false;
         }
+        bool shouldWalk = target.HasValue;
+        if (animator != null)
+            animator.SetBool(HashWalk, shouldWalk);
+
     }
 
     private void TouchCheck()
@@ -98,16 +117,26 @@ public class PlayerController : Controller, ITurnBased
             path.RemoveFirst();
 
         if (path.Count > 0)
-            target = new Vector3(path.First.Value.x, path.First.Value.y, 0f);
+        {
+            // 이동할 노드가 남아 있을 때
+            Vector2Int next = path.First.Value;
+            target = new Vector3(next.x, next.y, 0f);
+        }
         else
+        {
+            // 더 이상 이동할 경로가 없을 때 → 이동 애니메이션 종료
             target = null;
-
-        OnTurnEnd();
+            OnTurnEnd();
+        }
     }
 
     public void OnTurnBegin()
     {
-        
+        // 턴이 시작될시 애니메이션이 꺼져 있도록
+        if (animator != null)
+            animator.SetBool(HashWalk, false);
+        target = null;  // 잔여 경로가 남아있다면 바로 초기화
+        path.Clear();
     }
 
     public void OnTurnEnd()
