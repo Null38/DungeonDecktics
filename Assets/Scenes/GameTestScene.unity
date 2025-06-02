@@ -4047,6 +4047,7 @@ MonoBehaviour:
   restIcon: {fileID: 1093835938}
   disCardPile: {fileID: 1652282608}
   drawPile: {fileID: 426878739}
+  CostText: {fileID: 930304698}
   deckUI: {fileID: 662115695}
   Pause: {fileID: 841605111}
   spawner: {fileID: 136178219}

@@ -106,7 +106,7 @@ public class PlayerController : Controller, ITurnBased
 
     public void OnTurnBegin()
     {
-        
+        info.currentShield = 0;
     }
 
     public void OnTurnEnd()

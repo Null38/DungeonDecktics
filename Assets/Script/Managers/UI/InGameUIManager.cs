@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using TMPro;
 
 public class InGameUIManager : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class InGameUIManager : MonoBehaviour
     Button disCardPile;
     [SerializeField]
     Button drawPile;
+    [SerializeField]
+    TextMeshProUGUI CostText;
 
     [SerializeField]
     RectTransform deckUI;
@@ -87,6 +90,15 @@ public class InGameUIManager : MonoBehaviour
         restIcon.onClick.AddListener(GetRest);
         disCardPile.onClick.AddListener(CheckDisCardPile);
         drawPile.onClick.AddListener(CheckDrawPile);
+    }
+
+    private void Update()
+    {
+        HpBar.maxValue = DataManager.player.info.MaxHp;
+        HpBar.value = DataManager.player.info.currentHp;
+        ShildBar.maxValue = DataManager.player.info.currentHp;
+        ShildBar.value = Mathf.Min(DataManager.player.info.currentShield, ShildBar.maxValue);
+        CostText.text = DataManager.player.info.currentCost.ToString();
     }
 
 
