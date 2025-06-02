@@ -7,7 +7,11 @@ public class TargetTouch : MonoBehaviour
 
     public void OnMouseDown()
     {
-        GameManager.Instance.selectCard.cardInfo.UseCard(target);
+        if (!GameManager.Instance.selectCard.cardInfo.UseCard(target))
+            return;
+
+        GameManager.Instance.RemoveAllTarget();
+        GameManager.Instance.cardPile.HandToDiscardPile(GameManager.Instance.selectCard);
     }
 }
 

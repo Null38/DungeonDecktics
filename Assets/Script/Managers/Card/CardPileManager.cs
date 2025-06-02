@@ -107,7 +107,7 @@ public class CardPileManager
 
         for (int i = 0; i < count; i++)
         {
-            if (drawPile.Count == 0)
+            if (drawPile.Count == 0 && discardPile.Count != 0)
             {
                 drawPile.AddRange(discardPile);
                 discardPile.Clear();
@@ -157,5 +157,16 @@ public class CardPileManager
         }
     }
 
+    public void HandToDiscardPile(CardComponent compo)
+    {
+        for (int i = 0; i < handPile.Count; i++)
+        {
+            if (handPile[i].card != compo.cardInfo)
+                continue;
+            handPile.RemoveAt(i);
+            break;
+        }
 
+        UnityEngine.Object.Destroy(compo.gameObject);
+    }
 }

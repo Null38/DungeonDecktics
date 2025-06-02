@@ -18,6 +18,7 @@ public class PlayerController : Controller, ITurnBased
     void Awake()
     {
         DataManager.player = this;
+        info.currentCost = info.MaxCost;
     }
 
     void Start()
