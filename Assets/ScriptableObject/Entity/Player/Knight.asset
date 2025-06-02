@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66329adf9e56cf14a82925b2ebb346e2, type: 3}
   m_Name: Knight
   m_EditorClassIdentifier: 
-  MaxHp: 10
+  MaxHp: 20
   MaxCost: 5
-  currentHp: 87
-  currentCost: 0
+  currentHp: 0
+  currentCost: 5
   currentShield: 0
   defaultDeck: {fileID: 0}
   CharacterClass: 0

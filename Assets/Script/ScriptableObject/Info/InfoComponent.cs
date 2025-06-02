@@ -12,6 +12,12 @@ public class InfoComponent : MonoBehaviour
     [HideInInspector]
     public List<CardBase> Deck = new List<CardBase>();
 
+    private Animator animator;
+
+    void Awake()
+    {        
+        animator = GetComponent<Animator>();
+    }
 
     public void Initialize()
     {
@@ -38,9 +44,18 @@ public class InfoComponent : MonoBehaviour
         {
             info.currentHp = Mathf.Max(info.currentHp - remainingDamage, 0);
             // Debug.Log($"{remainingDamage}의 피해를 입었습니다. (남은 체력: {info.currentHp})");
+            
+            if (info.currentHp > 0 && animator != null)
+            {
+                animator.SetTrigger("Hit");
+            }
 
             if (info.currentHp <= 0)
             {
+                if (animator != null)
+                {
+                    animator.SetTrigger("Die");
+                }
                 Die();
             }
         }

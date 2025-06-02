@@ -11,6 +11,8 @@ public class PlayerController : Controller, ITurnBased
     // 애니메이션 컴포넌트
     [SerializeField] private Animator animator;
     private static readonly int HashWalk = Animator.StringToHash("IsWalking");
+    private static readonly int HashHit = Animator.StringToHash("Hit");
+    private static readonly int HashDie = Animator.StringToHash("Die");
 
     private Vector3? target = null; 
 
