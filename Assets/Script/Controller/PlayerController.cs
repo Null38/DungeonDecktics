@@ -28,12 +28,6 @@ public class PlayerController : Controller, ITurnBased
             animator.SetBool(HashWalk, false);
     }
 
-    void Start()
-    {
-        if (animator == null)
-            Debug.LogWarning("[PlayerController] Animator 컴포넌트가 연결되지 않았습니다.");
-    }
-
     void Update()
     {                
         if (!GameManager.Instance.IsPlayerTurn)
@@ -61,11 +55,8 @@ public class PlayerController : Controller, ITurnBased
 
                 Moved();
             }
-            else
-            {
-                target = null;
-            }
-                touch = false;
+
+            touch = false;
         }
         bool shouldWalk = target.HasValue;
         if (animator != null)
@@ -129,8 +120,6 @@ public class PlayerController : Controller, ITurnBased
         // 턴이 시작될시 애니메이션이 꺼져 있도록
         if (animator != null)
             animator.SetBool(HashWalk, false);
-        target = null;  // 잔여 경로가 남아있다면 바로 초기화
-        path.Clear();
     }
 
     public void OnTurnEnd()
