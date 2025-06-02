@@ -117,17 +117,11 @@ public class PlayerController : Controller, ITurnBased
             path.RemoveFirst();
 
         if (path.Count > 0)
-        {
-            // 이동할 노드가 남아 있을 때
-            Vector2Int next = path.First.Value;
-            target = new Vector3(next.x, next.y, 0f);
-        }
+            target = new Vector3(path.First.Value.x, path.First.Value.y, 0f);
         else
-        {
-            // 더 이상 이동할 경로가 없을 때 → 이동 애니메이션 종료
             target = null;
-            OnTurnEnd();
-        }
+
+        OnTurnEnd();
     }
 
     public void OnTurnBegin()
