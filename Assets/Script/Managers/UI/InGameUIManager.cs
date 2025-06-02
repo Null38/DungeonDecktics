@@ -45,6 +45,8 @@ public class InGameUIManager : MonoBehaviour
 
     bool isDeckUIHide = false;
 
+    public static event Action GetRestEvent;
+
     public void OnPauseUI()
     {
         Pause.SetActive(true);
@@ -55,7 +57,7 @@ public class InGameUIManager : MonoBehaviour
     }
     public void GetRest()
     {
-        Debug.Log("휴식 버튼 눌림");
+        GetRestEvent?.Invoke();
     }
     public void CheckDrawPile()
     {

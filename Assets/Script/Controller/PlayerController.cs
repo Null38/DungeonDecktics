@@ -19,10 +19,16 @@ public class PlayerController : Controller, ITurnBased
     {
         DataManager.player = this;
         info.currentCost = info.MaxCost;
+
+        InGameUIManager.GetRestEvent += GetRest;
     }
 
-    void Start()
+    void GetRest()
     {
+        info.currentCost = info.MaxCost;
+        Debug.LogWarning("카드 드로우 시키기");
+        //GameManager.Instance.cardPile.;
+        OnTurnEnd();
     }
 
     void Update()
