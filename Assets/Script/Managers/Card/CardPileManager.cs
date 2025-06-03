@@ -118,6 +118,12 @@ public class CardPileManager
         }
     }
 
+    public void SwapEquipment(int equipmentId, DeckObject deck)
+    {
+        RemoveEquipment(equipmentId);
+        AddEquipment(equipmentId, deck);
+    }
+
     /// <summary>
     /// 장비 카드 제거
     /// </summary>
