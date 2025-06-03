@@ -22,6 +22,7 @@ public class PlayerController : Controller, ITurnBased
     void Awake()
     {
         DataManager.player = this;
+        info.currentHp = info.MaxHp;
         info.currentCost = info.MaxCost;
 
         InGameUIManager.GetRestEvent += GetRest;
