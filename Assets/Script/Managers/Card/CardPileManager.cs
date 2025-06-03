@@ -121,19 +121,24 @@ public class CardPileManager
     /// <summary>
     /// 장비 카드 제거
     /// </summary>
-    public void RemoveEquipment(/* 장비 */)
+    public void RemoveEquipment(int equipmentId)
     {
-        throw new NotImplementedException("RemoveEquipment 미구현");
-        //모든 카드더미에서 그 장비 카드 제거. parentId 참조
+        drawPile.RemoveAll(ci => ci.parentId == equipmentId);
+        handPile.RemoveAll(ci => ci.parentId == equipmentId);
+        discardPile.RemoveAll(ci => ci.parentId == equipmentId);
     }
 
     /// <summary>
     /// 장비 카드 추가
     /// </summary>
-    public void AddEquipment(/* 장비 */)
+    public void AddEquipment(int equipmentId, DeckObject deck)
     {
-        throw new NotImplementedException("AddEquipment 미구현");
-        //뽑을 카드더미에서 그 장비 카드 추가. parentId 할당
+        foreach (var card in deck.cards)
+        {
+            drawPile.Add(new CardInfo(equipmentId, card));
+        }
+
+        ShuffleDrawPile();
     }
 
     /// <summary>
