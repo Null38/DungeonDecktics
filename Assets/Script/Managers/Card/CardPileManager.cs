@@ -96,7 +96,7 @@ public class CardPileManager
         ShuffleDrawPile();
     }
 
-    private void DrawToHand(int count)
+    public void DrawToHand(int count)
     {
         foreach (CardInfo card in handPile)
         {
@@ -111,11 +111,20 @@ public class CardPileManager
             {
                 drawPile.AddRange(discardPile);
                 discardPile.Clear();
+                ShuffleDrawPile();
             }
+
+            if (drawPile.Count == 0)
+                break;
+
             CardInfo card = drawPile[drawPile.Count - 1];
             drawPile.RemoveAt(drawPile.Count - 1);
             handPile.Add(card);
         }
+
+        Debug.Log($"DR:{drawPile.Count}");
+        Debug.Log($"HA:{handPile.Count}");
+        Debug.Log($"DS:{discardPile.Count}");
     }
 
     public void SwapEquipment(int equipmentId, DeckObject deck)
@@ -174,6 +183,7 @@ public class CardPileManager
         {
             if (handPile[i].card != compo.cardInfo)
                 continue;
+            discardPile.Add(handPile[i]);
             handPile.RemoveAt(i);
             break;
         }

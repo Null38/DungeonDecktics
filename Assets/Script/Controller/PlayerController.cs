@@ -27,7 +27,8 @@ public class PlayerController : Controller, ITurnBased
     {
         info.currentCost = info.MaxCost;
         Debug.LogWarning("카드 드로우 시키기");
-        //GameManager.Instance.cardPile.;
+
+        GameManager.Instance.cardPile.DrawToHand(5);
         OnTurnEnd();
     }
 

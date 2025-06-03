@@ -25,4 +25,12 @@ public class CardSpawner : MonoBehaviour
         return cardInstance;
 
     }
+
+    public void DestroyCards()
+    {
+        for (int i = parent.childCount - 1; i >= 0; i--)
+        {
+            Destroy(parent.GetChild(i).gameObject);
+        }
+    }
 }

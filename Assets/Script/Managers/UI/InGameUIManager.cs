@@ -58,6 +58,8 @@ public class InGameUIManager : MonoBehaviour
     public void GetRest()
     {
         GetRestEvent?.Invoke();
+        spawner.DestroyCards();
+        SpawnCards();
     }
     public void CheckDrawPile()
     {
@@ -77,18 +79,29 @@ public class InGameUIManager : MonoBehaviour
         if (deckUI == null)
             throw new ArgumentNullException("deckUI is null");
 
+        SpawnCards();
+
+        GameManager.CardSelectedEvent += selector.Select;
+
+        AddListeners();
+    }
+
+    private void SpawnCards()
+    {
         foreach (CardBase card in GameManager.Instance.cardPile.GetHandPile)
         {
             spawner.SpawnCard(card);
         }
+    }
 
-        GameManager.CardSelectedEvent += selector.Select;
+    private void AddListeners()
+    {
 
         LoadMainButton.onClick.AddListener(SceneLoadManager.LoadMain);
         OptionButton.onClick.AddListener(SceneLoadManager.LoadOption);
         settingIcon.onClick.AddListener(OnPauseUI);
 
-        invenIcon.onClick.AddListener (OpenInventory);
+        invenIcon.onClick.AddListener(OpenInventory);
         restIcon.onClick.AddListener(GetRest);
         disCardPile.onClick.AddListener(CheckDisCardPile);
         drawPile.onClick.AddListener(CheckDrawPile);
