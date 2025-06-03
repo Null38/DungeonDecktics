@@ -17,6 +17,13 @@ public class EnemyController : Controller, ITurnBased
     void OnEnable() => ActiveEnemy[this] = this;
     void OnDisable() => ActiveEnemy.Remove(this);
 
+    [SerializeField] private Animator animator;
+    private static readonly int HashAttack = Animator.StringToHash("Attack");
+    [Header("Sound")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip attackClip;
+
+
     public void OnTurnBegin()
     {
         hasActed = false;
@@ -53,6 +60,8 @@ public class EnemyController : Controller, ITurnBased
 
         int dx = playerPos.x - myPos.x;
         int dy = playerPos.y - myPos.y;
+        
+
 
         // 대각선 포함 8방향 인접 체크
         if (Mathf.Abs(dx) <= 1 && Mathf.Abs(dy) <= 1)
@@ -62,7 +71,18 @@ public class EnemyController : Controller, ITurnBased
             if (playerInfoComp != null)
             {
                 Debug.Log($"[EnemyController] {name}이(가) 플레이어에게 {attackDamage} 데미지 공격!");
+                // 공격 애니메이션
+                if (animator != null) animator.SetTrigger(HashAttack);
+                // 공격 사운드 설정
+                //audioSource?.PlayOneShot(attackClip);
+                // 플레이어에게 데미지 적용
                 playerInfoComp.TakeDamage(attackDamage);
+                // 플레이어에게 데미지 팝업 표시
+                Debug.Log("[EnemyController] 팝업 호출 시도");
+                GameManager.Instance.ShowDamagePopup(
+                    attackDamage,
+                    DataManager.player.transform.position
+                );
                 Debug.Log($"[EnemyController] 남은 HP: {playerInfoComp.currentHp}");
 
             }

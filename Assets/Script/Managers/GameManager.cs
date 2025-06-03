@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 
 public class GameManager : MonoBehaviour
@@ -34,6 +35,10 @@ public class GameManager : MonoBehaviour
     [Tooltip("적을 스폰할 위치들")]
     public List<Transform> spawnPoints = new();
 
+    [Header("Damage Popup")]
+    [SerializeField] private GameObject damagePopupPrefab;
+    [SerializeField] private Canvas Canvas;  
+
     private void Awake()
     {
         // 싱글톤 초기화
@@ -46,7 +51,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         cardPile = new(inventory);
-        cardPile.Initalize();
+        //cardPile.Initalize();
 
         Debug.Log("GameManager initialized");
     }
@@ -240,6 +245,26 @@ public class GameManager : MonoBehaviour
             CardSelectedEvent(cardTransform);
         }
     }
+    /// <summary>
+    /// 적/플레이어의 데미지 팝업을 화면에 띄움.
+    /// </summary>
+    public void ShowDamagePopup(int dmg, Vector3 worldPos)
+    {
+        if (damagePopupPrefab == null || Canvas == null) return;
+
+        // 1) 인스턴스화 (instantiate)
+        GameObject go = Instantiate(damagePopupPrefab, Canvas.transform);
+
+        go.transform.position = worldPos;
+
+        var popup = go.GetComponent<DamagePopup>();
+        if (popup != null) popup.Init(dmg);
+    }
+
+
+
+
+
 }
 
 public interface ITurnBased

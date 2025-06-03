@@ -8,9 +8,13 @@ using System;
 public class PlayerController : Controller, ITurnBased
 {
     public static event Action Moved;
+    // 애니메이션 컴포넌트
+    [SerializeField] private Animator animator;
+    private static readonly int HashWalk = Animator.StringToHash("IsWalking");
+    private static readonly int HashHit = Animator.StringToHash("Hit");
+    private static readonly int HashDie = Animator.StringToHash("Die");
 
-    private Vector3? target = null;
-
+    private Vector3? target = null; 
 
     private bool touch = false;
     private bool isTouchMove = true;
@@ -21,6 +25,10 @@ public class PlayerController : Controller, ITurnBased
         info.currentCost = info.MaxCost;
 
         InGameUIManager.GetRestEvent += GetRest;
+
+        // 게임 시작 직후엔 반드시 Idle (IsWalking = false)
+        if (animator != null)
+            animator.SetBool(HashWalk, false);
     }
 
     void GetRest()
@@ -33,10 +41,13 @@ public class PlayerController : Controller, ITurnBased
     }
 
     void Update()
-    {
-
+    {                
         if (!GameManager.Instance.IsPlayerTurn)
+        {
+            if (animator != null)
+                animator.SetBool(HashWalk, false);
             return;
+        }
 
         TouchCheck();
         // 클릭 입력 처리
@@ -51,13 +62,18 @@ public class PlayerController : Controller, ITurnBased
 
             if (path.Count > 0)
             {
-                // LinkedList<Vector2Int> → Vector3 변환
                 Vector2Int nextNode = path.First.Value;
                 target = new Vector3(nextNode.x, nextNode.y, 0f);
+
                 Moved();
             }
+
             touch = false;
         }
+        bool shouldWalk = target.HasValue;
+        if (animator != null)
+            animator.SetBool(HashWalk, shouldWalk);
+
     }
 
     private void TouchCheck()
@@ -114,6 +130,9 @@ public class PlayerController : Controller, ITurnBased
     public void OnTurnBegin()
     {
         info.currentShield = 0;
+        // 턴이 시작될시 애니메이션이 꺼져 있도록
+        if (animator != null)
+            animator.SetBool(HashWalk, false);
     }
 
     public void OnTurnEnd()
