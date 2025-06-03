@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using AsyncOperation = UnityEngine.AsyncOperation;
 
-public class SceneLoadManager :MonoBehaviour
+public class SceneLoadManager
 {
     public enum SceneState
     {
@@ -34,6 +34,7 @@ public class SceneLoadManager :MonoBehaviour
     public static void LoadMain()
     {
         LoadScene("MainScene");
+        UnityEngine.Object.Destroy(GameManager.Instance.gameObject);
     }
 
     public static void LoadOption()
