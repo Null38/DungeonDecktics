@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         cardPile = new(inventory);
-        //cardPile.Initalize();
+        cardPile.Initalize();
 
         Debug.Log("GameManager initialized");
     }
@@ -60,7 +60,6 @@ public class GameManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex >= 3)
         {
-            Debug.Log(SceneManager.GetActiveScene().rootCount);
             StartInit();
         }
     }
