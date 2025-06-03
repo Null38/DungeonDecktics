@@ -3120,7 +3120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   info: {fileID: 11400000, guid: d63194c1999541a46bcdd72de98c84c3, type: 2}
   attackDamage: 1
-  animator: {fileID: 0}
+  animator: {fileID: 877919386}
   audioSource: {fileID: 0}
   attackClip: {fileID: 0}
 --- !u!61 &877919385
