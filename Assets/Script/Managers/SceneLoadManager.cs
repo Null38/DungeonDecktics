@@ -28,11 +28,14 @@ public class SceneLoadManager
 
     public static void LoadGame()
     {
+        DumbAssSave.nextStage = 1;
         LoadScene("GameTestScene");
     }
 
     public static void LoadNextGame(int dumint)
     {
+        DumbAssSave.nextStage++;
+        UnityEngine.Object.Destroy(GameManager.Instance.gameObject);
         LoadScene($"GameTestScene {dumint}");
     }
 

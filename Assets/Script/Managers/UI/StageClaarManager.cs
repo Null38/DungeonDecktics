@@ -27,6 +27,6 @@ public class StageClearSceneUIManager : MonoBehaviour
     private void OnNextStageClicked()
     {
         SceneManager.UnloadSceneAsync("StageClearScene");
-        SceneLoadManager.LoadNextGame(nextStageIndex);
+        SceneLoadManager.LoadNextGame(DumbAssSave.nextStage);
     }
 }
