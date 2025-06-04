@@ -13,6 +13,7 @@ public class PlayerController : Controller, ITurnBased
     private static readonly int HashWalk = Animator.StringToHash("IsWalking");
     private static readonly int HashHit = Animator.StringToHash("Hit");
     private static readonly int HashDie = Animator.StringToHash("Die");
+    private static readonly int HashAttack = Animator.StringToHash("Attack");
 
     private Vector3? target = null; 
 
@@ -22,6 +23,7 @@ public class PlayerController : Controller, ITurnBased
     void Awake()
     {
         DataManager.player = this;
+        info.currentHp = info.MaxHp;
         info.currentCost = info.MaxCost;
 
         InGameUIManager.GetRestEvent += GetRest;
@@ -38,6 +40,13 @@ public class PlayerController : Controller, ITurnBased
 
         GameManager.Instance.cardPile.DrawToHand(5);
         OnTurnEnd();
+    }
+    public void PlayAttackAnimation()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger(HashAttack);
+        }
     }
 
     void Update()
