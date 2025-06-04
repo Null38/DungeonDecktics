@@ -23,8 +23,7 @@ public class PlayerController : Controller, ITurnBased
     void Awake()
     {
         DataManager.player = this;
-        info.currentHp = info.MaxHp;
-        info.currentCost = info.MaxCost;
+        info.Initialize();
 
         InGameUIManager.GetRestEvent += GetRest;
 
@@ -35,7 +34,7 @@ public class PlayerController : Controller, ITurnBased
 
     void GetRest()
     {
-        info.currentCost = info.MaxCost;
+        info.InitCost();
         Debug.LogWarning("카드 드로우 시키기");
 
         GameManager.Instance.cardPile.DrawToHand(5);

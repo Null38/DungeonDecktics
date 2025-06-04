@@ -16,19 +16,16 @@ public class InfoComponent : MonoBehaviour
     public int currentHp
     {
         get => info.currentHp;
-        set => info.currentHp = value;
     }
 
     public int MaxCost
     {
         get => info.MaxCost;
-        set => info.MaxCost = value;
     }
 
     public int currentCost
     {
         get => info.currentCost;
-        set => info.currentCost = value;
     }
 
     public int currentShield
@@ -49,13 +46,19 @@ public class InfoComponent : MonoBehaviour
 
     public void Initialize()
     {
-        Deck.Clear();
         info.currentHp = info.MaxHp;
         info.currentShield = 0;
         info.currentCost = info.MaxCost;
     }
 
-     public void TakeDamage(int damage)
+
+    public void InitCost()
+    {
+        info.currentCost = info.MaxCost;
+    }
+
+
+    public void TakeDamage(int damage)
     {
         int remainingDamage = damage;
                 
