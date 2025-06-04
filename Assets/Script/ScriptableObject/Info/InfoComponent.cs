@@ -7,7 +7,35 @@ public class InfoComponent : MonoBehaviour
     [SerializeField]
     BaseInfo info;
 
-    public int currentHp => info.currentHp;
+    public int MaxHp
+    {
+        get => info.MaxHp;
+        set => info.MaxHp = value;
+    }
+
+    public int currentHp
+    {
+        get => info.currentHp;
+        set => info.currentHp = value;
+    }
+
+    public int MaxCost
+    {
+        get => info.MaxCost;
+        set => info.MaxCost = value;
+    }
+
+    public int currentCost
+    {
+        get => info.currentCost;
+        set => info.currentCost = value;
+    }
+
+    public int currentShield
+    {
+        get => info.currentShield;
+        set => info.currentShield = value;
+    }
 
     [HideInInspector]
     public List<CardBase> Deck = new List<CardBase>();
