@@ -51,6 +51,10 @@ public class SceneLoadManager
     {
         SceneManager.LoadSceneAsync("GameOverScene", LoadSceneMode.Additive);
     }
+    public static void LoadStageClear()
+    {
+        SceneManager.LoadSceneAsync("StageClearScene", LoadSceneMode.Additive);
+    }
 
 
     private static void LoadScene(String scene)

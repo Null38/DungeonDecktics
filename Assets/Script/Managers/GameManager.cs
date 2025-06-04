@@ -271,23 +271,20 @@ public class GameManager : MonoBehaviour
         SceneLoadManager.LoadGameOver();
 
     }
-        
+
     private void HandleEnemyDeath(EnemyController enemy)
     {
-        Debug.Log($"[GameManager] 적 사망 처리 → activeEntitys에서 제거: {enemy.gameObject.name}");
-
-        // 턴 시스템에서 해당 적 제거
         if (activeEntitys.ContainsKey(enemy))
         {
             activeEntitys.Remove(enemy);
             CheckEndTurn();
         }
+
         var playerCtrl = DataManager.player.GetComponent<PlayerController>();
         if (playerCtrl != null)
-        {
             playerCtrl.CancelMove();
-        }
 
+        SceneLoadManager.LoadStageClear();
     }
 
 
