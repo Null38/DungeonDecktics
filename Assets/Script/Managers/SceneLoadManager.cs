@@ -31,6 +31,11 @@ public class SceneLoadManager
         LoadScene("GameTestScene");
     }
 
+    public static void LoadNextGame(int dumint)
+    {
+        LoadScene($"GameTestScene {dumint}");
+    }
+
     public static void LoadMain()
     {
         LoadScene("MainScene");
