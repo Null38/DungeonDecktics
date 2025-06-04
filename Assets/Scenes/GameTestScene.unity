@@ -3120,7 +3120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   info: {fileID: 877919387}
-  attackDamage: 1
+  attackDamage: 5
   animator: {fileID: 877919386}
   audioSource: {fileID: 0}
   attackClip: {fileID: 0}
@@ -4517,8 +4517,8 @@ MonoBehaviour:
   selectCard: {fileID: 0}
   enemyPrefab: {fileID: 0}
   spawnPoints: []
-  damagePopupPrefab: {fileID: 0}
-  Canvas: {fileID: 0}
+  damagePopupPrefab: {fileID: 5891820554498457677, guid: e49fe50f83f721a458a1f42df85397d2, type: 3}
+  Canvas: {fileID: 1112612929}
 --- !u!4 &1323081026
 Transform:
   m_ObjectHideFlags: 0

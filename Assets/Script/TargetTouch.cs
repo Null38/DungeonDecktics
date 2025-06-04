@@ -23,6 +23,8 @@ public class TargetTouch : MonoBehaviour
             {
                 enemyAnim.SetTrigger("Hit");
             }
+            if (playerCtrl != null)
+                playerCtrl.CancelMove();
         }
         
         GameManager.Instance.RemoveAllTarget();

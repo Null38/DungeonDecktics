@@ -31,6 +31,13 @@ public class PlayerController : Controller, ITurnBased
         if (animator != null)
             animator.SetBool(HashWalk, false);
     }
+    public void CancelMove()
+    {
+        path.Clear();
+        target = null;
+        if (animator != null)
+            animator.SetBool(HashWalk, false);
+    }
 
     void GetRest()
     {

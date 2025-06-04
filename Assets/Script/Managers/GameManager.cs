@@ -50,6 +50,10 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
+        InfoComponent.OnPlayerDied += HandlePlayerDeath;    
+        InfoComponent.OnEnemyDied += HandleEnemyDeath;
+
+
         cardPile = new(inventory);
         cardPile.Initalize();
 
@@ -260,6 +264,32 @@ public class GameManager : MonoBehaviour
         if (popup != null) popup.Init(dmg);
     }
 
+    private void HandlePlayerDeath()
+    {
+        Debug.Log("[GameManager] 플레이어 사망 처리 (게임 오버 혹은 리스폰 등)");
+        GameOverEvent?.Invoke();
+        SceneLoadManager.LoadGameOver();
+
+    }
+        
+    private void HandleEnemyDeath(EnemyController enemy)
+    {
+        Debug.Log($"[GameManager] 적 사망 처리 → activeEntitys에서 제거: {enemy.gameObject.name}");
+
+        // 턴 시스템에서 해당 적 제거
+        if (activeEntitys.ContainsKey(enemy))
+        {
+            activeEntitys.Remove(enemy);
+            CheckEndTurn();
+        }
+        var playerCtrl = DataManager.player.GetComponent<PlayerController>();
+        if (playerCtrl != null)
+        {
+            playerCtrl.CancelMove();
+        }
+
+    }
+
 
 
     private void OnDestroy()
@@ -268,9 +298,13 @@ public class GameManager : MonoBehaviour
         {
             Instance = null;
         }
+
+        InfoComponent.OnPlayerDied -= HandlePlayerDeath;
+        InfoComponent.OnEnemyDied -= HandleEnemyDeath;
     }
 
 }
+
 
 public interface ITurnBased
 {
