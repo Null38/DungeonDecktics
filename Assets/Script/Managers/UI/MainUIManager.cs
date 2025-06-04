@@ -18,8 +18,9 @@ public class MainUIManager : MonoBehaviour
     GameObject upgradePanel;
     [SerializeField]
     Button CloseUpgradePanel;
-
-    TextMeshProUGUI[] TlqkfAra;
+    [SerializeField]
+    TextMeshProUGUI[] TlqkfAra; [SerializeField]
+    TextMeshProUGUI ahahahahaha;
     public void GoUpgrade()
     {
         upgradePanel.SetActive(true);
@@ -35,6 +36,10 @@ public class MainUIManager : MonoBehaviour
 
     private void Awake()
     {
+        ahahahahaha.text = DumbAssSave.FUCK.ToString();
+        TlqkfAra[0].text = DumbAssSave.HP.ToString();
+        TlqkfAra[1].text = DumbAssSave.DAMAGE.ToString();
+        TlqkfAra[2].text = DumbAssSave.COST.ToString();
         StartBar.onClick.AddListener(SceneLoadManager.LoadGame);
         OptionButton.onClick.AddListener(SceneLoadManager.LoadOption);
         UpgradBar.onClick.AddListener(GoUpgrade);
@@ -63,5 +68,8 @@ public class MainUIManager : MonoBehaviour
         }
 
         TlqkfAra[i].text = a.ToString();
+
+
+        ahahahahaha.text = (--DumbAssSave.FUCK).ToString();
     }
 }

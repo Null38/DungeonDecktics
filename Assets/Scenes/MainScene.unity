@@ -3565,6 +3565,11 @@ MonoBehaviour:
   rankBar: {fileID: 466332553}
   upgradePanel: {fileID: 956805812}
   CloseUpgradePanel: {fileID: 2017842473}
+  TlqkfAra:
+  - {fileID: 405279861}
+  - {fileID: 2031548454}
+  - {fileID: 726940344}
+  ahahahahaha: {fileID: 0}
 --- !u!82 &1682904240
 AudioSource:
   m_ObjectHideFlags: 0
