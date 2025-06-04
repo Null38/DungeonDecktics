@@ -284,7 +284,8 @@ public class GameManager : MonoBehaviour
         if (playerCtrl != null)
             playerCtrl.CancelMove();
 
-        SceneLoadManager.LoadStageClear();
+        DumbAssSave.FUCK++;
+        SceneLoadManager.LoadStageClear(); 
     }
 
 

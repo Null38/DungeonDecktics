@@ -1,4 +1,5 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -17,6 +18,8 @@ public class MainUIManager : MonoBehaviour
     GameObject upgradePanel;
     [SerializeField]
     Button CloseUpgradePanel;
+
+    TextMeshProUGUI[] TlqkfAra;
     public void GoUpgrade()
     {
         upgradePanel.SetActive(true);
@@ -37,5 +40,28 @@ public class MainUIManager : MonoBehaviour
         UpgradBar.onClick.AddListener(GoUpgrade);
         rankBar.onClick.AddListener(CheckRank);
         CloseUpgradePanel.onClick.AddListener(CloseUpgrade);
+    }
+
+    public void Tlqkf(int i)
+    {
+        if (DumbAssSave.FUCK <= 0)
+        {
+            return;
+        }
+        int a = 0;
+        switch (i)
+        {
+            case 0:
+                a = ++DumbAssSave.HP;
+                break;
+            case 1:
+                a = ++DumbAssSave.DAMAGE;
+                break;
+            case 2:
+                a = ++DumbAssSave.COST;
+                break;
+        }
+
+        TlqkfAra[i].text = a.ToString();
     }
 }
