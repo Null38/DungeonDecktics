@@ -23,6 +23,7 @@ public class PlayerController : Controller, ITurnBased
     void Awake()
     {
         DataManager.player = this;
+        info.dumb();
         info.Initialize();
 
         InGameUIManager.GetRestEvent += GetRest;

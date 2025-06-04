@@ -15,8 +15,8 @@ public class SimpleAttack : CardBase
 
         for (int i = 0; i < damages.Length; i++)
         {
-            formatArray[i] = damages[i];
-            total += damages[i];
+            formatArray[i] = damages[i] + DumbAssSave.DAMAGE;
+            total += damages[i] + DumbAssSave.DAMAGE;
         }
         formatArray[damages.Length] = total;
 
@@ -39,7 +39,7 @@ public class SimpleAttack : CardBase
 
         foreach (var damage in damages)
         {
-            infoComp.TakeDamage(damage);
+            infoComp.TakeDamage(damage + DumbAssSave.DAMAGE);
         }
     }
 }

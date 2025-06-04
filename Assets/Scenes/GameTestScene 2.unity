@@ -5646,7 +5646,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 1208040086343421634, guid: e95ccac3c2f39a14d9bc70cf758e3845, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0.029372692, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5780,7 +5780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2abb5e6a87890e45a2fd8bf3898a845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  info: {fileID: 11400000, guid: d63194c1999541a46bcdd72de98c84c3, type: 2}
+  Real: {fileID: 0}
   Deck: []
 --- !u!1 &930304696
 GameObject:
@@ -8299,7 +8299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2abb5e6a87890e45a2fd8bf3898a845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  info: {fileID: 11400000, guid: fb8676b4fa0510845902539eec0ccede, type: 2}
+  Real: {fileID: 11400000, guid: fb8676b4fa0510845902539eec0ccede, type: 2}
   Deck: []
 --- !u!1 &1832285952
 GameObject:

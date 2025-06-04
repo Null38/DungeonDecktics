@@ -6,6 +6,7 @@ using static UnityEditor.PlayerSettings;
 public class InfoComponent : MonoBehaviour
 {
     [SerializeField]
+    BaseInfo Real;
     BaseInfo info;
 
     public static event Action OnPlayerDied;
@@ -46,7 +47,14 @@ public class InfoComponent : MonoBehaviour
 
     void Awake()
     {
+        info = Instantiate(Real);
         animator = GetComponent<Animator>();
+    }
+
+    public void dumb()
+    {
+        info.MaxHp += DumbAssSave.HP;
+        info.MaxCost += DumbAssSave.COST;
     }
 
     public void Initialize()
