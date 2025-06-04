@@ -22,7 +22,7 @@ public abstract class CardBase : ScriptableObject
 
     public bool UseCard(Controller target)
     {
-        if (DataManager.player.info.UseCost(cost))
+        if (!DataManager.player.info.UseCost(cost))
             return false;
 
         RunCard(target);
