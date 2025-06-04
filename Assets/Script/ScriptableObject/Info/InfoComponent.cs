@@ -110,10 +110,7 @@ public class InfoComponent : MonoBehaviour
         var playerCtrl = GetComponent<PlayerController>();
         if (playerCtrl != null)
         {           
-            OnPlayerDied?.Invoke();
-            
-            
-
+            OnPlayerDied?.Invoke();            
             return;
         }
         // 적 죽음 처리

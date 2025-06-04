@@ -31,10 +31,12 @@ public class GameOverUIManager : MonoBehaviour
     private void OnMainButtonClicked()
     {
         SceneManager.LoadScene("MainScene");
+        UnityEngine.Object.Destroy(GameManager.Instance.gameObject);
     }
 
     private void OnRetryButtonClicked()
     {
         SceneManager.LoadScene("GameTestScene");
+        UnityEngine.Object.Destroy(GameManager.Instance.gameObject);
     }
 }

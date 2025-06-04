@@ -50,8 +50,9 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        InfoComponent.OnPlayerDied += HandlePlayerDeath;
+        InfoComponent.OnPlayerDied += HandlePlayerDeath;    
         InfoComponent.OnEnemyDied += HandleEnemyDeath;
+
 
         cardPile = new(inventory);
         cardPile.Initalize();
@@ -267,8 +268,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("[GameManager] 플레이어 사망 처리 (게임 오버 혹은 리스폰 등)");
         GameOverEvent?.Invoke();
-        // 예: 게임 오버 UI 띄우거나, 씬 전환하는 로직을 여기에 추가
         SceneLoadManager.LoadGameOver();
+
     }
         
     private void HandleEnemyDeath(EnemyController enemy)
