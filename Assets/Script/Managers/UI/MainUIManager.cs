@@ -13,13 +13,21 @@ public class MainUIManager : MonoBehaviour
     Button UpgradBar;
     [SerializeField]
     Button rankBar;
+    [SerializeField]
+    GameObject upgradePanel;
+    [SerializeField]
+    Button CloseUpgradePanel;
     public void GoUpgrade()
     {
-        Debug.Log("업그레이드 버튼 눌림");
+        upgradePanel.SetActive(true);
+    }
+    public void CloseUpgrade()
+    {
+        upgradePanel.SetActive(false);
     }
     public void CheckRank()
     {
-        Debug.Log("랭킹 확인 버튼 눌림");
+        Debug.Log("업그레이드 버튼 눌림");
     }
 
     private void Awake()
@@ -28,5 +36,6 @@ public class MainUIManager : MonoBehaviour
         OptionButton.onClick.AddListener(SceneLoadManager.LoadOption);
         UpgradBar.onClick.AddListener(GoUpgrade);
         rankBar.onClick.AddListener(CheckRank);
+        CloseUpgradePanel.onClick.AddListener(CloseUpgrade);
     }
 }
