@@ -18,6 +18,12 @@ public class SimpleShield : CardBase
 
     protected override void RunCard(Controller user)
     {
-        user.info.currentShield += shield;
+        var infoComp = user.GetComponent<InfoComponent>();
+        if (infoComp == null)
+        {
+            return;
+        }
+
+        infoComp.currentShield += shield;
     }
 }

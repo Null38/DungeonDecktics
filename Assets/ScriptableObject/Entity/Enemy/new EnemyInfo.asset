@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f06b0e0b391f0d4e985b6677b78ceee, type: 3}
   m_Name: new EnemyInfo
   m_EditorClassIdentifier: 
-  MaxHp: 20
+  MaxHp: 5
   MaxCost: 0
-  currentHp: 0
+  currentHp: 16
   currentCost: 0
   currentShield: 0
   defaultDeck: {fileID: 0}

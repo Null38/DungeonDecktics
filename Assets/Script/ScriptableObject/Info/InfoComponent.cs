@@ -111,9 +111,8 @@ public class InfoComponent : MonoBehaviour
         if (playerCtrl != null)
         {           
             OnPlayerDied?.Invoke();
-            // 플레이어 오브젝트는 바로 Destroy하지 않고 GameManager 쪽에서
-            // 넘어갈 장면 전환이나 리스폰 처리 등을 검토할 수 있게 두어도 됩니다.
-            gameObject.SetActive(false);
+            
+            
 
             return;
         }

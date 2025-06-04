@@ -281,6 +281,11 @@ public class GameManager : MonoBehaviour
             activeEntitys.Remove(enemy);
             CheckEndTurn();
         }
+        var playerCtrl = DataManager.player.GetComponent<PlayerController>();
+        if (playerCtrl != null)
+        {
+            playerCtrl.CancelMove();
+        }
 
     }
 

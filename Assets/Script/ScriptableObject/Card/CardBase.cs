@@ -21,8 +21,12 @@ public abstract class CardBase : ScriptableObject
     public bool isUpgraded = false;
 
     public bool UseCard(Controller target)
-    {
-        if (DataManager.player.info.UseCost(cost))
+    {        
+        var playerInfo = DataManager.player.GetComponent<InfoComponent>();
+        if (playerInfo == null)
+            return false;
+        
+        if (!playerInfo.UseCost(cost))
             return false;
 
         RunCard(target);

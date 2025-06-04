@@ -31,10 +31,15 @@ public class SimpleAttack : CardBase
 
     protected override void RunCard(Controller target)
     {
+        var infoComp = target.GetComponent<InfoComponent>();
+        if (infoComp == null)
+        {
+            return;
+        }
 
         foreach (var damage in damages)
         {
-            target.info.TakeDamage(damage);
+            infoComp.TakeDamage(damage);
         }
     }
 }
