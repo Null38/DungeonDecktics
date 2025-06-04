@@ -3120,7 +3120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   info: {fileID: 877919387}
-  attackDamage: 1
+  attackDamage: 5
   animator: {fileID: 877919386}
   audioSource: {fileID: 0}
   attackClip: {fileID: 0}
