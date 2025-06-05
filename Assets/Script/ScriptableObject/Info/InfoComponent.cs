@@ -9,6 +9,10 @@ public class InfoComponent : MonoBehaviour
     BaseInfo Real;
     BaseInfo info;
 
+    //피격이펙트용
+    [SerializeField]
+    private GameObject HitEffectPrefab;
+
     public static event Action OnPlayerDied;
     public static event Action<EnemyController> OnEnemyDied;
 
@@ -99,6 +103,12 @@ public class InfoComponent : MonoBehaviour
         {
             info.currentHp = Mathf.Max(info.currentHp - remainingDamage, 0);
             // Debug.Log($"{remainingDamage}의 피해를 입었습니다. (남은 체력: {info.currentHp})");
+
+            if (HitEffectPrefab != null)
+            {
+                Vector3 spawnPos = transform.position;
+                GameObject fx = Instantiate(HitEffectPrefab, spawnPos, Quaternion.identity);                
+            }
 
             if (info.currentHp > 0 && animator != null)
             {

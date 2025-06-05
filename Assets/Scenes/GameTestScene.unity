@@ -3205,6 +3205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Real: {fileID: 11400000, guid: d63194c1999541a46bcdd72de98c84c3, type: 2}
+  HitEffectPrefab: {fileID: 8982765643084296839, guid: c9adf17403fc67540a0ab02d353e77a7, type: 3}
   Deck: []
 --- !u!1 &930304696
 GameObject:
@@ -5690,6 +5691,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Real: {fileID: 11400000, guid: fb8676b4fa0510845902539eec0ccede, type: 2}
+  HitEffectPrefab: {fileID: 8982765643084296839, guid: c9adf17403fc67540a0ab02d353e77a7, type: 3}
   Deck: []
 --- !u!1 &1832285952
 GameObject:
