@@ -3,7 +3,7 @@ using TMPro;
 
 public class DamagePopup : MonoBehaviour
 {
-    public TMP_Text damageText;      
+    public TextMeshProUGUI damageText;      
     public float lifetime = 1f;  // 화면에 떠 있는 시간
 
     /// <summary>
