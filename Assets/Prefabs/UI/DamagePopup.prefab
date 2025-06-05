@@ -117,6 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damageText: {fileID: 5899421482648133835}
   lifetime: 1
+  speed: 1
 --- !u!1 &8876981310776657486
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +183,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: asdf
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a1ff70225fc6384d8c54ab2e46afd45, type: 2}
   m_sharedMaterial: {fileID: 2333765052754836236, guid: 5a1ff70225fc6384d8c54ab2e46afd45, type: 2}
