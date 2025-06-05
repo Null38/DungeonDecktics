@@ -4518,8 +4518,7 @@ MonoBehaviour:
   selectCard: {fileID: 0}
   enemyPrefab: {fileID: 0}
   spawnPoints: []
-  damagePopupPrefab: {fileID: 5891820554498457677, guid: e49fe50f83f721a458a1f42df85397d2, type: 3}
-  Canvas: {fileID: 1112612929}
+  damagePopupPrefab: {fileID: 6765718941118968651, guid: c600e7f046bf1ea4186e5f46761dfd10, type: 3}
 --- !u!4 &1323081026
 Transform:
   m_ObjectHideFlags: 0

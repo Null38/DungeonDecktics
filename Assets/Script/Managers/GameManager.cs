@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
 
     [Header("Damage Popup")]
     [SerializeField] private GameObject damagePopupPrefab;
-    [SerializeField] private Canvas Canvas;  
 
     private void Awake()
     {
@@ -253,10 +252,10 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ShowDamagePopup(int dmg, Vector3 worldPos)
     {
-        if (damagePopupPrefab == null || Canvas == null) return;
+        if (damagePopupPrefab == null) return;
 
         // 1) 인스턴스화 (instantiate)
-        GameObject go = Instantiate(damagePopupPrefab, Canvas.transform);
+        GameObject go = Instantiate(damagePopupPrefab);
 
         go.transform.position = worldPos;
 
