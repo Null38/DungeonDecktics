@@ -8,4 +8,5 @@ public static class DumbAssSave
     public static int DAMAGE = 0;
     public static int FUCK = 0;
 
+    public static int savedHp = 0;
 }

@@ -27,6 +27,7 @@ public class PlayerController : Controller, ITurnBased
         info.SetInfo();
         info.dumb();
         info.Initialize();
+        info.dumbEq();
 
         InGameUIManager.GetRestEvent += GetRest;
 

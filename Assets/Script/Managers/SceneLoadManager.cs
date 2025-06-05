@@ -29,6 +29,7 @@ public class SceneLoadManager
     public static void LoadGame()
     {
         DumbAssSave.nextStage = 1;
+        DumbAssSave.savedHp = 0;
         LoadScene("GameTestScene");
     }
 

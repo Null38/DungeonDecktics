@@ -285,6 +285,7 @@ public class GameManager : MonoBehaviour
             playerCtrl.CancelMove();
 
         DumbAssSave.FUCK++;
+        DumbAssSave.savedHp = DataManager.player.info.currentHp;
         SceneLoadManager.LoadStageClear(); 
     }
 

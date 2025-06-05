@@ -61,6 +61,13 @@ public class InfoComponent : MonoBehaviour
         info.MaxCost += DumbAssSave.COST;
     }
 
+    public void dumbEq()
+    {
+        if (DumbAssSave.savedHp == 0)
+            return;
+        info.currentHp = DumbAssSave.savedHp;
+    }
+
     public void Initialize()
     {
         info.currentHp = info.MaxHp;
