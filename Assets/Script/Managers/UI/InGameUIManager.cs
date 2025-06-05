@@ -27,6 +27,12 @@ public class InGameUIManager : MonoBehaviour
     Button drawPile;
     [SerializeField]
     TextMeshProUGUI CostText;
+    [SerializeField]
+    GameObject InfoButton;
+    [SerializeField]
+    GameObject infoTmpObj;
+    [SerializeField]
+    TextMeshProUGUI infoTmp;
 
     [SerializeField]
     RectTransform deckUI;
@@ -37,6 +43,8 @@ public class InGameUIManager : MonoBehaviour
     CardSpawner spawner;
     [SerializeField]
     Selector selector;
+    [SerializeField]
+    InfoUI infoUI;
 
     [SerializeField]
     Vector2 DeckUIShowPos;
@@ -74,6 +82,12 @@ public class InGameUIManager : MonoBehaviour
         Pause.SetActive(false);
     }
 
+    private void Awake()
+    {
+        infoUI.Tmp = infoTmp;
+        infoUI.TmpObj = infoTmpObj;
+    }
+
     private void Start()
     {
         if (deckUI == null)
@@ -96,7 +110,6 @@ public class InGameUIManager : MonoBehaviour
 
     private void AddListeners()
     {
-
         LoadMainButton.onClick.AddListener(SceneLoadManager.LoadMain);
         OptionButton.onClick.AddListener(SceneLoadManager.LoadOption);
         settingIcon.onClick.AddListener(OnPauseUI);
@@ -105,10 +118,16 @@ public class InGameUIManager : MonoBehaviour
         restIcon.onClick.AddListener(GetRest);
         disCardPile.onClick.AddListener(CheckDisCardPile);
         drawPile.onClick.AddListener(CheckDrawPile);
+
     }
 
     private void Update()
     {
+        if (GameManager.Instance.selectCard != null)
+            infoUI.gameObject.SetActive(true);
+        else
+            infoUI.gameObject.SetActive(false);
+
         HpBar.maxValue = DataManager.player.info.MaxHp;
         HpBar.value = DataManager.player.info.currentHp;
         ShildBar.maxValue = DataManager.player.info.currentHp;
