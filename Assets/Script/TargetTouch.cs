@@ -17,6 +17,8 @@ public class TargetTouch : MonoBehaviour
             var playerCtrl = DataManager.player.GetComponent<PlayerController>();
             if (playerCtrl != null)
                 playerCtrl.PlayAttackAnimation();
+            if (AudioManager.Instance != null)
+                AudioManager.Instance.PlaySFX(playerCtrl.playerAttackClip);
 
             var enemyAnim = target.GetComponent<Animator>();
             if (enemyAnim != null)
