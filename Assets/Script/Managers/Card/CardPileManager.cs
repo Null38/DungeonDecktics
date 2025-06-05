@@ -121,10 +121,6 @@ public class CardPileManager
             drawPile.RemoveAt(drawPile.Count - 1);
             handPile.Add(card);
         }
-
-        Debug.Log($"DR:{drawPile.Count}");
-        Debug.Log($"HA:{handPile.Count}");
-        Debug.Log($"DS:{discardPile.Count}");
     }
 
     public void SwapEquipment(int equipmentId, DeckObject deck)

@@ -23,6 +23,8 @@ public class PlayerController : Controller, ITurnBased
     void Awake()
     {
         DataManager.player = this;
+
+        info.SetInfo();
         info.dumb();
         info.Initialize();
 

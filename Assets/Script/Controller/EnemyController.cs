@@ -14,20 +14,6 @@ public class EnemyController : Controller, ITurnBased
     // 공격 시 사용할 데미지(로그 출력용)
     [SerializeField] private int attackDamage = 1;
 
-    void OnEnable()
-    {
-        if (infoComp == null)
-            infoComp = GetComponent<InfoComponent>();
-
-        if (infoComp != null)
-            infoComp.Initialize();
-        else
-            Debug.LogWarning($"[EnemyController] InfoComponent가 없습니다: {gameObject.name}");
-
-        ActiveEnemy[this] = this;
-        Debug.Log($"[EnemyController] 등록: {gameObject.name}, ActiveEnemy.Count = {ActiveEnemy.Count}");
-
-    }
 
     void OnDisable() => ActiveEnemy.Remove(this);
 
@@ -37,8 +23,22 @@ public class EnemyController : Controller, ITurnBased
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip attackClip;
 
-    private InfoComponent infoComp;
 
+    void OnEnable()
+    {
+
+        if (info != null)
+        {
+            info.SetInfo();
+            info.Initialize();
+        }
+        else
+            Debug.LogWarning($"[EnemyController] InfoComponent가 없습니다: {gameObject.name}");
+
+        ActiveEnemy[this] = this;
+        Debug.Log($"[EnemyController] 등록: {gameObject.name}, ActiveEnemy.Count = {ActiveEnemy.Count}");
+
+    }
 
     public void OnTurnBegin()
     {

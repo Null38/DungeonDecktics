@@ -47,8 +47,12 @@ public class InfoComponent : MonoBehaviour
 
     void Awake()
     {
-        info = Instantiate(Real);
         animator = GetComponent<Animator>();
+    }
+
+    public void SetInfo()
+    {
+        info = Instantiate(Real);
     }
 
     public void dumb()
