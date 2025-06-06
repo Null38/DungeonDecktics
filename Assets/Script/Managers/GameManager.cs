@@ -285,7 +285,10 @@ public class GameManager : MonoBehaviour
 
         DumbAssSave.FUCK++;
         DumbAssSave.savedHp = DataManager.player.info.currentHp;
-        SceneLoadManager.LoadStageClear(); 
+        if (EnemyController.ActiveEnemy.Count == 1)
+        {
+            SceneLoadManager.LoadStageClear();
+        }
     }
 
 
