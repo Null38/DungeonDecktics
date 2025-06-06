@@ -553,7 +553,7 @@ GameObject:
   - component: {fileID: 900746627}
   - component: {fileID: 900746626}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Pass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -778,7 +778,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonNextStage: {fileID: 757299245}
-  nextStageIndex: 2
+  buttonPass: {fileID: 900746626}
+  buttonChange: {fileID: 1780024284}
+  CurrEq: {fileID: 232742982}
+  newEq: {fileID: 1850896597}
+  EquipmentChangeTap: {fileID: 1227179577}
 --- !u!1 &1003236881
 GameObject:
   m_ObjectHideFlags: 0
