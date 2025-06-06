@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,7 +14,10 @@ public class StageClearSceneUIManager : MonoBehaviour
     [SerializeField] private Image newEq;
 
     [SerializeField] private GameObject EquipmentChangeTap;
-
+    
+    
+    [SerializeField] private List<EquipmentItemObject> equipList;
+    [SerializeField] private EquipmentItemObject selectedEquip;
 
 
     private void Awake()
@@ -22,16 +26,16 @@ public class StageClearSceneUIManager : MonoBehaviour
         buttonPass.onClick.AddListener(() => EquipmentChangeTap.SetActive(false));
         buttonChange.onClick.AddListener(SetNewEq);
 
-        //CurrEq.sprite = GameManager.Instance.무슨무슨 장비
-        //newEq.sprite = 무슨무슨 새로운 장비
-        Debug.LogWarning("이 문구 보이면 구현하라 하는거임");
+        selectedEquip = equipList[Random.Range(0, equipList.Count - 1)];
+
+        CurrEq.sprite = GameManager.Instance.inventory.sprite[(int)selectedEquip.type];
+        newEq.sprite = selectedEquip.img;
     }
 
     private void SetNewEq()
     {
         EquipmentChangeTap.SetActive(false);
-        //DumbAssSave.eqSave[장] = 비;
-        Debug.LogWarning("이 문구 보이면 구현하라 하는거임");
+        DumbAssSave.eqSave[(int)selectedEquip.type] = selectedEquip;
     }
 
     private void OnNextStageClicked()

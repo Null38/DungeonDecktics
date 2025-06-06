@@ -14,7 +14,7 @@ public class Inventory : MonoBehaviour
         notEquipment = 5
     }
 
-
+    public Sprite[] sprite;
     public DeckObject[] decks;
 
     private void Awake()
