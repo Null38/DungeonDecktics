@@ -18,6 +18,7 @@ public class SimpleShield : CardBase
 
     protected override void RunCard(Controller user)
     {
+        AudioManager.Instance.PlayPlayerShield();
         var infoComp = user.GetComponent<InfoComponent>();
         if (infoComp == null)
         {

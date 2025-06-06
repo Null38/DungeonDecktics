@@ -15,9 +15,6 @@ public class PlayerController : Controller, ITurnBased
     private static readonly int HashDie = Animator.StringToHash("Die");
     private static readonly int HashAttack = Animator.StringToHash("Attack");
 
-    [SerializeField]
-    private AudioClip playerAttackClip;
-
     private Vector3? target = null; 
 
     private bool touch = false;

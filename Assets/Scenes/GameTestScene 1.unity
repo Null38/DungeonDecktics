@@ -503,6 +503,95 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 426878737}
   m_CullTransparentMesh: 1
+--- !u!1 &448185332
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 448185336}
+  - component: {fileID: 448185335}
+  - component: {fileID: 448185334}
+  - component: {fileID: 448185333}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &448185333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448185332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3270e157d44c1b0489047de703799500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxPlayerPrefab: {fileID: 140016305132098718, guid: a17f3bdbdd3d51243b82669814a84346, type: 3}
+  PlayerAttackClip: {fileID: 8300000, guid: 80502e18f68bb734b9dded7bb8d2e750, type: 3}
+  PlayerShieldClip: {fileID: 8300000, guid: b7b5a6156961bac44a67504d42ce6fcf, type: 3}
+  EnemyAttackClip: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
+  EnemyDieClip: {fileID: 8300000, guid: 9cd8cc2a448a0be428d27445f715a157, type: 3}
+--- !u!114 &448185334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448185332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b681bb413502a574a9f244539d4a4354, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  decks:
+  - {fileID: 11400000, guid: 095e2b9efb0a7824ab1bd4973ad50a6d, type: 2}
+  - {fileID: 11400000, guid: 73efc818b4d5e7242bad140536f19015, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &448185335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448185332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d87e8520f3825247a78f1354f2bccf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetPrefab: {fileID: 5957628733487507887, guid: 980d473de12a79e458e8ef6b82b58adb, type: 3}
+  inventory: {fileID: 448185334}
+  currentTurn: 0
+  selectCard: {fileID: 0}
+  enemyPrefab: {fileID: 0}
+  spawnPoints: []
+  damagePopupPrefab: {fileID: 6765718941118968651, guid: c600e7f046bf1ea4186e5f46761dfd10, type: 3}
+--- !u!4 &448185336
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 448185332}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &483952811
 GameObject:
   m_ObjectHideFlags: 0
@@ -5354,8 +5443,6 @@ MonoBehaviour:
   info: {fileID: 877919387}
   attackDamage: 5
   animator: {fileID: 877919386}
-  audioSource: {fileID: 0}
-  attackClip: {fileID: 0}
 --- !u!61 &877919385
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6714,77 +6801,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1310650463}
   m_CullTransparentMesh: 1
---- !u!1 &1323081024
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1323081026}
-  - component: {fileID: 1323081025}
-  - component: {fileID: 1323081027}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1323081025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1323081024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d87e8520f3825247a78f1354f2bccf9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  targetPrefab: {fileID: 5957628733487507887, guid: 980d473de12a79e458e8ef6b82b58adb, type: 3}
-  inventory: {fileID: 1323081027}
-  currentTurn: 0
-  selectCard: {fileID: 0}
-  enemyPrefab: {fileID: 0}
-  spawnPoints: []
-  damagePopupPrefab: {fileID: 6765718941118968651, guid: c600e7f046bf1ea4186e5f46761dfd10, type: 3}
---- !u!4 &1323081026
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1323081024}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1323081027
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1323081024}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b681bb413502a574a9f244539d4a4354, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  decks:
-  - {fileID: 11400000, guid: 095e2b9efb0a7824ab1bd4973ad50a6d, type: 2}
-  - {fileID: 11400000, guid: 73efc818b4d5e7242bad140536f19015, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!1 &1411297090
 GameObject:
   m_ObjectHideFlags: 0
@@ -14742,6 +14758,6 @@ SceneRoots:
   - {fileID: 2028901030}
   - {fileID: 1777974631}
   - {fileID: 877919381}
-  - {fileID: 1323081026}
+  - {fileID: 448185336}
   - {fileID: 1112612930}
   - {fileID: 2118754952}
