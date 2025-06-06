@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 07365c45d5b20ba4eb078e767e2ce6b3, type: 3}
-  m_Name: BareHandDeck
+  m_Name: BareHandDeck 1
   m_EditorClassIdentifier: 
   cards:
   - {fileID: 11400000, guid: 9130db0d2a3bb0b4b88d6cb110418547, type: 2}
