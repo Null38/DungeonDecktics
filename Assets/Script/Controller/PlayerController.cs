@@ -92,8 +92,7 @@ public class PlayerController : Controller, ITurnBased
         bool shouldWalk = target.HasValue;
         if (animator != null)
             animator.SetBool(HashWalk, shouldWalk);
-
-    }
+        }
 
     private void TouchCheck()
     {

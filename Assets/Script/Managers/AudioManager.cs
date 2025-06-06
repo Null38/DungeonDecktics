@@ -14,6 +14,8 @@ public class AudioManager : MonoBehaviour
     private AudioClip PlayerAttackClip;
     [SerializeField]
     private AudioClip PlayerShieldClip;
+    [SerializeField]
+    private AudioClip PlayerWalkClip;
 
     [Header("Enemy")]
     [SerializeField]
@@ -34,26 +36,26 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySFX(AudioClip clip)
     {
-        if (clip == null || sfxPlayerPrefab == null)
-            return;
+        if (clip == null || sfxPlayerPrefab == null) return;
         GameObject go = Instantiate(sfxPlayerPrefab);
         go.name = "SFXPlayer_Instance";
         AudioSource source = go.GetComponent<AudioSource>();
         if (source != null)
         {
             source.PlayOneShot(clip);
-            
+            Destroy(go, clip.length + 0.05f);
         }
         else
         {
-           Destroy(go);
+            Destroy(go);
         }
     }
+
     //재생편의 레퍼 메서드
     public void PlayPlayerAttack() => PlaySFX(PlayerAttackClip);
     public void PlayEnemyAttack() => PlaySFX(EnemyAttackClip);
     public void PlayEnemyDie() => PlaySFX(EnemyDieClip);
     public void PlayPlayerShield() => PlaySFX(PlayerShieldClip);
-    
+    public void PlayPlayerWalk() => PlaySFX(PlayerWalkClip);
 
 }
