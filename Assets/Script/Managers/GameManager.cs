@@ -268,7 +268,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("[GameManager] 플레이어 사망 처리 (게임 오버 혹은 리스폰 등)");
         GameOverEvent?.Invoke();
         SceneLoadManager.LoadGameOver();
-
     }
 
     private void HandleEnemyDeath(EnemyController enemy)

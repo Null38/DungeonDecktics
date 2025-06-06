@@ -102,8 +102,7 @@ public class InfoComponent : MonoBehaviour
         if (remainingDamage > 0)
         {
             info.currentHp = Mathf.Max(info.currentHp - remainingDamage, 0);
-            // Debug.Log($"{remainingDamage}의 피해를 입었습니다. (남은 체력: {info.currentHp})");
-
+            // Debug.Log($"{remainingDamage}의 피해를 입었습니다. (남은 체력: {info.currentHp})");            
             if (HitEffectPrefab != null)
             {
                 Vector3 spawnPos = transform.position;
@@ -143,9 +142,10 @@ public class InfoComponent : MonoBehaviour
             return;
         }
         // 적 죽음 처리
-        var enemyCtrl = GetComponent<EnemyController>();
+        var enemyCtrl = GetComponent<EnemyController>();        
         if (enemyCtrl != null)
         {
+            AudioManager.Instance.PlayEnemyDie();
             OnEnemyDied?.Invoke(enemyCtrl);
             Debug.Log($"[InfoComponent] 적({gameObject.name}) 사망 이벤트 발생");
             Destroy(gameObject);

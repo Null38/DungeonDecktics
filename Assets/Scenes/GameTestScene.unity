@@ -3306,8 +3306,6 @@ MonoBehaviour:
   info: {fileID: 877919387}
   attackDamage: 5
   animator: {fileID: 877919386}
-  audioSource: {fileID: 0}
-  attackClip: {fileID: 0}
 --- !u!61 &877919385
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4681,6 +4679,7 @@ GameObject:
   - component: {fileID: 1323081026}
   - component: {fileID: 1323081025}
   - component: {fileID: 1323081027}
+  - component: {fileID: 1323081028}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4741,6 +4740,24 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &1323081028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323081024}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3270e157d44c1b0489047de703799500, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sfxPlayerPrefab: {fileID: 140016305132098718, guid: a17f3bdbdd3d51243b82669814a84346, type: 3}
+  PlayerAttackClip: {fileID: 8300000, guid: 80502e18f68bb734b9dded7bb8d2e750, type: 3}
+  PlayerShieldClip: {fileID: 8300000, guid: b7b5a6156961bac44a67504d42ce6fcf, type: 3}
+  PlayerWalkClip: {fileID: 8300000, guid: df7087e4d8a8bb546bc08ce68632903f, type: 3}
+  EnemyAttackClip: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
+  EnemyDieClip: {fileID: 8300000, guid: 9cd8cc2a448a0be428d27445f715a157, type: 3}
 --- !u!1 &1411297090
 GameObject:
   m_ObjectHideFlags: 0

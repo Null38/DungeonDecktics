@@ -14,6 +14,7 @@ public class TargetTouch : MonoBehaviour
                 
         if (selected != null && selected.cardInfo.targetType == CardBase.TargetType.other)
         {
+            AudioManager.Instance.PlayPlayerAttack();
             var playerCtrl = DataManager.player.GetComponent<PlayerController>();
             if (playerCtrl != null)
                 playerCtrl.PlayAttackAnimation();
