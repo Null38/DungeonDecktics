@@ -9,4 +9,6 @@ public static class DumbAssSave
     public static int FUCK = 0;
 
     public static int savedHp = 0;
+
+    public static EquipmentItemObject[] eqSave = new EquipmentItemObject[2]; 
 }

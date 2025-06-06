@@ -17,6 +17,20 @@ public class Inventory : MonoBehaviour
 
     public DeckObject[] decks;
 
+    private void Awake()
+    {
+        if (DumbAssSave.eqSave[0] != null)
+        {
+            decks[0] = DumbAssSave.eqSave[0].deck;
+        }
+
+        if (DumbAssSave.eqSave[1] != null)
+        {
+            decks[1] = DumbAssSave.eqSave[1].deck;
+
+        }
+    }
+
     public List<CardBase>[] GetCardPile()
     {
         List<CardBase>[] combined = new List<CardBase>[Enum.GetValues(typeof(ParentId)).Length];

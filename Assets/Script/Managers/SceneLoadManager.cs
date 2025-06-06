@@ -30,6 +30,7 @@ public class SceneLoadManager
     {
         DumbAssSave.nextStage = 1;
         DumbAssSave.savedHp = 0;
+        DumbAssSave.eqSave = new EquipmentItemObject[2];
         LoadScene("GameTestScene");
     }
 

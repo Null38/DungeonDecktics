@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum EquipmentType
 {
@@ -8,6 +9,8 @@ public enum EquipmentType
 [CreateAssetMenu(fileName = "EquipmentData", menuName = "Scriptable Objects/Equipment", order = 1)]
 public class EquipmentItemObject : ItemObject
 {
+    public Sprite img;
+
     public DeckObject deck;
 
     public EquipmentType type;
