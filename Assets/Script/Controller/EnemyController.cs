@@ -89,11 +89,6 @@ public class EnemyController : Controller, ITurnBased
                 AudioManager.Instance.PlayEnemyAttack();
                 // 플레이어에게 데미지 적용
                 playerInfoComp.TakeDamage(attackDamage);
-                // 플레이어에게 데미지 팝업 표시
-                GameManager.Instance.ShowDamagePopup(
-                    attackDamage,
-                    DataManager.player.transform.position
-                );
                 Debug.Log($"[EnemyController] 남은 HP: {playerInfoComp.currentHp}");
 
             }

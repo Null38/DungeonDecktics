@@ -101,6 +101,11 @@ public class InfoComponent : MonoBehaviour
         // 2. 남은 데미지를 HP에 적용
         if (remainingDamage > 0)
         {
+            GameManager.Instance.ShowDamagePopup(
+                remainingDamage,
+                transform.position
+            );
+
             info.currentHp = Mathf.Max(info.currentHp - remainingDamage, 0);
             // Debug.Log($"{remainingDamage}의 피해를 입었습니다. (남은 체력: {info.currentHp})");            
             if (HitEffectPrefab != null)
