@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Light armor Deck
   m_EditorClassIdentifier: 
   cards:
-  - {fileID: 11400000, guid: d0bbc75f2888af0418709f90ac2bc2cd, type: 2}
+  - {fileID: 11400000, guid: 208912d7f88feb74bb3a97dc1838dfa1, type: 2}
   - {fileID: 11400000, guid: 5b34f127838b8bf4c9e29e02bfe7df7a, type: 2}
   - {fileID: 11400000, guid: 5b34f127838b8bf4c9e29e02bfe7df7a, type: 2}
