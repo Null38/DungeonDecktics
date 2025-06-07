@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     public CardComponent selectCard;
     public static event Action<RectTransform> CardSelectedEvent;
-    
+
 
     [Header("Enemy Spawning")]
     [Tooltip("씬에 배치할 적 Prefab")]
@@ -49,7 +49,7 @@ public class GameManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        InfoComponent.OnPlayerDied += HandlePlayerDeath;    
+        InfoComponent.OnPlayerDied += HandlePlayerDeath;
         InfoComponent.OnEnemyDied += HandleEnemyDeath;
 
 
@@ -168,7 +168,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("게임 오버!");
     }
 
-    public bool IsSameTargetPosition(Controller self ,Vector3? targetPos)
+    public bool IsSameTargetPosition(Controller self, Vector3? targetPos)
     {
         foreach (KeyValuePair<Controller, ITurnBased> entity in activeEntitys)
         {
@@ -284,9 +284,16 @@ public class GameManager : MonoBehaviour
 
         DumbAssSave.FUCK++;
         DumbAssSave.savedHp = DataManager.player.info.currentHp;
+
         if (EnemyController.ActiveEnemy.Count == 1)
         {
-            SceneLoadManager.LoadStageClear();
+
+            if (DumbAssSave.nextStage == 3)
+            {
+                SceneLoadManager.LoadEnding();
+            }
+            else
+                SceneLoadManager.LoadStageClear();
         }
     }
 
