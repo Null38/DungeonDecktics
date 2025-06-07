@@ -66,6 +66,9 @@ public class InGameUIManager : MonoBehaviour
     public void GetRest()
     {
         GetRestEvent?.Invoke();
+        GameManager.Instance.selectCard = null;
+        GameManager.Instance.RemoveAllTarget();
+
         spawner.DestroyCards();
         SpawnCards();
     }
