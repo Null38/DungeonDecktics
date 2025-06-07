@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35d37f07b59e4744d91e29d30a3d348c, type: 3}
-  m_Name: Flash Attack
+  m_Name: Wind Cutter
   m_EditorClassIdentifier: 
-  CardName: "\uBCBD\uB825\uC5F0\uCC38"
-  description: "\uB9E4\uC6B0 \uBE60\uB978 \uC18D\uB3C4\uB85C \uAC80\uC744 \uD718\uB458\uB7EC
-    \uC801\uC5D0\uAC8C {0}\uC758 \uD53C\uD574\uB97C 4\uBC88 \uC90D\uB2C8\uB2E4."
+  CardName: "\uAC80\uD48D \uC77C\uC73C\uD0A4\uAE30"
+  description: "\uB300\uAC80\uC744 \uD06C\uAC8C \uD718\uB458\uB7EC \uAC80\uD48D\uC744
+    \uB0A0\uB9BD\uB2C8\uB2E4. {0}\uC758 \uD53C\uD574\uB97C \uC90D\uB2C8\uB2E4"
   backgroundColor: {r: 0.9716981, g: 0.12375401, b: 0.21661192, a: 1}
   artwork: {fileID: 4176362632249098406, guid: 1b79b6506bdc22e4996fd332932ba103, type: 3}
-  cost: 5
-  distance: 1
+  cost: 1
+  distance: 2
   category: 0
   targetType: 1
   isUpgraded: 0
-  damages: 07000000070000000700000007000000
+  damages: 05000000

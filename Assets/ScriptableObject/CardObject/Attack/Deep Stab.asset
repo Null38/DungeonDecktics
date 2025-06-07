@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d37f07b59e4744d91e29d30a3d348c, type: 3}
+  m_Name: Deep Stab
+  m_EditorClassIdentifier: 
+  CardName: "\uAE4A\uAC8C \uCC0C\uB974\uAE30"
+  description: "\uAC80\uC744 \uAE4A\uAC8C \uCC14\uB7EC  {0}\uC758 \uD53C\uD574\uB97C
+    \uC90D\uB2C8\uB2E4."
+  backgroundColor: {r: 0.972549, g: 0.1254902, b: 0.21568628, a: 1}
+  artwork: {fileID: 69959685, guid: b604bb98c93866549b35b30d045ef6cb, type: 3}
+  cost: 2
+  distance: 1
+  category: 0
+  targetType: 1
+  isUpgraded: 0
+  damages: 07000000

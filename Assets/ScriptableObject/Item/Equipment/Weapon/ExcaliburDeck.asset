@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: ExcaliburDeck
   m_EditorClassIdentifier: 
   cards:
-  - {fileID: 11400000, guid: 6b9d859f25c0bb346be264692117e318, type: 2}
-  - {fileID: 11400000, guid: 6b9d859f25c0bb346be264692117e318, type: 2}
+  - {fileID: 11400000, guid: 6ae95fef66958234fbb3bd84513e57c7, type: 2}
+  - {fileID: 11400000, guid: 6ae95fef66958234fbb3bd84513e57c7, type: 2}
   - {fileID: 11400000, guid: faed3bfb0fa857c45a87715c91dd6545, type: 2}
   - {fileID: 11400000, guid: 29542570417837240bc792b48b32c8cf, type: 2}
   - {fileID: 11400000, guid: 29542570417837240bc792b48b32c8cf, type: 2}
