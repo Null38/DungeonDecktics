@@ -17,16 +17,18 @@ public class Inventory : MonoBehaviour
     public Sprite[] sprite;
     public DeckObject[] decks;
 
-    private void Awake()
+    public void Init()
     {
         if (DumbAssSave.eqSave[0] != null)
         {
             decks[0] = DumbAssSave.eqSave[0].deck;
+            sprite[0] = DumbAssSave.eqSave[0].img;
         }
 
         if (DumbAssSave.eqSave[1] != null)
         {
             decks[1] = DumbAssSave.eqSave[1].deck;
+            sprite[1] = DumbAssSave.eqSave[1].img;
 
         }
     }

@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
         InfoComponent.OnPlayerDied += HandlePlayerDeath;
         InfoComponent.OnEnemyDied += HandleEnemyDeath;
 
-
+        inventory.Init();
         cardPile = new(inventory);
         cardPile.Initalize();
 
