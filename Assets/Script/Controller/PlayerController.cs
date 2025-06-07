@@ -45,8 +45,7 @@ public class PlayerController : Controller, ITurnBased
 
     void GetRest()
     {
-        info.InitCost();
-        Debug.LogWarning("카드 드로우 시키기");
+        info.InitCost();    
 
         GameManager.Instance.cardPile.DrawToHand(5);
         OnTurnEnd();

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f566e14c93707c640a555c0b6dce92a3, type: 3}
   m_Name: Crown
   m_EditorClassIdentifier: 
-  deck: {fileID: 0}
+  img: {fileID: 0}
+  deck: {fileID: 11400000, guid: f96c40e2d9690304691025d7e43651d7, type: 2}
   type: 0

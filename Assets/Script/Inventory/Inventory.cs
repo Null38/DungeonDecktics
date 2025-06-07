@@ -14,8 +14,22 @@ public class Inventory : MonoBehaviour
         notEquipment = 5
     }
 
-
+    public Sprite[] sprite;
     public DeckObject[] decks;
+
+    private void Awake()
+    {
+        if (DumbAssSave.eqSave[0] != null)
+        {
+            decks[0] = DumbAssSave.eqSave[0].deck;
+        }
+
+        if (DumbAssSave.eqSave[1] != null)
+        {
+            decks[1] = DumbAssSave.eqSave[1].deck;
+
+        }
+    }
 
     public List<CardBase>[] GetCardPile()
     {

@@ -12,6 +12,7 @@ public class DamagePopup : MonoBehaviour
     /// </summary>
     public void Init(int dmg)
     {
+        transform.position += new Vector3(Random.value, Random.value);
         damageText.text = $"-{dmg}";
         // 1초 뒤 자신을 파괴
         Destroy(gameObject, lifetime);
