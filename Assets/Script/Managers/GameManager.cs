@@ -288,7 +288,7 @@ public class GameManager : MonoBehaviour
         if (EnemyController.ActiveEnemy.Count == 1)
         {
 
-            if (DumbAssSave.nextStage == 3)
+            if (DumbAssSave.nextStage == 6)
             {
                 SceneLoadManager.LoadEnding();
             }
