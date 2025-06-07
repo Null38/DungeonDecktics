@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using static UnityEditor.PlayerSettings;
 
 public class InfoComponent : MonoBehaviour
@@ -8,6 +9,10 @@ public class InfoComponent : MonoBehaviour
     [SerializeField]
     BaseInfo Real;
     BaseInfo info;
+
+    [SerializeField]
+    Slider Hpbar;
+
 
     //피격이펙트용
     [SerializeField]
@@ -52,6 +57,15 @@ public class InfoComponent : MonoBehaviour
     void Awake()
     {
         animator = GetComponent<Animator>();
+    }
+
+    private void Update()
+    {
+        if (Hpbar != null)
+        {
+            Hpbar.maxValue = info.MaxHp;
+            Hpbar.value = info.currentHp;
+        }
     }
 
     public void SetInfo()
