@@ -15,7 +15,7 @@ MonoBehaviour:
   CardName: "\uB178\uBCD1\uC758 \uB178\uB828\uD55C \uBC29\uD328\uC220"
   description: "\uBC29\uC5B4\uB3C4\uB97C {0} \uC5BB\uC2B5\uB2C8\uB2E4."
   backgroundColor: {r: 0.3066038, g: 0.7295698, b: 1, a: 1}
-  artwork: {fileID: 0}
+  artwork: {fileID: -1902985772, guid: ff02d96fc6e6dcd4da44f13769bc9569, type: 3}
   cost: 1
   distance: 0
   category: 1
