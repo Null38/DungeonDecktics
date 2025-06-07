@@ -290,7 +290,7 @@ public class GameManager : MonoBehaviour
 
             if (DumbAssSave.nextStage == 6)
             {
-                SceneLoadManager.LoadEnding();
+                SceneLoadManager.LoadLastStageClear();
             }
             else
                 SceneLoadManager.LoadStageClear();

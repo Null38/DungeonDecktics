@@ -5800,7 +5800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   info: {fileID: 877919387}
-  attackDamage: 5
+  attackDamage: 11
   animator: {fileID: 877919386}
 --- !u!61 &877919385
 BoxCollider2D:
