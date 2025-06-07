@@ -5528,7 +5528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2abb5e6a87890e45a2fd8bf3898a845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Real: {fileID: 11400000, guid: d63194c1999541a46bcdd72de98c84c3, type: 2}
+  Real: {fileID: 11400000, guid: 3df2209dad5d05c4a8d10f67421f60e2, type: 2}
   HitEffectPrefab: {fileID: 8982765643084296839, guid: c9adf17403fc67540a0ab02d353e77a7, type: 3}
   Deck: []
 --- !u!1 &930304696
