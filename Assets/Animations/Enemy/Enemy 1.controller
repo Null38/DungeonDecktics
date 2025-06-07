@@ -46,7 +46,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 5d6f99eadb9a8994f8c1d7a74e2d0e26, type: 2}
+  m_Motion: {fileID: 7400000, guid: 87f8a1fbbf6254c4eb2a66b191ce773f, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -120,7 +120,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: e3e1ccc855d1fdd44be2834caf27619a, type: 2}
+  m_Motion: {fileID: 7400000, guid: cf603a8de7932fc4fa900b21c9883a17, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -146,7 +146,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 1ee0e6d57aee2424a8774c6e38128a4d, type: 2}
+  m_Motion: {fileID: 7400000, guid: 1c41da0942cb3e644869a057c7810b72, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -158,7 +158,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy
+  m_Name: Enemy 1
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Attack
@@ -291,7 +291,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: 8beda2ba96486d546ba6d53a646233c0, type: 2}
+  m_Motion: {fileID: 7400000, guid: 6749c5d8df407c44e908d1f5163ffd02, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
