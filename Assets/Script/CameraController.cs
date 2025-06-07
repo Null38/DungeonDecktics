@@ -81,7 +81,7 @@ public class CameraController : MonoBehaviour
             lastMousePosition = Input.mousePosition;
         }
         // 드래그 중
-        else if (Input.GetMouseButton(0) && isDragging)
+        else if (Input.GetMouseButton(0) && isDragging && !IsPointerOverUIObject())
         {
             Vector3 currentMousePos = Input.mousePosition;
             Vector3 deltaPixels = lastMousePosition - currentMousePos;
