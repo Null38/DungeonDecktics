@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f566e14c93707c640a555c0b6dce92a3, type: 3}
   m_Name: Heavy armor
   m_EditorClassIdentifier: 
-  img: {fileID: 0}
+  img: {fileID: -3022540174006795666, guid: 132fb68eb61997a4bbfcf87614ca0fb6, type: 3}
   deck: {fileID: 11400000, guid: 26898d6cae2353248a961fdff3711d58, type: 2}
   type: 1

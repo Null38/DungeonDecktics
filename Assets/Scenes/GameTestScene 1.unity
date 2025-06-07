@@ -537,6 +537,7 @@ MonoBehaviour:
   sfxPlayerPrefab: {fileID: 140016305132098718, guid: a17f3bdbdd3d51243b82669814a84346, type: 3}
   PlayerAttackClip: {fileID: 8300000, guid: 80502e18f68bb734b9dded7bb8d2e750, type: 3}
   PlayerShieldClip: {fileID: 8300000, guid: b7b5a6156961bac44a67504d42ce6fcf, type: 3}
+  PlayerWalkClip: {fileID: 0}
   EnemyAttackClip: {fileID: 8300000, guid: 56703418e3aed4c47a5f6622816b8e41, type: 3}
   EnemyDieClip: {fileID: 8300000, guid: 9cd8cc2a448a0be428d27445f715a157, type: 3}
 --- !u!114 &448185334
@@ -551,6 +552,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b681bb413502a574a9f244539d4a4354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite:
+  - {fileID: 1518363075290452430, guid: bfc03f2e712b89b499e34a7563324dda, type: 3}
+  - {fileID: -2757887451555568444, guid: 132fb68eb61997a4bbfcf87614ca0fb6, type: 3}
   decks:
   - {fileID: 11400000, guid: 095e2b9efb0a7824ab1bd4973ad50a6d, type: 2}
   - {fileID: 11400000, guid: 73efc818b4d5e7242bad140536f19015, type: 2}
@@ -6836,7 +6840,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -10.000004, y: 109.99999}
+  m_AnchoredPosition: {x: -10, y: 109.99999}
   m_SizeDelta: {x: 32, y: 32}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1210057808

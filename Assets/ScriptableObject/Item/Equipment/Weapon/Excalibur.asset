@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f566e14c93707c640a555c0b6dce92a3, type: 3}
   m_Name: Excalibur
   m_EditorClassIdentifier: 
-  img: {fileID: 0}
+  img: {fileID: 6919366548538155999, guid: bfc03f2e712b89b499e34a7563324dda, type: 3}
   deck: {fileID: 11400000, guid: 0f37625f912fec243bd54c75a2eab8b8, type: 2}
   type: 0

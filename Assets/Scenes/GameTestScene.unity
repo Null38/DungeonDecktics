@@ -4733,6 +4733,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b681bb413502a574a9f244539d4a4354, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sprite:
+  - {fileID: 1518363075290452430, guid: bfc03f2e712b89b499e34a7563324dda, type: 3}
+  - {fileID: -2757887451555568444, guid: 132fb68eb61997a4bbfcf87614ca0fb6, type: 3}
   decks:
   - {fileID: 11400000, guid: 095e2b9efb0a7824ab1bd4973ad50a6d, type: 2}
   - {fileID: 11400000, guid: 73efc818b4d5e7242bad140536f19015, type: 2}
