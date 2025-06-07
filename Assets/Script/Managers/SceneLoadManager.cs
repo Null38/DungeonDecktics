@@ -46,6 +46,10 @@ public class SceneLoadManager
         LoadScene("MainScene");
         UnityEngine.Object.Destroy(GameManager.Instance.gameObject);
     }
+    public static void LoadEnding()
+    {
+        SceneManager.LoadScene("EndingScene", LoadSceneMode.Single);
+    }
 
     public static void LoadOption()
     {
@@ -61,6 +65,12 @@ public class SceneLoadManager
         SceneManager.LoadSceneAsync("StageClearScene", LoadSceneMode.Additive);
     }
 
+    public static void LoadLastStageClear()
+    {
+        SceneManager.LoadSceneAsync("LastStageClearScene", LoadSceneMode.Additive);
+    }
+
+    
 
     private static void LoadScene(String scene)
     {

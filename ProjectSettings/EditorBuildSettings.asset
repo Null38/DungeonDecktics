@@ -29,6 +29,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameTestScene 2.unity
     guid: b68da235188c5b54788429f71a3cba63
+  - enabled: 1
+    path: Assets/Scenes/LastStageClearScene.unity
+    guid: 47e9a8f1874b7d9419de2f6d4facdea7
+  - enabled: 1
+    path: Assets/Scenes/EndingScene.unity
+    guid: 3fce30fd45a26d642b87cd572c595e65
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
