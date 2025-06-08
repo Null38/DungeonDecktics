@@ -784,7 +784,6 @@ MonoBehaviour:
   newEq: {fileID: 1850896597}
   EquipmentChangeTap: {fileID: 1227179577}
   equipList:
-  - {fileID: 11400000, guid: 7c5d04f5516c4b643bad06741bfe7f9e, type: 2}
   - {fileID: 11400000, guid: f068f07f3a841c949b473782d25baaf4, type: 2}
   - {fileID: 11400000, guid: 832e2c0e5cf1ed940baccdf0655cb61b, type: 2}
   - {fileID: 11400000, guid: f1853f4efb1d7074eac03a4904b6811b, type: 2}
