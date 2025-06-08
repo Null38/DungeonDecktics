@@ -16,7 +16,7 @@ MonoBehaviour:
   description: "\uAC80\uC744 \uAE4A\uAC8C \uCC14\uB7EC  {0}\uC758 \uD53C\uD574\uB97C
     \uC90D\uB2C8\uB2E4."
   backgroundColor: {r: 0.972549, g: 0.1254902, b: 0.21568628, a: 1}
-  artwork: {fileID: 69959685, guid: b604bb98c93866549b35b30d045ef6cb, type: 3}
+  artwork: {fileID: -2082799716, guid: 2e5763729496b3c4e99d450a4d168b9b, type: 3}
   cost: 2
   distance: 1
   category: 0
